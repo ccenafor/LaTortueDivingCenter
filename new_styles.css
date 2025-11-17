@@ -129,14 +129,28 @@ section.sand { background-color: var(--color-bg); }
 
 /* 5. Header & Navigation */
 header.nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  box-shadow: var(--shadow-sm);
-  border-bottom: 1px solid #e5e5e5;
+  background-color: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(14px);
+  z-index: 1200;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(21, 32, 64, 0.08);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+header.nav.nav-transparent {
+  background: linear-gradient(180deg, rgba(5, 8, 20, 0.55) 0%, rgba(5, 8, 20, 0.15) 80%, rgba(5, 8, 20, 0) 100%);
+  box-shadow: none;
+  border-bottom-color: transparent;
+}
+body.has-fixed-nav {
+  padding-top: 80px;
+}
+body.has-fixed-nav .slider,
+body.has-fixed-nav section.hero:first-of-type {
+  margin-top: -80px;
 }
 
 .nav-inner {
@@ -178,14 +192,14 @@ header.nav {
   font-weight: 500;
   color: var(--color-text-main);
   padding: 0 5px; /* Add some padding */
-  border-bottom: 2px solid transparent;
+  border-bottom: none;
   white-space: nowrap;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--color-primary);
-  border-bottom-color: var(--color-accent);
 }
 
 .nav-cta {
@@ -203,6 +217,40 @@ header.nav {
 .nav-cta .btn {
     padding: 0.4rem 0.8rem;
     font-size: 14px;
+    border-radius: 0;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+header.nav.nav-transparent .brand-title,
+header.nav.nav-transparent .nav-subtitle,
+header.nav.nav-transparent .nav-links a,
+header.nav.nav-transparent .nav-cta .btn,
+header.nav.nav-transparent .burger i,
+header.nav.nav-transparent .burger i::before,
+header.nav.nav-transparent .burger i::after {
+  color: var(--color-text-light);
+  border-color: rgba(255,255,255,0.4);
+}
+header.nav.nav-transparent .nav-links a {
+  color: rgba(255,255,255,0.85);
+}
+header.nav.nav-transparent .nav-links a:hover,
+header.nav.nav-transparent .nav-links a.active {
+  color: #fff;
+}
+header.nav.nav-transparent .nav-cta .btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.55);
+  color: #fff;
+}
+header.nav.nav-transparent .nav-cta .btn.btn-primary {
+  background: rgba(255,255,255,0.14);
+  border-color: transparent;
+  color: #fff;
+}
+header.nav.nav-transparent .burger i,
+header.nav.nav-transparent .burger i::before,
+header.nav.nav-transparent .burger i::after {
+  background: rgba(255,255,255,0.85);
 }
 
 /* 6. Buttons */

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             document.getElementById('menu-placeholder').innerHTML = data;
+            document.body.classList.add('has-fixed-nav');
 
             // Re-attach event listeners for the burger menu after content is loaded
             var t = document.getElementById('menuToggle');
@@ -31,6 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     link.classList.remove('active');
                 }
             });
+            
+            var header = document.querySelector('header.nav');
+            function updateNavState() {
+                if (!header) return;
+                if (window.scrollY > 90) {
+                    header.classList.remove('nav-transparent');
+                } else {
+                    header.classList.add('nav-transparent');
+                }
+            }
+            updateNavState();
+            window.addEventListener('scroll', updateNavState);
         })
         .catch(error => console.error('Error loading menu:', error));
 });
