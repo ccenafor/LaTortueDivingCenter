@@ -100,7 +100,9 @@ img, .ph {
   height: auto;
   display: block;
   border-radius: var(--border-radius);
-  background-color: #e0e0e0;
+  background-image: url('assets/diving-bg.webp'); /* Use diving-bg.webp */
+  background-size: cover; /* Crop to fit */
+  background-position: center; /* Center the image */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,11 +277,12 @@ a.btn[style*="background:#25D366"]:hover {
   background-size: cover;
   background-position: center;
 }
-/* TODO: Add actual images */
-.slide:nth-child(1) .hero.ph { background-image: url('https://images.unsplash.com/photo-1577368363214-31a7a3321437?q=80&w=2070&auto=format&fit=crop'); }
-.slide:nth-child(2) .hero.ph { background-image: url('https://images.unsplash.com/photo-1580744495239-3b54a5531353?q=80&w=1932&auto=format&fit=crop'); }
-.slide:nth-child(3) .hero.ph { background-image: url('https://images.unsplash.com/photo-1544568100-847a948585b9?q=80&w=1974&auto=format&fit=crop'); }
-.slide:nth-child(4) .hero.ph { background-image: url('https://images.unsplash.com/photo-1608253844964-8717923a5339?q=80&w=1974&auto=format&fit=crop'); }
+/* All slider hero sections will now use diving-bg.webp */
+.slide .hero.ph {
+  background-image: url('assets/diving-bg.webp');
+  background-size: cover;
+  background-position: center;
+}
 
 
 .slide .caption {
