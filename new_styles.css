@@ -402,23 +402,158 @@ a.btn[style*="background:#25D366"]:hover {
 
 /* 9. Footer */
 footer {
-  background-color: var(--color-primary);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 2rem 1rem;
-  border-top: 4px solid var(--color-accent);
+  background: linear-gradient(140deg, #0f172f 0%, #152040 60%, #1f2d52 100%);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 2.75rem 1rem;
+  border-top: 4px solid var(--color-secondary);
+  position: relative;
+  overflow: hidden;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 45%);
+  opacity: 0.8;
+  pointer-events: none;
 }
 footer .container {
+  max-width: 1100px;
+  padding: 0 1rem;
+}
+footer .footer-grid {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+footer .footer-left {
+  margin-right: 2.5rem;
+}
+footer .footer-left,
+footer .footer-right {
+  flex: 1 1 280px;
+}
+footer .footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+  margin-right: 3.5rem;
+}
+footer .brand-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+footer .footer-social {
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--color-accent);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  margin-top: 2.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+footer .footer-social:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+footer .footer-social-label {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1rem;
+  color: var(--color-text-light);
+}
+footer .footer-social-links {
+  display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
-/* Target the left part of the footer */
-footer .container > div:first-child {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+footer .footer-social-links a {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.3s ease, border-bottom-color 0.3s ease, transform 0.3s ease;
+}
+footer .footer-social-links a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+  transform: translateX(4px);
+}
+footer .footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0.5rem;
+  margin-left: auto;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 430px;
+}
+footer .footer-map-label {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--color-text-light);
+}
+footer .footer-right iframe {
+  width: 100%;
+  max-width: 420px;
+  height: 250px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+}
+}
+@media (max-width: 640px) {
+  footer .footer-right iframe {
+    max-width: 100%;
+    height: 220px;
+  }
+}
+footer .footer-legal {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+footer .footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.25rem;
+}
+footer .footer-links a {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-left: 0;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+footer .footer-links a:hover {
+  color: var(--color-accent);
+  padding-left: 6px;
+}
+footer .footer-bottom {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 /* Override inline styles on the footer text */
 footer .brand-title,
@@ -428,23 +563,13 @@ footer a[style] {
     font-family: var(--font-family-base);
 }
 footer .brand-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-text-light);
 }
 footer span[style] {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
-}
-footer a[style] {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-text-light);
-  text-decoration: none;
-  transition: color var(--transition-speed);
-}
-footer a[style]:hover {
-  color: var(--color-accent);
 }
 
 /* 10. Mobile Menu */
