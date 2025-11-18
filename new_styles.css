@@ -642,6 +642,51 @@ a.btn[style*="background:#25D366"]:hover {
   margin-top: 1rem;
 }
 
+.card.card-wide {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 2rem 0 2.5rem;
+  flex-wrap: wrap;
+}
+.card-wide-image {
+  flex: 1 1 260px;
+  min-height: 220px;
+}
+.card-wide-content {
+  flex: 2 1 340px;
+}
+.card-wide-content .muted {
+  margin-top: 0.25rem;
+}
+.card-points {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.25rem;
+}
+.card-points li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+.card-points li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-secondary);
+}
+.card-wide-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.card-wide-cta .btn {
+  flex: 1 1 160px;
+  min-width: 160px;
+}
+
 /* 9. Footer */
 footer {
   background: linear-gradient(140deg, #0f172f 0%, #152040 60%, #1f2d52 100%);
