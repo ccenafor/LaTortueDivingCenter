@@ -642,6 +642,10 @@ a.btn[style*="background:#25D366"]:hover {
   margin-top: 1rem;
 }
 
+.section-cta {
+  margin-top: 1.5rem;
+}
+
 .card.card-wide {
   display: flex;
   gap: 1.5rem;
