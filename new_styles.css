@@ -852,6 +852,24 @@ a.btn[style*="background:#25D366"]:hover {
 .card .btn {
   margin-top: 1rem;
 }
+.course-details {
+  margin-top: 0.75rem;
+  display: none;
+  gap: 0.35rem;
+  flex-direction: column;
+}
+.course-details.open {
+  display: flex;
+}
+.course-details p {
+  margin: 0;
+  color: var(--color-text-main);
+}
+.ssi-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
 
 .feature-grid {
   display: grid;
