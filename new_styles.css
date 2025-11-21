@@ -947,6 +947,13 @@ a.btn[style*="background:#25D366"]:hover {
   margin: 0;
   color: var(--color-text-main);
 }
+.course-details ul {
+  margin: 0 0 0.4rem 1.25rem;
+  padding: 0;
+}
+.course-details ul li {
+  margin-bottom: 0.25rem;
+}
 .course-details .prereq {
   font-size: 0.88rem;
   font-style: italic;
