@@ -373,6 +373,53 @@ header.nav.nav-transparent .brand-logo-white {
   font-size: 12px;
   margin-top: -2px;
 }
+.nav-partner {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  margin-left: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft);
+  background: rgba(21, 32, 64, 0.04);
+  white-space: nowrap;
+}
+.nav-partner-logo {
+  max-height: 26px;
+  width: auto;
+  min-height: 0;
+  background: none !important;
+  background-image: none !important;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+  object-fit: contain;
+  transform: none !important;
+}
+.nav-partner-note {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+@media (min-width: 1024px) {
+  .nav-partner {
+    display: inline-flex;
+  }
+}
+header.nav.nav-transparent .nav-partner {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+header.nav.nav-transparent .nav-partner-note {
+  color: rgba(255,255,255,0.92);
+}
+header.nav.nav-transparent .nav-partner .nav-partner-logo {
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.28));
+}
 
 .nav-links {
   display: none; /* Hidden on mobile */
@@ -1335,6 +1382,22 @@ footer .footer-legal {
 }
 .mpanel .actions .btn {
   width: 100%;
+}
+.menu-partner {
+  display: grid;
+  place-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.menu-partner .nav-partner-logo {
+  max-height: 44px;
+}
+.menu-partner .nav-partner-note {
+  color: var(--color-primary);
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 0.85rem;
 }
 
 /* Form styles */
