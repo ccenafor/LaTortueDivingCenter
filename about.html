@@ -1,8 +1,54 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About Us</title>
-<link rel="stylesheet" href="new_styles.css"></head><body>
+<link rel="stylesheet" href="new_styles.css">
+<style>
+  .about-split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+  .about-photo {
+    position: relative;
+    padding-top: 65%;
+    background: linear-gradient(135deg, rgba(21,32,64,0.1), rgba(198,168,125,0.15));
+    overflow: hidden;
+  }
+  .about-photo .ph {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    height: 100%;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .team-card {
+    background: var(--color-block);
+    border: 1px solid var(--color-border-soft);
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+  }
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(21,32,64,0.15), rgba(198,168,125,0.25));
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head><body>
 <div id="menu-placeholder"></div>
+
 <section class="hero scroll-reveal">
   <div class="banner" data-reveal><div class="ph hero"><label>Add image here</label></div></div>
   <div class="inner container">
@@ -18,15 +64,43 @@
   </div>
 </section>
 
-<section class="sand scroll-reveal"><div class="container">
+<section class="sand scroll-reveal"><div class="container section-left">
   <h2 data-reveal>Our Story</h2>
-  <p class="muted" data-reveal>La Tortue was created by Marielle & Nicolas to share the sea and relaxed island life in Dauin. Today, the team welcomes divers and travelers a few steps from the water — with personalized service and a love for nature.</p>
-  <div class="row row-3">
-    <div class="ph tile" data-reveal><label>Add image here</label></div>
-    <div class="ph tile" data-reveal><label>Add image here</label></div>
-    <div class="ph tile" data-reveal><label>Add image here</label></div>
+  <div class="about-split">
+    <div style="display:grid;gap:1rem;" data-reveal>
+      <p class="muted">What started as a vision for Marielle and Nicolas to live by the sea and share their passions with travelers from all over the world, came to fruition in February of 2020. Marielle had left her life in Manila and her corporate job to start anew with Nicolas, who had been reinventing his life too after leaving France. Dauin, Negros Oriental felt like the ideal place to build a modest first venture together. The name "La Tortue" means The Turtle in French, and it was originally meant to attract the French-speaking market that Nicolas could teach diving. Neither of them knew that the global pandemic would change the course of their life and business altogether.</p>
+      <p class="muted">La Tortue became a metaphor for the months that followed - as everything moved in a much slower pace, albeit steady, calm, and hopeful. People embraced more and more not only the love for nature and diving, but the chill island lifestyle altogether. La Tortue offers modest but comfortable rooms a few steps away from the sea, freshly prepared food and drinks made from local ingredients, and activities centered on appreciation for nature.</p>
+      <p class="muted">La Tortue Diving Center & Beach Resort is a safe haven for nature-lovers, explorers, foodies, and everything in between! We are happy to welcome you on your next adventure!</p>
+    </div>
+    <div class="about-photo" data-reveal>
+      <div class="ph tile"><label>Add story photo</label></div>
+    </div>
   </div>
-  <div data-reveal><a class="btn btn-outline" href="https://www.instagram.com/latortuediving" target="_blank">Follow on Instagram</a></div>
+</div></section>
+
+<section class="ocean scroll-reveal"><div class="container section-left">
+  <h2 data-reveal>Our Team</h2>
+  <p class="muted" data-reveal>We are a young team with a knack for personalized service and creating a home away from home atmosphere! Put your feet up, we're here to make your stay one of a kind!</p>
+  <div class="team-grid">
+    <div class="team-card" data-reveal>
+      <div class="avatar">M</div>
+      <strong>Marielle</strong>
+      <p class="muted">Co-founder, host, and lover of slow island mornings.</p>
+      <div class="ph tile"><label>Add portrait here</label></div>
+    </div>
+    <div class="team-card" data-reveal>
+      <div class="avatar">N</div>
+      <strong>Nicolas</strong>
+      <p class="muted">Co-founder and dive instructor sharing Dauin’s reefs one guest at a time.</p>
+      <div class="ph tile"><label>Add portrait here</label></div>
+    </div>
+    <div class="team-card" data-reveal>
+      <div class="avatar">T</div>
+      <strong>The Crew</strong>
+      <p class="muted">Guides, kitchen, and front desk team keeping days smooth and the coffee flowing.</p>
+      <div class="ph tile"><label>Add portrait here</label></div>
+    </div>
+  </div>
 </div></section>
 
 <div id="footer-placeholder"></div>
