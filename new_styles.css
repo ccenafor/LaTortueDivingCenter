@@ -758,15 +758,24 @@ a.btn[style*="background:#25D366"]:hover {
   font-weight: 500;
 }
 .badge {
-  background-color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.26rem 0.64rem 0.26rem 0.48rem;
   color: var(--color-text-light);
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.9rem;
+  background: var(--color-primary);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 6px 14px rgba(21,32,64,0.35);
+  width: fit-content;
 }
+
 .cta {
   margin-top: 0.5rem;
   display: flex;
