@@ -48,6 +48,18 @@
     }
   };
 
+  const setupCourseToggles = () => {
+    document.querySelectorAll('.course-toggle').forEach(button => {
+      const details = button.closest('.card')?.querySelector('.course-details');
+      if (!details) return;
+      button.addEventListener('click', () => {
+        const isOpen = details.classList.toggle('open');
+        button.setAttribute('aria-expanded', String(isOpen));
+        button.textContent = isOpen ? 'Hide details' : 'More about this course';
+      });
+    });
+  };
+
   const initializeScrollReveal = () => {
     const sections = document.querySelectorAll('.scroll-reveal');
     if (!sections.length) return;
@@ -104,6 +116,7 @@
       ]);
 
       setupMenu();
+      setupCourseToggles();
     } catch (error) {
       console.error('Page initialization failed:', error);
     } finally {
