@@ -32,6 +32,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     link.classList.remove('active');
                 }
             });
+
+            // Mobile diving submenu toggle
+            var mToggles = document.querySelectorAll('.mpanel-toggle');
+            mToggles.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var expanded = btn.getAttribute('aria-expanded') === 'true';
+                    btn.setAttribute('aria-expanded', String(!expanded));
+                    var group = btn.closest('.mpanel-group');
+                    if (group) {
+                        group.classList.toggle('open', !expanded);
+                    }
+                });
+            });
             
             var header = document.querySelector('header.nav');
             function updateNavState() {
