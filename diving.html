@@ -382,20 +382,5 @@
 </div></section>
 
 <div id="footer-placeholder"></div>
-<script src="assets/load_menu.js"></script>
-<script src="assets/load_footer.js"></script>
-<script src="assets/scroll_reveal.js"></script>
-<script>
-(function(){
-  var toggles=document.querySelectorAll('.course-toggle');
-  toggles.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var details=btn.previousElementSibling;
-      if(!details.classList.contains('course-details')) return;
-      details.classList.toggle('open');
-      btn.textContent = details.classList.contains('open') ? 'Hide details' : 'More about this course';
-    });
-  });
-})();
-</script>
+<script src="assets/site.js"></script>
 </body></html>
