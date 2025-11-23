@@ -78,10 +78,13 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
 
-    sections.forEach(section => {
-      section.classList.remove('is-visible');
-      observer.observe(section);
-    });
+    // Defer observing slightly to allow layout / CSS reflow before computing intersections.
+    setTimeout(() => {
+      sections.forEach(section => {
+        section.classList.remove('is-visible');
+        observer.observe(section);
+      });
+    }, 20);
   };
 
   let hasInitialized = false;
@@ -92,14 +95,13 @@
     initializing = true;
 
     try {
-      initializeScrollReveal();
-
       await Promise.all([
         fetchHTML('menu.html', 'menu-placeholder'),
         fetchHTML('footer.html', 'footer-placeholder')
       ]);
 
       setupMenu();
+      initializeScrollReveal();
       hasInitialized = true;
     } catch (error) {
       console.error('Page initialization failed:', error);
