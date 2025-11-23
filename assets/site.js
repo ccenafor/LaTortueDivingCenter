@@ -94,6 +94,9 @@
     if (initializing || hasInitialized) return;
     initializing = true;
 
+    // Always set up reveal promptly so it doesn't depend on fetch success.
+    initializeScrollReveal();
+
     try {
       await Promise.all([
         fetchHTML('menu.html', 'menu-placeholder'),
@@ -101,11 +104,12 @@
       ]);
 
       setupMenu();
-      initializeScrollReveal();
-      hasInitialized = true;
     } catch (error) {
       console.error('Page initialization failed:', error);
     } finally {
+      // Re-run to refresh observers after layout shifts from injected HTML.
+      initializeScrollReveal();
+      hasInitialized = true;
       initializing = false;
     }
   };
