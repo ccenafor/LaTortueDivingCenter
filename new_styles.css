@@ -229,44 +229,6 @@ section.ocean.has-banner {
   }
 }
 
-/* Scroll reveal animations */
-.scroll-reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.9s cubic-bezier(.4,.0,.2,1), transform 0.9s cubic-bezier(.4,.0,.2,1);
-  will-change: opacity, transform;
-}
-body.reveal-ready .scroll-reveal {
-  opacity: 0;
-  transform: translateY(48px);
-}
-body.reveal-ready .scroll-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.scroll-reveal [data-reveal] {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  transition-delay: var(--reveal-delay, 0s);
-  will-change: opacity, transform;
-}
-body.reveal-ready .scroll-reveal [data-reveal] {
-  opacity: 0;
-  transform: translateY(32px);
-}
-body.reveal-ready .scroll-reveal.is-visible [data-reveal] {
-  opacity: 1;
-  transform: translateY(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-reveal,
-  .scroll-reveal [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
 section.ocean { background-color: var(--color-surface); }
 section.sand { background-color: var(--color-bg); }
 
@@ -1583,6 +1545,14 @@ section.hero {
   body.has-fixed-nav section.hero:first-of-type {
     margin-top: -76px;
   }
+}
+
+/* Compact hero variant for shorter headers */
+.hero.hero-compact {
+  min-height: 32vh;
+}
+.hero.hero-compact .inner.container {
+  padding: 2.5rem 1rem;
 }
 
 
