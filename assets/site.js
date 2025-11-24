@@ -60,6 +60,44 @@
     });
   };
 
+  const setupReviewSliders = () => {
+    document.querySelectorAll('.review-slider').forEach(slider => {
+      const track = slider.querySelector('.review-track');
+      const slides = Array.from(slider.querySelectorAll('.review-slide'));
+      const dots = Array.from(slider.querySelectorAll('.review-dot'));
+      if (!track || !slides.length) return;
+
+      let index = 0;
+      const autoplayMs = Number(slider.dataset.autoplay || 0);
+      let timer;
+
+      const goTo = (idx) => {
+        index = (idx + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      };
+
+      const startAuto = () => {
+        if (!autoplayMs) return;
+        clearInterval(timer);
+        timer = setInterval(() => goTo(index + 1), autoplayMs);
+      };
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          goTo(i);
+          startAuto();
+        });
+      });
+
+      slider.addEventListener('pointerenter', () => clearInterval(timer));
+      slider.addEventListener('pointerleave', startAuto);
+
+      goTo(0);
+      startAuto();
+    });
+  };
+
   const setupRevealAnimations = () => {
     if (!('IntersectionObserver' in window)) return;
 
@@ -138,6 +176,7 @@
 
       setupMenu();
       setupCourseToggles();
+      setupReviewSliders();
     } catch (error) {
       console.error('Page initialization failed:', error);
     } finally {
