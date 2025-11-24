@@ -60,6 +60,67 @@
     });
   };
 
+  const setupRevealAnimations = () => {
+    if (!('IntersectionObserver' in window)) return;
+
+    const revealNow = (el) => {
+      el.classList.remove('is-visible');
+      void el.offsetWidth; // force reflow so transition triggers
+      setTimeout(() => el.classList.add('is-visible'), 24);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          revealNow(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -10%' });
+
+    const tagTargets = (elements, { stagger = false } = {}) => {
+      elements.forEach((el, idx) => {
+        if (!el || el.classList.contains('reveal')) return;
+        el.classList.add('reveal');
+        if (stagger) {
+          const delay = Math.min(idx * 80, 480);
+          el.style.setProperty('--reveal-delay', `${delay}ms`);
+        }
+        observer.observe(el);
+      });
+    };
+
+    const runInitialPass = () => {
+      observer.takeRecords().forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.classList.contains('is-visible')) return;
+        const rect = el.getBoundingClientRect();
+        const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (rect.top < viewHeight && rect.bottom > 0) {
+          revealNow(el);
+          observer.unobserve(el);
+        }
+      });
+    };
+
+    tagTargets(document.querySelectorAll('section:not(.slider)'), { stagger: true });
+    tagTargets(document.querySelectorAll('.card, .card-wide, .feature-card, .day-pass-card'), { stagger: true });
+    tagTargets(document.querySelectorAll('.row.row-4.dining-gallery .ph.tile'), { stagger: true });
+    tagTargets(document.querySelectorAll('.hero .inner.container'), { stagger: false });
+    tagTargets(document.querySelectorAll('.slider .caption .box, .slider .slider-dots, .slider .slider-nav'), { stagger: true });
+    tagTargets(document.querySelectorAll('footer .footer-grid, footer .footer-bottom'), { stagger: true });
+
+    runInitialPass();
+    requestAnimationFrame(runInitialPass);
+    setTimeout(runInitialPass, 220);
+    window.addEventListener('load', runInitialPass, { once: true });
+  };
+
   let hasInitialized = false;
   let initializing = false;
 
@@ -68,6 +129,8 @@
     initializing = true;
 
     try {
+      setupRevealAnimations();
+
       await Promise.all([
         fetchHTML('menu.html', 'menu-placeholder'),
         fetchHTML('footer.html', 'footer-placeholder')

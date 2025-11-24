@@ -57,6 +57,39 @@ body {
   overflow-x: hidden;
 }
 
+/* Subtle scroll-reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  filter: blur(8px);
+  will-change: opacity, transform, filter;
+}
+.reveal.is-visible {
+  animation: reveal-in 0.8s cubic-bezier(0.21, 0.61, 0.35, 1) forwards;
+  animation-delay: var(--reveal-delay, 0s);
+}
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
 /* 4. Typography */
 h1, h2, h3, h4, h5, h6, .brand-title {
   font-family: "Manrope", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
