@@ -60,54 +60,12 @@
     });
   };
 
-  const initializeScrollReveal = () => {
-    const sections = document.querySelectorAll('.scroll-reveal');
-    if (!sections.length) return;
-
-    document.body.classList.add('reveal-ready');
-
-    const supportsMatchMedia = typeof window.matchMedia === 'function';
-    const prefersReducedMotion = supportsMatchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const revealImmediately = prefersReducedMotion || !('IntersectionObserver' in window);
-
-    sections.forEach(section => {
-      section.querySelectorAll('[data-reveal]').forEach((el, index) => {
-        el.style.setProperty('--reveal-delay', `${index * 80}ms`);
-      });
-    });
-
-    if (revealImmediately) {
-      sections.forEach(section => section.classList.add('is-visible'));
-      return;
-    }
-
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
-
-    // Defer observing slightly to allow layout / CSS reflow before computing intersections.
-    setTimeout(() => {
-      sections.forEach(section => {
-        section.classList.remove('is-visible');
-        observer.observe(section);
-      });
-    }, 20);
-  };
-
   let hasInitialized = false;
   let initializing = false;
 
   const runPageInitialization = async () => {
     if (initializing || hasInitialized) return;
     initializing = true;
-
-    // Always set up reveal promptly so it doesn't depend on fetch success.
-    initializeScrollReveal();
 
     try {
       await Promise.all([
@@ -120,8 +78,6 @@
     } catch (error) {
       console.error('Page initialization failed:', error);
     } finally {
-      // Re-run to refresh observers after layout shifts from injected HTML.
-      initializeScrollReveal();
       hasInitialized = true;
       initializing = false;
     }
