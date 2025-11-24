@@ -1163,14 +1163,15 @@ a.btn[style*="background:#25D366"]:hover {
 
 .card.card-wide {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: center;
-  margin: 2rem 0 2.5rem;
+  margin: 1.75rem 0 2.25rem;
   flex-wrap: wrap;
 }
 .card-wide-image {
   flex: 1 1 260px;
   min-height: 220px;
+  margin-bottom: 0.25rem;
 }
 .card-wide-content {
   flex: 2 1 340px;
@@ -1204,6 +1205,116 @@ a.btn[style*="background:#25D366"]:hover {
 .card-wide-cta .btn {
   flex: 1 1 160px;
   min-width: 160px;
+}
+@media (max-width: 768px) {
+  .card.card-wide {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin: 1.25rem 0;
+  }
+  .card-wide-image, .card-wide-content {
+    flex: 1 1 100%;
+  }
+.card-wide-image {
+  min-height: 0;
+  margin-bottom: 0.2rem;
+}
+}
+
+/* 9. Reviews */
+.reviews {
+  position: relative;
+  padding: 4rem 1rem;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.reviews::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,14,28,0.78), rgba(10,14,28,0.86));
+  z-index: 0;
+}
+.reviews .container {
+  position: relative;
+  z-index: 1;
+}
+.reviews h2 {
+  color: #fff;
+}
+.reviews .muted {
+  color: rgba(255,255,255,0.8);
+}
+.review-slider {
+  position: relative;
+  margin-top: 1.25rem;
+  overflow: hidden;
+}
+.review-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.review-slide {
+  min-width: 100%;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.24);
+  border-radius: 10px;
+  display: grid;
+  gap: 0.75rem;
+}
+.review-quote {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #fff;
+}
+.review-meta {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.9rem;
+}
+.review-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+.review-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+.review-dot.active,
+.review-dot:focus-visible {
+  background: #fff;
+  border-color: #fff;
+}
+.review-dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+@media (max-width: 768px) {
+  .reviews {
+    padding: 3rem 1rem;
+  }
+  .review-slide {
+    padding: 1.1rem;
+  }
+  .review-quote {
+    font-size: 0.95rem;
+  }
 }
 
 /* 9. Footer */
