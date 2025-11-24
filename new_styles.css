@@ -852,7 +852,10 @@ a.btn[style*="background:#25D366"]:hover {
   gap: 2rem;
   margin-top: 2rem !important;
 }
-.row.row-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.row.row-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+@media (max-width: 640px) {
+  .row.row-2 { grid-template-columns: 1fr; }
+}
 .row.row-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .row.row-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 .row.row-4.dining-gallery {
@@ -1514,6 +1517,90 @@ form .row {
   form .row {
     grid-template-columns: 1fr 1fr;
   }
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.contact-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.contact-form .form-row.form-dates {
+  grid-column: 1 / -1;
+}
+.contact-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.contact-form .phone-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.contact-form .phone-group select {
+  flex: 0 0 160px;
+  width: 160px;
+  min-width: 140px;
+}
+.contact-form .phone-group input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.contact-form label {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+@media (min-width: 640px) {
+  .contact-form .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .contact-form .phone-field,
+  .contact-form .interest-field {
+    grid-column: 1 / -1;
+  }
+  .contact-form .form-row.form-dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+.contact-actions .btn {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .contact-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .contact-actions .btn {
+    flex: 1 1 160px;
+  }
+}
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .contact-form .form-row.form-dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.is-hidden {
+  display: none !important;
 }
 
 /* 11. Page-specific adjustments */
