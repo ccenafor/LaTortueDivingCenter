@@ -1211,6 +1211,44 @@ footer .footer-social-links {
   align-items: center;
 }
 footer .footer-social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  line-height: 1.2;
+}
+footer .social-icon-img {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.3);
+}
+footer .social-icon-fb {
+  background-image: url('assets/Pictures/Icons/Facebook-la-tortue-diving-center.jpg');
+}
+footer .social-icon-ig {
+  background-image: url('assets/Pictures/Icons/Instagram-la-tortue-diving-center-dauin.jpg');
+}
+footer .social-text {
+  color: inherit;
+}
+@media (max-width: 640px) {
+  footer .footer-social {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  footer .footer-social-links {
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+}
+footer .footer-social-links a {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-text-light);
