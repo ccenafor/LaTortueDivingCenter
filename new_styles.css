@@ -486,10 +486,11 @@ header.nav.nav-transparent .dropdown-menu::before {
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  background-color: var(--color-bg);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(21, 32, 64, 0.08);
-  border: none;
-  padding: 3rem 2.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.16), 0 0 0 1px rgba(21,32,64,0.06);
+  border: 1px solid rgba(21,32,64,0.08);
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
   min-width: 900px;
   max-width: 1100px;
   width: calc(100vw - 4rem);
@@ -522,12 +523,17 @@ header.nav.nav-transparent .dropdown-menu::before {
   text-align: center;
   text-decoration: none;
   color: var(--color-text-main);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
-  padding: 0.5rem;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  padding: 0.6rem 0.35rem;
+  border-radius: 6px;
+  background: #f8f8f5;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.05);
 }
 .dropdown-item:hover {
   transform: translateY(-6px);
   color: var(--color-primary);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  background: #ffffff;
 }
 .dropdown-image {
   width: 100%;
@@ -535,11 +541,13 @@ header.nav.nav-transparent .dropdown-menu::before {
   margin-bottom: 1.25rem;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border-radius: 6px;
 }
 .dropdown-item:hover .dropdown-image {
   box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
 }
 .dropdown-image .ph.tile {
   width: 100%;
@@ -550,7 +558,20 @@ header.nav.nav-transparent .dropdown-menu::before {
   background-position: center;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.dropdown-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 6px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
 .dropdown-item:hover .dropdown-image .ph.tile {
+  transform: scale(1.08);
+}
+.dropdown-item:hover .dropdown-image img {
   transform: scale(1.08);
 }
 .dropdown-item span {
@@ -783,6 +804,11 @@ a.btn[style*="background:#25D366"]:hover {
     padding: 1.5rem 1rem;
     max-width: 90%;
   }
+  .slide .caption .cta {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .slide .caption .box h1 {
     font-size: 1.75rem;
     line-height: 1.2;
@@ -810,6 +836,14 @@ a.btn[style*="background:#25D366"]:hover {
   transform: translateY(-50%);
   padding: 0 1rem;
 }
+.slider-nav {
+  z-index: 5;
+}
+@media (max-width: 768px) {
+  .slider-nav {
+    top: 42%;
+  }
+}
 .slider-btn {
   background: transparent;
   border: none;
@@ -829,10 +863,14 @@ a.btn[style*="background:#25D366"]:hover {
 .slider-dots {
   position: absolute;
   bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  transform: none;
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 .dot {
   width: 10px;
@@ -852,7 +890,10 @@ a.btn[style*="background:#25D366"]:hover {
   gap: 2rem;
   margin-top: 2rem !important;
 }
-.row.row-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.row.row-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+@media (max-width: 640px) {
+  .row.row-2 { grid-template-columns: 1fr; }
+}
 .row.row-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .row.row-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 .row.row-4.dining-gallery {
@@ -905,6 +946,37 @@ a.btn[style*="background:#25D366"]:hover {
 }
 .card .btn {
   margin-top: 1rem;
+}
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.price-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px dashed rgba(21,32,64,0.15);
+  padding-bottom: 0.5rem;
+}
+.price-line:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.price-name {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.price-note {
+  display: block;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+.price-value {
+  font-weight: 800;
+  color: var(--color-primary);
 }
 .day-pass-card {
   display: grid;
@@ -1208,6 +1280,44 @@ footer .footer-social-links {
   align-items: center;
 }
 footer .footer-social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  line-height: 1.2;
+}
+footer .social-icon-img {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.3);
+}
+footer .social-icon-fb {
+  background-image: url('assets/Pictures/Icons/Facebook-la-tortue-diving-center.jpg');
+}
+footer .social-icon-ig {
+  background-image: url('assets/Pictures/Icons/Instagram-la-tortue-diving-center-dauin.jpg');
+}
+footer .social-text {
+  color: inherit;
+}
+@media (max-width: 640px) {
+  footer .footer-social {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  footer .footer-social-links {
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+}
+footer .footer-social-links a {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-text-light);
@@ -1249,11 +1359,19 @@ footer .footer-right iframe {
   border-radius: 0;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
 }
-}
 @media (max-width: 640px) {
-  footer .footer-right iframe {
+  footer .footer-right {
+    flex: 1 1 100%;
     max-width: 100%;
-    height: 220px;
+    align-items: center;
+    text-align: center;
+    margin-left: 0;
+  }
+  footer .footer-right iframe {
+    width: 92%;
+    max-width: 320px;
+    margin: 0 auto;
+    height: 180px;
   }
 }
 footer .footer-legal {
@@ -1514,6 +1632,115 @@ form .row {
   form .row {
     grid-template-columns: 1fr 1fr;
   }
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.contact-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.contact-form .form-row.form-dates {
+  grid-column: 1 / -1;
+}
+.contact-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.contact-form .phone-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.contact-form .phone-group select {
+  flex: 0 0 160px;
+  width: 160px;
+  min-width: 140px;
+}
+.contact-form .phone-group input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+@media (max-width: 640px) {
+  .contact-form .phone-group {
+    flex-direction: column;
+  }
+  .contact-form .phone-group select,
+  .contact-form .phone-group input {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+}
+.contact-form label {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+@media (min-width: 640px) {
+  .contact-form .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .contact-form .phone-field,
+  .contact-form .interest-field {
+    grid-column: 1 / -1;
+  }
+  .contact-form .form-row.form-dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+.contact-actions .btn {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .contact-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .contact-actions .btn {
+    flex: 1 1 160px;
+  }
+}
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  max-height: 800px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease, visibility 0.45s ease, padding 0.35s ease;
+}
+.contact-form .form-row.is-hidden {
+  display: grid !important;
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+@media (min-width: 640px) {
+  .contact-form .form-row.form-dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.is-hidden {
+  display: none !important;
 }
 
 /* 11. Page-specific adjustments */
