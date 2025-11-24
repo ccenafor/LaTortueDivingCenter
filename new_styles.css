@@ -804,6 +804,11 @@ a.btn[style*="background:#25D366"]:hover {
     padding: 1.5rem 1rem;
     max-width: 90%;
   }
+  .slide .caption .cta {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .slide .caption .box h1 {
     font-size: 1.75rem;
     line-height: 1.2;
@@ -831,6 +836,14 @@ a.btn[style*="background:#25D366"]:hover {
   transform: translateY(-50%);
   padding: 0 1rem;
 }
+.slider-nav {
+  z-index: 5;
+}
+@media (max-width: 768px) {
+  .slider-nav {
+    top: 42%;
+  }
+}
 .slider-btn {
   background: transparent;
   border: none;
@@ -850,10 +863,14 @@ a.btn[style*="background:#25D366"]:hover {
 .slider-dots {
   position: absolute;
   bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  transform: none;
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 .dot {
   width: 10px;
