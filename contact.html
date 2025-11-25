@@ -324,6 +324,27 @@ document.addEventListener('DOMContentLoaded', function() {
     countrySelect.value = hasDefault ? defaultCode : countries[0].dial;
   }
 
+  if (dateInputs && dateInputs.length) {
+    var today = new Date().toISOString().split('T')[0];
+    dateInputs.forEach(function(input) {
+      input.min = today;
+    });
+  }
+
+  var startDateInput = document.getElementById('start-date');
+  var endDateInput = document.getElementById('end-date');
+  if (startDateInput && endDateInput) {
+    var setEndMin = function() {
+      var minDate = startDateInput.value || new Date().toISOString().split('T')[0];
+      endDateInput.min = minDate;
+      if (endDateInput.value && endDateInput.value < minDate) {
+        endDateInput.value = minDate;
+      }
+    };
+    startDateInput.addEventListener('change', setEndMin);
+    setEndMin();
+  }
+
   function setVisibility(el, show) {
     if (!el) return;
     el.classList.toggle('is-hidden', !show);
