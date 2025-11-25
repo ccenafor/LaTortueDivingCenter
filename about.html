@@ -2,50 +2,6 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About Us</title>
 <link rel="stylesheet" href="new_styles.css">
-<style>
-  .about-split {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    align-items: start;
-  }
-  .about-photo {
-    position: relative;
-    padding-top: 65%;
-    background: linear-gradient(135deg, rgba(21,32,64,0.1), rgba(198,168,125,0.15));
-    overflow: hidden;
-  }
-  .about-photo .ph {
-    position: absolute;
-    inset: 0;
-    min-height: 0;
-    height: 100%;
-  }
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.25rem;
-  }
-  .team-card {
-    background: var(--color-block);
-    border: 1px solid var(--color-border-soft);
-    padding: 1.25rem;
-    display: grid;
-    gap: 0.6rem;
-    align-content: start;
-  }
-  .avatar {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(21,32,64,0.15), rgba(198,168,125,0.25));
-    display: grid;
-    place-items: center;
-    font-weight: 800;
-    color: var(--color-primary);
-    letter-spacing: 0.06em;
-  }
-</style>
 </head><body>
 <div id="menu-placeholder"></div>
 
@@ -78,30 +34,79 @@
   </div>
 </div></section>
 
+<section class="reviews" style="background-image:url('assets/Pictures/menu/Dive-sites-la-tortue-diving-center-dauin.jpg')">
+  <div class="container">
+    <h2>How's the staff?</h2>
+    <p class="muted"></p>
+    <div class="review-slider" data-autoplay="9000">
+      <div class="review-track">
+        <article class="review-slide">
+          <p class="review-quote">"Joseph and Glenn were amazing and all the other staff were so friendly and welcoming."</p>
+          <div class="review-meta">Nisha &mdash; Apr 2025</div>
+        </article>
+        <article class="review-slide">
+          <p class="review-quote">"We spent our open water here and everything was perfect thanks to our two great instructors... a warm, funny pair who believes in you and helps you accomplish everything!"</p>
+          <div class="review-meta">Pauline &mdash; Mar 2025</div>
+        </article>
+        <article class="review-slide">
+          <p class="review-quote">"The staff is lovely and super professional, the training is top-notch..."</p>
+          <div class="review-meta">L&eacute;on &mdash; Jul 2025</div>
+        </article>
+        <article class="review-slide">
+          <p class="review-quote">"My instructor Camille was absolutely amazing... knowledgeable and professional, but also patient, fun, and genuinely invested in your growth as a diver."</p>
+          <div class="review-meta">Abbie &mdash; Jul 2025</div>
+        </article>
+        <article class="review-slide">
+          <p class="review-quote">"The professionalism, sympathy and confidence of Nicolas' team allowed us to launch a family diving experience with young children - a real success!"</p>
+          <div class="review-meta">B&eacute;atrice &mdash; Nov 2024</div>
+        </article>
+      </div>
+      <div class="review-dots">
+        <button class="review-dot active" aria-label="Show review 1"></button>
+        <button class="review-dot" aria-label="Show review 2"></button>
+        <button class="review-dot" aria-label="Show review 3"></button>
+        <button class="review-dot" aria-label="Show review 4"></button>
+        <button class="review-dot" aria-label="Show review 5"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="ocean"><div class="container section-left">
   <h2>Our Team</h2>
   <p class="muted">We are a young team with a knack for personalized service and creating a home away from home atmosphere! Put your feet up, we're here to make your stay one of a kind!</p>
   <div class="team-grid">
     <div class="team-card">
-      <div class="avatar">M</div>
       <strong>Marielle</strong>
       <p class="muted">Co-founder, host, and lover of slow island mornings.</p>
       <div class="ph tile"><label>Add portrait here</label></div>
     </div>
     <div class="team-card">
-      <div class="avatar">N</div>
       <strong>Nicolas</strong>
       <p class="muted">Co-founder and dive instructor sharing Dauin's reefs one guest at a time.</p>
       <div class="ph tile"><label>Add portrait here</label></div>
     </div>
     <div class="team-card">
-      <div class="avatar">T</div>
       <strong>The Crew</strong>
       <p class="muted">Guides, kitchen, and front desk team keeping days smooth and the coffee flowing.</p>
       <div class="ph tile"><label>Add portrait here</label></div>
     </div>
   </div>
+  <div class="team-grid team-grid-dogs">
+    <div class="team-card">
+      <strong>Dolly</strong>
+      <p class="muted">Resident good girl, beach greeter, and connoisseur of sunset walks.</p>
+      <div class="ph tile"><img src="assets/Pictures/Staff/Dolly-la-tortue-diving-center-dauin.jpg" alt="Dolly, the La Tortue dog"></div>
+    </div>
+    <div class="team-card">
+      <strong>Panda</strong>
+      <p class="muted">Playful protector of flip-flops and expert in post-dive naps.</p>
+      <div class="ph tile"><img src="assets/Pictures/Staff/Panda-la-tortue-diving-center-dauin.jpg" alt="Panda, the La Tortue dog"></div>
+    </div>
+  </div>
 </div></section>
+
+
 
 <div id="footer-placeholder"></div>
 <script src="assets/site.js"></script>
