@@ -1395,21 +1395,27 @@ a.btn[style*="background:#25D366"]:hover {
 .team-card {
   background: var(--color-block);
   border: 1px solid var(--color-border-soft);
+  border-radius: 0;
   padding: 1.25rem;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.5rem;
   align-content: start;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
 }
-.avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(21,32,64,0.15), rgba(198,168,125,0.25));
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  color: var(--color-primary);
-  letter-spacing: 0.06em;
+.team-card strong {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.team-card .ph.tile {
+  border-radius: 0;
+  background: none;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+.team-card .ph.tile img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* 9. Footer */
