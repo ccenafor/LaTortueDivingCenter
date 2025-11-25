@@ -169,7 +169,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.2, rootMargin: '0px 0px -10%' });
+    }, { threshold: 0.1, rootMargin: '20% 0px -5%' });
 
     const tagTargets = (elements, { stagger = false } = {}) => {
       elements.forEach((el, idx) => {
