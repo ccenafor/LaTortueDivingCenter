@@ -771,6 +771,18 @@ header.nav.nav-transparent .burger i::after {
   border-color: #1eae52;
   color: #fff;
 }
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.cta-secondary:hover {
+  color: #0f1a36;
+  text-decoration: underline;
+}
 @media (max-width: 768px) {
   body.has-mobile-dive-bar {
     padding-bottom: 96px;
