@@ -1322,9 +1322,34 @@ a.btn[style*="background:#25D366"]:hover {
   position: relative;
   z-index: 1;
   max-width: 1100px;
+  text-align: center;
 }
 .reviews h2 {
   color: #fff;
+}
+.review-rating {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  color: rgba(255,255,255,0.86);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.88rem;
+  padding: 0.3rem 0.62rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+  margin: 0 auto 0.25rem;
+  text-align: center;
+}
+.review-rating .rating-stars {
+  color: rgba(198,168,125,0.85);
+  letter-spacing: 0.02em;
+  font-size: 1em;
 }
 .reviews .muted {
   color: rgba(255,255,255,0.8);
