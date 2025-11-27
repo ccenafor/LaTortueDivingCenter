@@ -2066,8 +2066,10 @@ section.hero {
 .hero .inner h1 {
   color: var(--color-text-light);
 }
-.hero .inner p.muted {
-  color: rgba(255, 255, 255, 0.8);
+.hero .inner .muted {
+  color: #ffffff !important;
+  font-weight: 500;
+  font-size: 1rem;
 }
 @media (max-width: 768px) {
   .hero .inner.container {
