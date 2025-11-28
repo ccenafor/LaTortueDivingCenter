@@ -60,6 +60,43 @@
     });
   };
 
+  const setupMobileDiveBar = () => {
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const isDivingPage = /^diving(?:[-.]|$)/.test(page);
+    if (!isDivingPage) return;
+
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    const removeBar = () => {
+      const existing = document.querySelector('.mobile-dive-bar');
+      if (existing) existing.remove();
+      document.body.classList.remove('has-mobile-dive-bar');
+    };
+
+    const buildBar = () => {
+      if (document.querySelector('.mobile-dive-bar')) return;
+      const bar = document.createElement('div');
+      bar.className = 'mobile-dive-bar';
+      bar.innerHTML = `
+        <a class="btn btn-primary" href="contact.html">Book a Dive</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/639695291297" target="_blank" rel="noreferrer" aria-label="WhatsApp chat">WhatsApp</a>
+      `;
+      document.body.appendChild(bar);
+      document.body.classList.add('has-mobile-dive-bar');
+    };
+
+    const evaluate = () => {
+      if (isMobile()) {
+        buildBar();
+      } else {
+        removeBar();
+      }
+    };
+
+    evaluate();
+    window.addEventListener('resize', evaluate, { passive: true });
+  };
+
   const setupReviewSliders = () => {
     document.querySelectorAll('.review-slider').forEach(slider => {
       const track = slider.querySelector('.review-track');
@@ -231,6 +268,7 @@
 
       setupMenu();
       setupCourseToggles();
+      setupMobileDiveBar();
       setupReviewSliders();
       setupMenuLightbox();
     } catch (error) {
