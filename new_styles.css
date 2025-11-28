@@ -998,6 +998,25 @@ a.btn[style*="background:#25D366"]:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (max-width: 480px) {
+  .row.row-4.dining-gallery .ph.tile {
+    height: 180px;
+    min-height: 180px;
+  }
+}
+/* Menu gallery specific styles */
+.menu-gallery.row-4 {
+  gap: 1.25rem;
+}
+@media (max-width: 640px) {
+  .menu-gallery.row-4 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .menu-gallery.row-4 .menu-thumb {
+    max-width: 100%;
+  }
+}
 
 .card {
   background-color: var(--color-block);
@@ -1063,11 +1082,24 @@ a.btn[style*="background:#25D366"]:hover {
   align-items: center;
   gap: 1.5rem;
   background: linear-gradient(120deg, #152040, #0f1a33);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  border: 2px solid var(--color-secondary);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.18);
   color: var(--color-text-light);
   margin-top: 1.75rem;
-  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.day-pass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(198,168,125,0.15) 0%, transparent 70%);
+  pointer-events: none;
 }
 .day-pass-copy {
   display: flex;
@@ -1090,9 +1122,10 @@ a.btn[style*="background:#25D366"]:hover {
   width: fit-content;
 }
 .day-pass-price {
-  font-size: 1.6rem;
+  font-size: 1.85rem;
   font-weight: 800;
   color: var(--color-secondary);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .day-pass-card p {
   margin: 0;
@@ -1132,10 +1165,14 @@ a.btn[style*="background:#25D366"]:hover {
   .day-pass-card {
     grid-template-columns: 1fr;
     align-items: flex-start;
+    padding: 1.5rem;
   }
   .day-pass-card .btn {
     width: 100%;
     text-align: center;
+  }
+  .day-pass-price {
+    font-size: 1.6rem;
   }
 }
 .course-details {
@@ -1238,6 +1275,11 @@ a.btn[style*="background:#25D366"]:hover {
 
 .section-cta {
   margin-top: 1.5rem;
+  text-align: center;
+}
+.btn-lg {
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
 }
 
 .card.card-wide {
@@ -2120,14 +2162,21 @@ section.hero {
 .menu-thumb {
   position: relative;
   padding: 0;
-  border: 0;
+  border: 2px solid var(--color-border-soft);
   background: transparent;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border-radius: 4px;
+  overflow: hidden;
 }
 .menu-thumb:hover {
   transform: translateY(-4px);
   box-shadow: 0 14px 32px rgba(0,0,0,0.2);
+  border-color: var(--color-secondary);
+}
+.menu-thumb:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
 }
 .menu-thumb img {
   display: block;
@@ -2138,14 +2187,19 @@ section.hero {
 .menu-thumb-cta {
   position: absolute;
   inset: auto 0 0 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 90%);
+  background: linear-gradient(180deg, transparent 0%, rgba(21,32,64,0.92) 100%);
   color: #fff;
   text-align: center;
-  padding: 0.45rem 0.4rem;
+  padding: 0.65rem 0.5rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  transition: background 0.25s ease;
+}
+.menu-thumb:hover .menu-thumb-cta {
+  background: linear-gradient(180deg, transparent 0%, rgba(198,168,125,0.95) 100%);
+  color: var(--color-primary);
 }
 .menu-lightbox {
   position: fixed;
