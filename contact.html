@@ -22,26 +22,31 @@
     <div class="row row-2">
       <div class="card">
         <strong>Quick Request</strong>
-        <form id="contact-form" class="contact-form" action="mailto:bernard.mika@gmail.com?subject=Contact%20Request" method="post" enctype="text/plain">
+        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact-success.html">
+          <input type="hidden" name="form-name" value="contact">
+          <div style="display: none;">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </div>
           <div class="form-grid">
             <div class="form-field">
-              <label for="contact-name">Name</label>
-              <input id="contact-name" type="text" name="name" placeholder="Name">
+              <label for="contact-name">Name *</label>
+              <input id="contact-name" type="text" name="name" placeholder="Name" required>
             </div>
             <div class="form-field">
-              <label for="contact-email">Email</label>
-              <input id="contact-email" type="email" name="email" placeholder="Email">
+              <label for="contact-email">Email *</label>
+              <input id="contact-email" type="email" name="email" placeholder="Email" required>
             </div>
             <div class="form-field phone-field">
-              <label for="contact-phone">Phone</label>
+              <label for="contact-phone">Phone *</label>
               <div class="phone-group">
-                <select name="country_code" aria-label="Country code"><option value="+63">+63 (PH)</option></select>
-                <input id="contact-phone" type="tel" name="phone" placeholder="Phone number">
+                <select name="country_code" aria-label="Country code" required><option value="+63">+63 (PH)</option></select>
+                <input id="contact-phone" type="tel" name="phone" placeholder="917 881 0313" required>
               </div>
             </div>
             <div class="form-field interest-field">
-              <label for="contact-interest">What would you like to book?</label>
-              <select id="contact-interest" name="interest">
+              <label for="contact-interest">What would you like to book? *</label>
+              <select id="contact-interest" name="interest" required>
+                <option value="">Select an option</option>
                 <option>Book a dive</option>
                 <option>Book a room</option>
                 <option>Book a table</option>
@@ -72,7 +77,6 @@
           <div class="contact-actions">
             <button class="btn btn-primary" type="submit">Send</button>
             <a class="btn" href="https://wa.me/639695291297" target="_blank">WhatsApp Us</a>
-            <a class="btn btn-outline" href="tel:+639178810313">Call</a>
           </div>
         </form>
       </div>
@@ -81,6 +85,7 @@
         <div class="muted" style="display:grid;gap:0.35rem;">
           <span>Masaplod Norte, Dauin, Negros Oriental</span>
           <span>+63 917 881 0313</span>
+          <span>Reception: +63 969 529 1297</span>
           <span>latortue.info@gmail.com</span>
         </div>
         <div class="map-embed">
