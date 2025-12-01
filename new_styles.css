@@ -206,6 +206,9 @@ img:hover,
 .section-banner img:hover {
   transform: none;
 }
+.gallery-modal img:hover {
+  transform: none;
+}
 /* Hide placeholder text */
 .ph label {
   display: none;
