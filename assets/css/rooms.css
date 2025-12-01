@@ -44,11 +44,6 @@
   overflow: hidden;
   background: var(--color-block);
   cursor: pointer;
-  transition: transform var(--transition-speed);
-}
-
-.room-image-card:hover {
-  transform: scale(1.02);
 }
 
 .room-image-card img {
