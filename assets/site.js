@@ -190,6 +190,59 @@
     });
   };
 
+  const setupDiningGallery = () => {
+    const gallery = document.querySelector('.dining-grid');
+    const lightbox = document.getElementById('dining-lightbox');
+    if (!gallery || !lightbox) return;
+
+    const items = Array.from(gallery.querySelectorAll('[data-dining-item]'));
+    const img = lightbox.querySelector('.menu-lightbox-img');
+    const closeBtns = lightbox.querySelectorAll('[data-dining-close]');
+    const prevBtn = lightbox.querySelector('[data-dining-prev]');
+    const nextBtn = lightbox.querySelector('[data-dining-next]');
+    let index = 0;
+
+    const open = (idx) => {
+      index = (idx + items.length) % items.length;
+      const full = items[index].dataset.full || items[index].querySelector('img')?.src;
+      const alt = items[index].querySelector('img')?.alt || 'Dining photo';
+      if (img) {
+        img.src = full;
+        img.alt = alt;
+      }
+      lightbox.removeAttribute('hidden');
+      document.body.classList.add('no-scroll');
+    };
+
+    const close = () => {
+      lightbox.setAttribute('hidden', '');
+      document.body.classList.remove('no-scroll');
+    };
+
+    const go = (delta) => open(index + delta);
+
+    items.forEach((item, i) => {
+      item.addEventListener('click', () => open(i));
+      item.addEventListener('keyup', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') open(i);
+      });
+    });
+
+    closeBtns.forEach(btn => btn.addEventListener('click', close));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('menu-lightbox-backdrop')) close();
+    });
+    prevBtn?.addEventListener('click', () => go(-1));
+    nextBtn?.addEventListener('click', () => go(1));
+
+    window.addEventListener('keydown', (e) => {
+      if (lightbox.hasAttribute('hidden')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') go(-1);
+      if (e.key === 'ArrowRight') go(1);
+    });
+  };
+
   const setupRevealAnimations = () => {
     if (!('IntersectionObserver' in window)) return;
 
@@ -271,6 +324,7 @@
       setupMobileDiveBar();
       setupReviewSliders();
       setupMenuLightbox();
+      setupDiningGallery();
     } catch (error) {
       console.error('Page initialization failed:', error);
     } finally {
