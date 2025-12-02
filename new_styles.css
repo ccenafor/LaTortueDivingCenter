@@ -2222,21 +2222,21 @@ section.hero {
 .menu-lightbox-content {
   position: relative;
   z-index: 1;
-  max-width: min(460px, 98vw);
+  max-width: min(960px, 98vw);
   width: auto;
-  background: rgba(6,10,18,0.9);
+  background: rgba(6,10,18,0.94);
   border: 1px solid rgba(255,255,255,0.05);
   box-shadow: 0 30px 80px rgba(0,0,0,0.55);
-  padding: 0.9rem;
+  padding: 1.25rem;
   display: grid;
   gap: 0.6rem;
-  max-height: 90vh;
+  max-height: 92vh;
 }
 .menu-lightbox-img {
   width: auto;
   height: auto;
-  max-width: min(424px, 95vw);
-  max-height: min(600px, 92vh);
+  max-width: min(900px, 96vw);
+  max-height: min(86vh, 1100px);
   display: block;
   background: #04070f;
   object-fit: contain;
