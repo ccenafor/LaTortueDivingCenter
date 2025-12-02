@@ -4,6 +4,10 @@ Official website for La Tortue Diving Center, a diving resort and accommodation 
 
 ## Development Guidelines
 
+### Collaboration Workflow
+- Do not create or push git commits unless explicitly requested by the project owner; stage changes only when asked.
+- Do not delete branches (local or remote) unless explicitly requested by the project owner.
+
 ### Coding Best Practices
 
 All code contributions must follow industry best practices:
