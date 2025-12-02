@@ -997,28 +997,34 @@ a.btn[style*="background:#25D366"]:hover {
 }
 .dining-showcase {
   margin-top: 2.5rem;
+  padding: 1.5rem 1rem;
+  background: #fff;
+  border: 1px solid rgba(21,32,64,0.04);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.08);
 }
 .dining-showcase-title {
   text-align: center;
   margin-bottom: 0.5rem;
   color: var(--color-primary);
+  letter-spacing: 0.01em;
 }
 .dining-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.25rem;
 }
 .dining-tile {
   position: relative;
   overflow: hidden;
-  background: #0b1022;
+  background: #f9f9f7;
   border-radius: 0;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
   aspect-ratio: 4 / 3;
   border: 0;
   padding: 0;
   cursor: pointer;
+  transition: transform 0.32s ease, box-shadow 0.32s ease, filter 0.32s ease;
 }
 .dining-tile img {
   width: 100%;
@@ -1033,20 +1039,22 @@ a.btn[style*="background:#25D366"]:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0.75rem 0.9rem;
-  color: #fff;
+  padding: 0.85rem 1rem;
+  color: #f9fbff;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   font-size: 0.78rem;
-  background: linear-gradient(180deg, rgba(7,11,22,0) 0%, rgba(7,11,22,0.85) 100%);
+  background: transparent;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.45);
 }
 .dining-tile:hover img {
   transform: scale(1.05);
-  filter: saturate(1.05);
+  filter: saturate(1.04);
 }
 .dining-tile:hover .dining-caption {
-  background: linear-gradient(180deg, rgba(7,11,22,0.05) 0%, rgba(7,11,22,0.95) 100%);
+  background: transparent;
 }
 @media (max-width: 640px) {
   .dining-grid {
