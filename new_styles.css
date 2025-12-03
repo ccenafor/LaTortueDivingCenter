@@ -1310,6 +1310,14 @@ a.btn[style*="background:#25D366"]:hover {
   object-fit: cover;
   display: block;
 }
+.feature-card .media img.logo-placeholder {
+  object-fit: contain;
+  height: auto;
+  max-height: 180px;
+  min-height: 0;
+  padding: 1.25rem;
+  background: #fff;
+}
 .feature-card .media .ph {
   min-height: 220px;
   border-radius: 0;
