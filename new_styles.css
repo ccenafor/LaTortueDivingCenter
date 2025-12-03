@@ -850,6 +850,19 @@ a.btn[style*="background:#25D366"]:hover {
   text-shadow: 0 6px 15px rgba(0,0,0,0.5);
   margin: 0;
 }
+.hero-badge {
+  height: 75px;
+  width: auto;
+  max-height: 75px;
+  min-height: 0;
+  display: block;
+  margin: 0.75rem auto 0;
+  object-fit: contain;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  transform: none !important;
+}
 .slide .caption p,
 .slide .caption .muted {
   color: #FFFFFF !important;
