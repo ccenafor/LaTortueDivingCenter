@@ -24,7 +24,7 @@
     <div class="row row-2">
       <div class="card">
         <strong>Quick Request</strong>
-        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact-success.html">
+        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="contact">
           <div style="display: none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -80,6 +80,7 @@
             <button class="btn btn-primary" type="submit">Send</button>
             <a class="btn" href="https://wa.me/639695291297" target="_blank">WhatsApp Us</a>
           </div>
+          <div id="contact-status" class="form-status" hidden aria-live="polite"></div>
         </form>
       </div>
       <div class="card">
@@ -367,6 +368,55 @@ document.addEventListener('DOMContentLoaded', function() {
   updateDateVisibility();
   if (interestSelect) {
     interestSelect.addEventListener('change', updateDateVisibility);
+  }
+
+  var contactForm = document.getElementById('contact-form');
+  var statusBox = document.getElementById('contact-status');
+
+  function setFormStatus(state, message) {
+    if (!statusBox) return;
+    statusBox.textContent = message;
+    statusBox.className = 'form-status ' + state;
+    statusBox.hidden = false;
+  }
+
+  function clearFormStatus() {
+    if (!statusBox) return;
+    statusBox.hidden = true;
+    statusBox.textContent = '';
+    statusBox.className = 'form-status';
+  }
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      clearFormStatus();
+      var formData = new FormData(contactForm);
+      if (!formData.get('form-name')) {
+        formData.append('form-name', contactForm.getAttribute('name') || 'contact');
+      }
+
+      setFormStatus('pending', 'Sending your request...');
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      })
+      .then(function(response) {
+        if (response.ok) {
+          setFormStatus('success', 'Thanks! Your request has been sent.');
+          contactForm.reset();
+          updateDateVisibility();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(function(error) {
+        console.error('Form submission error:', error);
+        setFormStatus('error', 'Something went wrong. Please try again or email us at latortue.info@gmail.com.');
+      });
+    });
   }
 
   // Make sure clicking the date field opens the native picker.
