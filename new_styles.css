@@ -223,7 +223,7 @@ img:hover,
   }
 }
 .slide .hero.ph {
-  background-image: url('assets/diving-bg.webp');
+  background-image: url('assets/Pictures/Backgrounds/diving-bg.webp');
   background-size: cover;
   background-position: center;
 }
@@ -647,9 +647,9 @@ header.nav.nav-transparent .dropdown-menu::before {
 .dropdown-locale-row .flag-icon + .flag-icon {
   margin-left: 0.9rem;
 }
-.flag-gb { background-image: url('assets/images/icons/GB.svg'); }
-.flag-fr { background-image: url('assets/images/icons/FR.svg'); }
-.flag-ph { background-image: url('assets/images/icons/PH.svg'); }
+.flag-gb { background-image: url('assets/Pictures/Icons/GB.svg'); }
+.flag-fr { background-image: url('assets/Pictures/Icons/FR.svg'); }
+.flag-ph { background-image: url('assets/Pictures/Icons/PH.svg'); }
 .dropdown-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -860,7 +860,7 @@ a.btn[style*="background:#25D366"]:hover {
 }
 /* All slider hero sections will now use diving-bg.webp */
 .slide .hero.ph {
-  background-image: url('assets/diving-bg.webp');
+  background-image: url('assets/Pictures/Backgrounds/diving-bg.webp');
   background-size: cover;
   background-position: center;
 }
@@ -2366,7 +2366,7 @@ section.hero {
   background-color: var(--color-primary);
 }
 .hero .banner .ph.hero {
-    background-image: url('assets/diving-bg.webp'); /* Use the local image */
+    background-image: url('assets/Pictures/Backgrounds/diving-bg.webp'); /* Use the local image */
     background-size: cover;
     background-position: center;
     /* Override conflicting .ph styles */
