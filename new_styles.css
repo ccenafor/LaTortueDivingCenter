@@ -56,6 +56,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+body.no-scroll {
+  overflow: hidden;
+}
 
 /* Subtle scroll-reveal animation */
 .reveal {
@@ -2461,6 +2464,7 @@ section.hero {
   z-index: 9999;
   display: grid;
   place-items: center;
+  padding: 1rem;
 }
 .menu-lightbox[hidden] {
   display: none;
@@ -2474,21 +2478,21 @@ section.hero {
 .menu-lightbox-content {
   position: relative;
   z-index: 1;
-  max-width: min(960px, 98vw);
-  width: auto;
+  max-width: min(900px, 92vw);
+  width: min(880px, 92vw);
   background: rgba(6,10,18,0.94);
   border: 1px solid rgba(255,255,255,0.05);
   box-shadow: 0 30px 80px rgba(0,0,0,0.55);
   padding: 1.25rem;
   display: grid;
   gap: 0.6rem;
-  max-height: 92vh;
+  max-height: 90vh;
 }
 .menu-lightbox-img {
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: min(900px, 96vw);
-  max-height: min(86vh, 1100px);
+  max-width: 100%;
+  max-height: 76vh;
   display: block;
   background: #04070f;
   object-fit: contain;
@@ -2515,6 +2519,24 @@ section.hero {
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+}
+.contact__recaptcha {
+  margin: 1rem 0;
+}
+@media (max-width: 640px) {
+  .menu-lightbox-content {
+    width: 94vw;
+    max-width: 94vw;
+    padding: 0.9rem;
+    max-height: 88vh;
+  }
+  .menu-lightbox-img {
+    max-height: 70vh;
+  }
+  .menu-lightbox-nav .btn {
+    flex: 1;
+    width: 100%;
+  }
 }
 
 
