@@ -24,7 +24,15 @@
     <div class="row row-2">
       <div class="card">
         <strong>Quick Request</strong>
-        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact-success.html">
+        <form
+          id="contact-form"
+          class="contact-form contact__form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          data-netlify-recaptcha="true"
+          action="/contact-success.html">
           <input type="hidden" name="form-name" value="contact">
           <p style="display:none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -76,6 +84,7 @@
             <label for="contact-message">Message</label>
             <textarea id="contact-message" name="message" placeholder="Message" rows="4"></textarea>
           </div>
+          <div class="contact__recaptcha" data-netlify-recaptcha="true"></div>
           <div class="contact-actions">
             <button class="btn btn-primary" type="submit">Send</button>
             <a class="btn" href="https://wa.me/639695291297" target="_blank">WhatsApp Us</a>
