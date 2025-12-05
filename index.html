@@ -46,12 +46,22 @@
 
 <script>
 (function(){
-  var idx=0;var s=document.querySelector('.slides');var dots=document.querySelectorAll('.dot');if(!s)return;
+  var s=document.querySelector('.slides');
+  var dots=document.querySelectorAll('.dot');
+  if(!s)return;
+  var idx=0;
+  var total=s.children.length||dots.length||4;
+  var timer;
   function render(){ s.style.transform='translateX(' + (-idx*100) + '%)'; dots.forEach((d,i)=>d.classList.toggle('active',i===idx)); }
-  document.querySelector('.prev')?.addEventListener('click',()=>{idx=(idx-1+4)%4;render();});
-  document.querySelector('.next')?.addEventListener('click',()=>{idx=(idx+1)%4;render();});
-  setInterval(()=>{idx=(idx+1)%4;render();}, 6000);
+  function schedule(delay){
+    clearTimeout(timer);
+    timer=setTimeout(function next(){ idx=(idx+1)%total; render(); schedule(6000); }, delay||6000);
+  }
+  function go(step,pause){ idx=(idx+step+total)%total; render(); schedule(pause||6000); }
+  document.querySelector('.prev')?.addEventListener('click',()=>go(-1,5000)); // pause autoplay for 5s after manual nav
+  document.querySelector('.next')?.addEventListener('click',()=>go(1,5000));
   render();
+  schedule(6000);
 })();
 </script>
 
