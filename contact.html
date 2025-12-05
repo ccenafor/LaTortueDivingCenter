@@ -24,11 +24,11 @@
     <div class="row row-2">
       <div class="card">
         <strong>Quick Request</strong>
-        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact-success.html">
           <input type="hidden" name="form-name" value="contact">
-          <div style="display: none;">
+          <p style="display:none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-          </div>
+          </p>
           <div class="form-grid">
             <div class="form-field">
               <label for="contact-name">Name *</label>
@@ -47,7 +47,7 @@
             </div>
             <div class="form-field interest-field">
               <label for="contact-interest">What would you like to book? *</label>
-              <select id="contact-interest" name="interest" required>
+              <select id="contact-interest" name="subject" required>
                 <option value="">Select an option</option>
                 <option>Book a dive</option>
                 <option>Book a room</option>
@@ -58,11 +58,11 @@
             <div class="form-row form-dates" data-field="date-range">
               <div class="form-field">
                 <label for="start-date">From</label>
-                <input id="start-date" type="date" name="start_date">
+                <input id="start-date" type="date" name="from">
               </div>
               <div class="form-field">
                 <label for="end-date">To</label>
-                <input id="end-date" type="date" name="end_date">
+                <input id="end-date" type="date" name="to">
               </div>
             </div>
             <div class="form-row" data-field="table-date">
@@ -104,7 +104,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var countrySelect = document.querySelector('select[name="country_code"]');
-  var interestSelect = document.querySelector('.contact-form select[name="interest"]');
+  var interestSelect = document.querySelector('.contact-form select[name="subject"]');
   var dateRange = document.querySelector('[data-field="date-range"]');
   var tableDate = document.querySelector('[data-field="table-date"]');
   var dateInputs = document.querySelectorAll('input[type="date"]');
