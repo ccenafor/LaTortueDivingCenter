@@ -10,8 +10,7 @@
 }
 /* --- La Tortue Diving - New Design System (Corrected) --- */
 
-/* 1. Google Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@500;600;700&display=swap');
+/* 1. Fonts loaded via head links */
 
 /* 2. CSS Variables (Color Palette) */
 :root {
@@ -55,6 +54,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+body.no-scroll {
+  overflow: hidden;
 }
 
 /* Subtle scroll-reveal animation */
@@ -223,7 +225,7 @@ img:hover,
   }
 }
 .slide .hero.ph {
-  background-image: url('assets/diving-bg.webp');
+  background-image: url('assets/Pictures/Backgrounds/diving-bg.webp');
   background-size: cover;
   background-position: center;
 }
@@ -632,6 +634,10 @@ header.nav.nav-transparent .dropdown-menu::before {
   color: var(--color-text-muted);
   line-height: 1.2;
   gap: 1rem;
+  padding: 0.35rem 1rem;
+  background: rgba(21, 32, 64, 0.06);
+  border: 1px solid rgba(21, 32, 64, 0.08);
+  border-radius: 10px;
 }
 .dropdown-locale-row .flag-icon {
   width: 30px;
@@ -647,9 +653,9 @@ header.nav.nav-transparent .dropdown-menu::before {
 .dropdown-locale-row .flag-icon + .flag-icon {
   margin-left: 0.9rem;
 }
-.flag-gb { background-image: url('assets/images/icons/GB.svg'); }
-.flag-fr { background-image: url('assets/images/icons/FR.svg'); }
-.flag-ph { background-image: url('assets/images/icons/PH.svg'); }
+.flag-gb { background-image: url('assets/Pictures/Icons/GB.svg'); }
+.flag-fr { background-image: url('assets/Pictures/Icons/FR.svg'); }
+.flag-ph { background-image: url('assets/Pictures/Icons/PH.svg'); }
 .dropdown-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -860,7 +866,7 @@ a.btn[style*="background:#25D366"]:hover {
 }
 /* All slider hero sections will now use diving-bg.webp */
 .slide .hero.ph {
-  background-image: url('assets/diving-bg.webp');
+  background-image: url('assets/Pictures/Backgrounds/diving-bg.webp');
   background-size: cover;
   background-position: center;
 }
@@ -2122,6 +2128,10 @@ footer .footer-legal {
   letter-spacing: 0.2em;
   color: rgba(21, 32, 64, 0.55);
   text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  background: rgba(21, 32, 64, 0.06);
+  border: 1px solid rgba(21, 32, 64, 0.08);
+  border-radius: 8px;
 }
 .mpanel-locale-label {
   display: inline-block;
@@ -2366,7 +2376,7 @@ section.hero {
   background-color: var(--color-primary);
 }
 .hero .banner .ph.hero {
-    background-image: url('assets/diving-bg.webp'); /* Use the local image */
+    background-image: url('assets/Pictures/Backgrounds/diving-bg.webp'); /* Use the local image */
     background-size: cover;
     background-position: center;
     /* Override conflicting .ph styles */
@@ -2461,6 +2471,7 @@ section.hero {
   z-index: 9999;
   display: grid;
   place-items: center;
+  padding: 1rem;
 }
 .menu-lightbox[hidden] {
   display: none;
@@ -2474,21 +2485,21 @@ section.hero {
 .menu-lightbox-content {
   position: relative;
   z-index: 1;
-  max-width: min(960px, 98vw);
-  width: auto;
+  max-width: min(900px, 92vw);
+  width: min(880px, 92vw);
   background: rgba(6,10,18,0.94);
   border: 1px solid rgba(255,255,255,0.05);
   box-shadow: 0 30px 80px rgba(0,0,0,0.55);
   padding: 1.25rem;
   display: grid;
   gap: 0.6rem;
-  max-height: 92vh;
+  max-height: 90vh;
 }
 .menu-lightbox-img {
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: min(900px, 96vw);
-  max-height: min(86vh, 1100px);
+  max-width: 100%;
+  max-height: 76vh;
   display: block;
   background: #04070f;
   object-fit: contain;
@@ -2515,6 +2526,24 @@ section.hero {
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+}
+.contact__recaptcha {
+  margin: 1rem 0;
+}
+@media (max-width: 640px) {
+  .menu-lightbox-content {
+    width: 94vw;
+    max-width: 94vw;
+    padding: 0.9rem;
+    max-height: 88vh;
+  }
+  .menu-lightbox-img {
+    max-height: 70vh;
+  }
+  .menu-lightbox-nav .btn {
+    flex: 1;
+    width: 100%;
+  }
 }
 
 

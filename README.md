@@ -16,6 +16,7 @@ All code contributions must follow industry best practices:
 - **Separation of Concerns**: Keep HTML, CSS, and JavaScript in separate files
 - **Semantic HTML**: Use proper HTML5 semantic elements for better structure
 - **DRY Principle**: Don't Repeat Yourself - avoid code duplication
+- **File Organization**: Keep assets and pages in the correct folders; avoid leaving ungrouped files at the repo root
 - **Consistent Naming**: Use clear, descriptive names for classes, IDs, and functions
 - **Code Comments**: Document complex logic and functionality
 - **Version Control**: Make atomic commits with clear, descriptive messages
