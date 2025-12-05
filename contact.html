@@ -24,7 +24,7 @@
     <div class="row row-2">
       <div class="card">
         <strong>Quick Request</strong>
-        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact-success.html">
+        <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="contact">
           <div style="display: none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -80,6 +80,7 @@
             <button class="btn btn-primary" type="submit">Send</button>
             <a class="btn" href="https://wa.me/639695291297" target="_blank">WhatsApp Us</a>
           </div>
+          <div id="contact-status" class="form-status" hidden aria-live="polite"></div>
         </form>
       </div>
       <div class="card">
@@ -90,9 +91,9 @@
           <span>Reception: +63 969 529 1297</span>
           <span>latortue.info@gmail.com</span>
         </div>
-        <div class="map-embed">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2013212.3124849207!2d123.08803444160657!3d9.76138368331392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33ab43da96504d6d%3A0x2da4a0efd1771bc2!2sLa%20Tortue%20Diving%20Center%20%26%20Beach%20Resort%20Dauin!5e0!3m2!1sen!2sph!4v1764089194610!5m2!1sen!2sph" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+        <a class="map-embed" href="https://www.google.com/maps/place/La+Tortue+Diving+Center+%26+Beach+Resort+Dauin/@9.6552638,123.1917381,9.75z/data=!4m9!3m8!1s0x33ab43da96504d6d:0x2da4a0efd1771bc2!5m2!4m1!1i2!8m2!3d9.1849181!4d123.2619068!16s%2Fg%2F11fnwvjbvw?authuser=0&entry=ttu&g_ep=EgoyMDI1MTIwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+          <img src="assets/Pictures/Others/Transportation-visayas-la-tortue-diving-center-dauin.jpg" alt="Directions to La Tortue Diving Center in Negros Oriental" style="display:block;width:100%;height:600px;object-fit:cover;border:0;">
+        </a>
         <div><a class="btn btn-outline" href="https://www.instagram.com/latortuediving" target="_blank">Instagram</a></div>
       </div>
     </div>
@@ -367,6 +368,55 @@ document.addEventListener('DOMContentLoaded', function() {
   updateDateVisibility();
   if (interestSelect) {
     interestSelect.addEventListener('change', updateDateVisibility);
+  }
+
+  var contactForm = document.getElementById('contact-form');
+  var statusBox = document.getElementById('contact-status');
+
+  function setFormStatus(state, message) {
+    if (!statusBox) return;
+    statusBox.textContent = message;
+    statusBox.className = 'form-status ' + state;
+    statusBox.hidden = false;
+  }
+
+  function clearFormStatus() {
+    if (!statusBox) return;
+    statusBox.hidden = true;
+    statusBox.textContent = '';
+    statusBox.className = 'form-status';
+  }
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      clearFormStatus();
+      var formData = new FormData(contactForm);
+      if (!formData.get('form-name')) {
+        formData.append('form-name', contactForm.getAttribute('name') || 'contact');
+      }
+
+      setFormStatus('pending', 'Sending your request...');
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      })
+      .then(function(response) {
+        if (response.ok) {
+          setFormStatus('success', 'Thanks! Your request has been sent.');
+          contactForm.reset();
+          updateDateVisibility();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(function(error) {
+        console.error('Form submission error:', error);
+        setFormStatus('error', 'Something went wrong. Please try again or email us at latortue.info@gmail.com.');
+      });
+    });
   }
 
   // Make sure clicking the date field opens the native picker.
