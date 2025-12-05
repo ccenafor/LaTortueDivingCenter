@@ -634,6 +634,10 @@ header.nav.nav-transparent .dropdown-menu::before {
   color: var(--color-text-muted);
   line-height: 1.2;
   gap: 1rem;
+  padding: 0.35rem 1rem;
+  background: rgba(21, 32, 64, 0.06);
+  border: 1px solid rgba(21, 32, 64, 0.08);
+  border-radius: 10px;
 }
 .dropdown-locale-row .flag-icon {
   width: 30px;
@@ -2124,6 +2128,10 @@ footer .footer-legal {
   letter-spacing: 0.2em;
   color: rgba(21, 32, 64, 0.55);
   text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  background: rgba(21, 32, 64, 0.06);
+  border: 1px solid rgba(21, 32, 64, 0.08);
+  border-radius: 8px;
 }
 .mpanel-locale-label {
   display: inline-block;
