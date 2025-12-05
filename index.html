@@ -7,8 +7,10 @@
 <link rel="icon" href="assets/Pictures/logo/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@500;600;700&display=swap" as="style" onload="this.rel='stylesheet'">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="new_styles.css">
+<link rel="preload" href="new_styles.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="new_styles.css"></noscript>
 <meta property="og:type" content="website">
 <meta property="og:title" content="La Tortue Diving Center | Dauin Dives, Apo Trips & Beach Resort">
 <meta property="og:description" content="Dauin dive resort offering SSI courses, Apo Island trips, beachfront cottages, and beach dining at La Tortue Diving Center in Negros Oriental.">
@@ -39,6 +41,19 @@
   "openingHours": "Mo-Su 08:30-19:30",
   "priceRange": "PHP $$"
 }</script>
+
+<link rel="preload" as="image" href="/assets/Pictures/rooms/hero-banner.jpg" imagesrcset="/assets/Pictures/rooms/hero-banner.jpg 800w, /assets/Pictures/rooms/hero-banner.jpg 1200w" imagesizes="100vw">
+<link rel="preload" as="image" href="/assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg" imagesrcset="/assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg 800w, /assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg 1400w" imagesizes="100vw">
+<link rel="preload" as="image" href="/assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg" imagesrcset="/assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 800w, /assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 1400w" imagesizes="100vw">
+<script type="application/ld+json">{
+  \"@context\": \"https://schema.org\",
+  \"@type\": \"FAQPage\",
+  \"mainEntity\": [
+    {"@type":"Question","name":"Do you run Apo Island day trips?","acceptedAnswer":{"@type":"Answer","text":"Yes, we schedule Apo Island boat days with SSI guides; message us to secure a slot."}},
+    {"@type":"Question","name":"Can I book rooms and dives together?","acceptedAnswer":{"@type":"Answer","text":"Yes, we bundle cottages with fun dives or courses; include your dates and group size in the form."}},
+    {"@type":"Question","name":"Do you accept walk-ins for dining?","acceptedAnswer":{"@type":"Answer","text":"Walk-ins are welcome; for larger tables or sunsets we recommend reserving via the contact form or WhatsApp."}}
+  ]
+}</script>
 </head><body>
 <div id="menu-placeholder"></div>
 
@@ -54,7 +69,7 @@
       </div></div>
     </div>
     <div class="slide">
-      <img loading="lazy" decoding="async" class="ph hero" src="assets/Pictures/rooms/hero-banner.jpg" alt="Bamboo rooms by the beach" style="width: 100%; height: 100%; object-fit: cover;">
+      <img loading="eager" decoding="async" class="ph hero" src="assets/Pictures/rooms/hero-banner.jpg" srcset="assets/Pictures/rooms/hero-banner.jpg 800w, assets/Pictures/rooms/hero-banner.jpg 1400w" sizes="100vw" alt="Bamboo rooms by the beach" style="width: 100%; height: 100%; object-fit: cover;">
       <div class="caption"><div class="box">
         <h2>Bamboo rooms by the beach</h2>
         <p class="muted">Seaview &bull; Garden &bull; Family &bull; Deluxe &bull; Dormitory</p>
@@ -62,7 +77,7 @@
       </div></div>
     </div>
     <div class="slide">
-      <img loading="lazy" decoding="async" class="ph hero" src="assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg" alt="Tropical beachfront at La Tortue Diving Center in Dauin" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      <img loading="eager" decoding="async" class="ph hero" src="assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg" srcset="assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg 800w, assets/Pictures/Backgrounds/Home-contact-banner-la-tortue-diving-center-dauin.jpg 1600w" sizes="100vw" alt="Tropical beachfront at La Tortue Diving Center in Dauin" style="width:100%;height:100%;object-fit:cover;object-position:center;">
       <div class="caption"><div class="box">
         <h2>Easy access &bull; Sibulan Airport</h2>
         <p class="muted">Ferries to Siquijor/Bohol/Cebu &bull; Bus to Moalboal &bull; 20-min from Dumaguete</p>
@@ -70,7 +85,7 @@
       </div></div>
     </div>
     <div class="slide">
-      <img loading="lazy" decoding="async" class="ph hero" src="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg" alt="Beach dinner setup at La Tortue Dining Center" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      <img loading="eager" decoding="async" class="ph hero" src="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg" srcset="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 800w, assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 1600w" sizes="100vw" alt="Beach dinner setup at La Tortue Dining Center" style="width:100%;height:100%;object-fit:cover;object-position:center;">
       <div class="caption"><div class="box">
         <h2>Beach dining & fresh shakes</h2>
         <p class="muted">Breakfast & local plates &bull; Pasta & burgers &bull; Cocktails by the sea</p>
