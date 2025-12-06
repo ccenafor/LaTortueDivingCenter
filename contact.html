@@ -422,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var contactForm = document.getElementById('contact-form');
   var statusBox = document.getElementById('contact-status');
+  var contactEndpoint = '/';
 
   function setFormStatus(state, message) {
     if (!statusBox) return;
@@ -442,13 +443,14 @@ document.addEventListener('DOMContentLoaded', function() {
       event.preventDefault();
       clearFormStatus();
       var formData = new FormData(contactForm);
+      var formName = contactForm.getAttribute('name') || 'contact';
       if (!formData.get('form-name')) {
-        formData.append('form-name', contactForm.getAttribute('name') || 'contact');
+        formData.append('form-name', formName);
       }
 
       setFormStatus('pending', 'Sending your request...');
 
-      fetch('/', {
+      fetch(contactEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData).toString()
