@@ -1722,6 +1722,12 @@ a.btn[style*="background:#25D366"]:hover {
   height: auto;
   display: block;
 }
+.team-subheading {
+  grid-column: 1 / -1;
+  margin: 0.35rem 0 0.25rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
 .team-photo-pair .ph.tile {
   aspect-ratio: 4 / 3;
 }
