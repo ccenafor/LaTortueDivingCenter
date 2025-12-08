@@ -20,15 +20,34 @@
 }
 
 .room-header h3 {
-  font-size: 32px;
-  margin-bottom: 12px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: 2px solid var(--color-primary);
+  background: linear-gradient(135deg, rgba(21,32,64,0.04), rgba(198,168,125,0.06));
+  box-shadow: 10px 10px 0 var(--color-border-soft);
+  font-size: 28px;
+  margin-bottom: 18px;
   color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .room-header .room-subtitle {
   font-size: 18px;
   color: var(--color-text-muted);
   margin-bottom: 20px;
+}
+
+.room-header h3::before,
+.room-header h3::after {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 44px;
+  background: var(--color-secondary);
 }
 
 .room-grid {
