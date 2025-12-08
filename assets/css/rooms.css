@@ -50,6 +50,23 @@
   background: var(--color-secondary);
 }
 
+@media (max-width: 640px) {
+  .room-header h3 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    box-shadow: none;
+    gap: 10px;
+  }
+  .room-header h3::before,
+  .room-header h3::after {
+    width: 32px;
+  }
+}
+
 .room-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
