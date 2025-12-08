@@ -46,7 +46,7 @@
 <div id="menu-placeholder"></div>
 <section class="hero">
   <div class="banner">
-    <div class="ph hero" style="background-image:url('assets/Pictures/Backgrounds/Contac-bannert-la-tortue-diving-center-dauin.jpg');"><label>Add image here</label></div>
+    <div class="ph hero" style="background-image:url('assets/Pictures/Backgrounds/Contact-banner-la-tortue-diving-center.jpg');"><label>Add image here</label></div>
   </div>
   <div class="inner container">
     <div>
@@ -422,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var contactForm = document.getElementById('contact-form');
   var statusBox = document.getElementById('contact-status');
+  var contactEndpoint = '/';
 
   function setFormStatus(state, message) {
     if (!statusBox) return;
@@ -442,13 +443,14 @@ document.addEventListener('DOMContentLoaded', function() {
       event.preventDefault();
       clearFormStatus();
       var formData = new FormData(contactForm);
+      var formName = contactForm.getAttribute('name') || 'contact';
       if (!formData.get('form-name')) {
-        formData.append('form-name', contactForm.getAttribute('name') || 'contact');
+        formData.append('form-name', formName);
       }
 
       setFormStatus('pending', 'Sending your request...');
 
-      fetch('/', {
+      fetch(contactEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData).toString()
