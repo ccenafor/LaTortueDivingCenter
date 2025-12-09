@@ -49,13 +49,25 @@
   };
 
   const setupCourseToggles = () => {
-    document.querySelectorAll('.course-toggle').forEach(button => {
-      const details = button.closest('.card')?.querySelector('.course-details');
-      if (!details) return;
+    const cards = Array.from(document.querySelectorAll('.card'));
+    cards.forEach(card => {
+      const button = card.querySelector('.course-toggle');
+      const details = card.querySelector('.course-details');
+      if (!button || !details) return;
+
+      button.setAttribute('aria-expanded', 'false');
+
       button.addEventListener('click', () => {
-        const isOpen = details.classList.toggle('open');
-        button.setAttribute('aria-expanded', String(isOpen));
-        button.textContent = isOpen ? 'Hide details' : 'More about this course';
+        const isOpening = !details.classList.contains('open');
+        details.classList.toggle('open', isOpening);
+        button.setAttribute('aria-expanded', String(isOpening));
+        button.textContent = isOpening ? 'Hide details' : 'More about this course';
+
+        if (!isOpening) {
+          const headerOffset = 90;
+          const top = card.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+        }
       });
     });
   };
