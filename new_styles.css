@@ -1392,6 +1392,53 @@ a.btn[style*="background:#25D366"]:hover {
   font-style: italic;
   color: var(--color-text-muted);
 }
+.course-meta-card {
+  margin-top: 0.85rem;
+  background: linear-gradient(120deg, #152040, #0f1a33);
+  border: 2px solid var(--color-secondary);
+  box-shadow: none;
+  color: var(--color-text-light);
+  padding: 1rem 1.15rem;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+.course-meta-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(198,168,125,0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+.course-meta-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.45rem 1rem;
+}
+.course-meta-grid .meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.course-meta-grid .meta-label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255,255,255,0.76);
+  font-weight: 700;
+}
+.course-meta-grid .meta-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text-light);
+  text-align: right;
+}
 .ssi-link {
   display: inline-block;
   font-size: 0.85rem;
