@@ -1609,7 +1609,7 @@ a.btn[style*="background:#25D366"]:hover {
   padding-left: 1.15rem;
 }
 .card-points li::before {
-  content: 'â€¢';
+  content: 'ÔÇó';
   position: absolute;
   left: 0;
   color: var(--color-secondary);
