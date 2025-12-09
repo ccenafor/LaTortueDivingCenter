@@ -1034,6 +1034,7 @@ a.btn[style*="background:#25D366"]:hover {
   display: grid;
   gap: 2rem;
   margin-top: 2rem !important;
+  align-items: start;
 }
 .row.row-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 @media (max-width: 640px) {
@@ -1358,14 +1359,22 @@ a.btn[style*="background:#25D366"]:hover {
   }
 }
 .course-details {
-  margin-top: 0.75rem;
-  display: none;
+  margin-top: 0;
+  display: flex;
   gap: 0.35rem;
   flex-direction: column;
   font-size: 0.95rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, transform 0.32s ease;
 }
 .course-details.open {
-  display: flex;
+  max-height: 1800px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 0.75rem;
 }
 .course-details p {
   margin: 0;
