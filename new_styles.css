@@ -1438,9 +1438,9 @@ a.btn[style*="background:#25D366"]:hover {
   z-index: 1;
 }
 .course-grid .card:hover {
-  box-shadow: 0 18px 48px rgba(0,0,0,0.16);
-  transform: translateY(-2px);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  border-color: transparent;
 }
 .course-meta-card {
   margin-top: 0.85rem;
@@ -2678,5 +2678,7 @@ section.hero {
     width: 100%;
   }
 }
+
+
 
 
