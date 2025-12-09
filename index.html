@@ -70,7 +70,7 @@
       </div></div>
     </div>
     <div class="slide">
-      <img loading="eager" decoding="async" class="ph hero" src="assets/Pictures/Home/Slide-bamboo-rooms-la-tortue-diving-center-dauin.jpg" alt="Bamboo rooms by the beach" style="width: 100%; height: 100%; object-fit: cover;">
+      <img loading="lazy" decoding="async" class="ph hero" src="assets/Pictures/Home/Slide-bamboo-rooms-la-tortue-diving-center-dauin.jpg" alt="Bamboo rooms by the beach" style="width: 100%; height: 100%; object-fit: cover;">
       <div class="caption"><div class="box">
         <h2>Bamboo rooms by the beach</h2>
         <p class="muted">Seaview &bull; Garden &bull; Family &bull; Deluxe &bull; Dormitory</p>
@@ -78,7 +78,7 @@
       </div></div>
     </div>
     <div class="slide">
-      <img loading="eager" decoding="async" class="ph hero" src="assets/Pictures/Home/Slide-easy-access-la-tortue-diving-center-dauin.jpg" alt="Tropical beachfront at La Tortue Diving Center in Dauin" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      <img loading="lazy" decoding="async" class="ph hero" src="assets/Pictures/Home/Slide-easy-access-la-tortue-diving-center-dauin.jpg" alt="Tropical beachfront at La Tortue Diving Center in Dauin" style="width:100%;height:100%;object-fit:cover;object-position:center;">
       <div class="caption"><div class="box">
         <h2>Easy Acess Airport or Seaport</h2>
         <p class="muted">Ferries to Siquijor/Bohol/Cebu &bull; Bus to Moalboal &bull; 30-min from Dumaguete</p>
@@ -86,7 +86,7 @@
       </div></div>
     </div>
     <div class="slide">
-      <img loading="eager" decoding="async" class="ph hero" src="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg" srcset="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 800w, assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 1600w" sizes="100vw" alt="Beach dinner setup at La Tortue Dining Center" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      <img loading="lazy" decoding="async" class="ph hero" src="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg" srcset="assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 800w, assets/Pictures/Backgrounds/Home-dinner-banner-la-tortue-diving-center-dauin.jpg 1600w" sizes="100vw" alt="Beach dinner setup at La Tortue Dining Center" style="width:100%;height:100%;object-fit:cover;object-position:center;">
       <div class="caption"><div class="box">
         <h2>Beach dining & fresh shakes</h2>
         <p class="muted">Breakfast & local plates &bull; Pasta & burgers &bull; Cocktails by the sea</p>
@@ -98,29 +98,7 @@
   <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
 </section>
 
-<script>
-(function(){
-  var s=document.querySelector('.slides');
-  var dots=document.querySelectorAll('.dot');
-  if(!s)return;
-  var idx=0;
-  var total=s.children.length||dots.length||4;
-  var timer;
-  function render(){ s.style.transform='translateX(' + (-idx*100) + '%)'; dots.forEach((d,i)=>d.classList.toggle('active',i===idx)); }
-  function schedule(delay){
-    clearTimeout(timer);
-    timer=setTimeout(function next(){ idx=(idx+1)%total; render(); schedule(6000); }, delay||6000);
-  }
-  function go(step,pause){ idx=(idx+step+total)%total; render(); schedule(pause||6000); }
-  dots.forEach((dot,i)=>{
-    dot.addEventListener('click',()=>{ idx=i; render(); schedule(5000); });
-  });
-  document.querySelector('.prev')?.addEventListener('click',()=>go(-1,5000)); // pause autoplay for 5s after manual nav
-  document.querySelector('.next')?.addEventListener('click',()=>go(1,5000));
-  render();
-  schedule(6000);
-})();
-</script>
+<script defer src="assets/js/home-slider.js"></script>
 
 <section class="ocean section-left"><div class="band"></div><div class="container">
   <h2>Dauin & Apo Island Dives & Courses</h2>
