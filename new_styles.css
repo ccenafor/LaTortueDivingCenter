@@ -1609,10 +1609,15 @@ a.btn[style*="background:#25D366"]:hover {
   padding-left: 1.15rem;
 }
 .card-points li::before {
-  content: 'ÔÇó';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--color-secondary);
+  top: 0.55em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  transform: translateY(-50%);
 }
 .card-wide-cta {
   display: flex;
@@ -2678,6 +2683,7 @@ section.hero {
     width: 100%;
   }
 }
+
 
 
 
