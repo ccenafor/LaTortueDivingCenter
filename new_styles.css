@@ -428,6 +428,9 @@ header.nav.nav-transparent .brand-logo-white {
   object-fit: contain;
   transform: none !important;
 }
+.nav-partner-logo.ffessm-logo {
+  max-height: 22px;
+}
 .nav-partner-note {
   font-size: 0.68rem;
   font-weight: 800;
@@ -2184,6 +2187,9 @@ footer .footer-legal {
 }
 .menu-partner .nav-partner-logo {
   max-height: 44px;
+}
+.menu-partner .nav-partner-logo.ffessm-logo {
+  max-height: 36px;
 }
 .menu-partner .nav-partner-note {
   color: var(--color-primary);
