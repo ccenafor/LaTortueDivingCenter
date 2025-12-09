@@ -2366,13 +2366,13 @@ form .row {
   align-items: stretch;
 }
 .contact-form .phone-group select {
-  flex: 0 0 160px;
-  width: 160px;
-  min-width: 140px;
+  flex: 0 0 200px;
+  width: 200px;
+  min-width: 180px;
   background-position: right 0.65rem center;
 }
 .contact-form .phone-group input {
-  flex: 1 1 auto;
+  flex: 1 1 140px;
   min-width: 0;
 }
 @media (max-width: 640px) {
