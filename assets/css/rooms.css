@@ -80,6 +80,10 @@
   overflow: hidden;
   background: var(--color-block);
   cursor: pointer;
+  border: 2px solid var(--color-border-soft);
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .room-image-card img {
@@ -87,6 +91,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.room-image-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.2);
+  border-color: var(--color-secondary);
+}
+
+.room-image-card:hover img {
+  transform: scale(1.01);
+  filter: saturate(1.02) contrast(1.01);
 }
 
 .room-image-overlay {
@@ -94,15 +110,16 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(21, 32, 64, 0.9), transparent);
+  background: linear-gradient(180deg, transparent 0%, rgba(21,32,64,0.9) 100%);
   color: white;
   padding: 20px;
-  transform: translateY(100%);
-  transition: transform var(--transition-speed);
+  transform: translateY(0);
+  transition: transform var(--transition-speed), background 0.25s ease, color 0.25s ease;
 }
 
 .room-image-card:hover .room-image-overlay {
-  transform: translateY(0);
+  background: linear-gradient(180deg, transparent 0%, rgba(198,168,125,0.9) 100%);
+  color: var(--color-primary);
 }
 
 .room-image-overlay .image-label {
