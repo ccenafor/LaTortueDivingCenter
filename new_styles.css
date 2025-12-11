@@ -1259,6 +1259,164 @@ a.btn[style*="background:#25D366"]:hover {
   font-weight: 800;
   color: var(--color-primary);
 }
+.price-list-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.price-list-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--color-text-muted);
+}
+.price-addons {
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(21,32,64,0.12);
+}
+.price-addons .price-line {
+  border-color: rgba(21,32,64,0.1);
+}
+.price-addons .price-value {
+  color: var(--color-secondary);
+}
+.package-box {
+  margin-top: 1.2rem;
+  padding: 1.6rem 1.6rem 1.4rem;
+  background: linear-gradient(145deg, #0f1a33 0%, #13254b 52%, #0b162d 100%);
+  border: 2px solid rgba(198,168,125,0.55);
+  border-radius: 0;
+  box-shadow: 0 18px 38px rgba(0,0,0,0.24);
+  color: var(--color-text-light);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.package-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px rgba(0,0,0,0.3);
+  border-color: rgba(198,168,125,0.75);
+}
+.package-box::before {
+  content: '';
+  position: absolute;
+  top: -32px;
+  right: -32px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(198,168,125,0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+.package-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 35%), radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 30%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.package-box .badge {
+  display: block;
+  margin: 0 auto 0.15rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-secondary);
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  border-radius: 0;
+  font-weight: 800;
+  box-shadow: none;
+}
+.package-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.95rem 1.45rem;
+  width: 100%;
+}
+.package-rate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-weight: 800;
+  color: var(--color-text-light);
+  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid var(--color-secondary);
+  border-radius: 0;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+  text-shadow: none;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.package-rate:last-child {
+  align-items: center;
+  text-align: center;
+}
+.package-rate:hover {
+  transform: translateY(-2px);
+  border-color: #d4bc97;
+  background: linear-gradient(160deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
+}
+.package-percent {
+  letter-spacing: 0.01em;
+  font-size: 1.3rem;
+}
+.package-note {
+  font-weight: 700;
+  color: rgba(255,255,255,0.82);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.price-footnote {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  background: rgba(21,32,64,0.04);
+  border-left: 4px solid var(--color-accent);
+}
+.price-footnote-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(166,194,238,0.35);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+.price-footnote-title {
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.01em;
+}
+.price-footnote .muted {
+  margin-bottom: 0.2rem;
+  color: var(--color-text-muted);
+}
+.price-footnote-date {
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
 .day-pass-card {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -2683,8 +2841,3 @@ section.hero {
     width: 100%;
   }
 }
-
-
-
-
-
