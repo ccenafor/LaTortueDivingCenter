@@ -1648,6 +1648,35 @@ a.btn[style*="background:#25D366"]:hover {
   color: var(--color-text-light);
   text-align: left;
 }
+@media (max-width: 768px) {
+  .course-meta-grid .meta-row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    justify-items: center;
+    width: 100%;
+    padding: 0.75rem 0.5rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+  }
+  .course-meta-grid .meta-row + .meta-row {
+    margin-top: 0.6rem;
+  }
+  .course-meta-grid .meta-label,
+  .course-meta-grid .meta-value {
+    text-align: center;
+  }
+  .course-meta-grid .meta-label {
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+  }
+  .course-meta-grid .meta-value {
+    font-size: 1.08rem;
+    line-height: 1.5;
+    font-weight: 900;
+    max-width: 92%;
+  }
+}
 .ssi-link {
   display: inline-block;
   font-size: 0.85rem;
