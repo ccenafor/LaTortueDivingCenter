@@ -853,30 +853,38 @@ header.nav.nav-transparent .nav-locale .lang-option {
   padding: 0 12px;
 }
 .menu-partner.container {
-  margin: 4px auto 6px;
-  padding: 0 0 4px 0;
+  margin: 6px auto 4px;
+  padding: 0;
+  text-align: center;
+}
+.menu-partner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 0;
 }
 .menu-partner .nav-partner-logo {
-  max-height: 22px;
+  max-height: 20px;
+  width: auto;
+}
+.menu-partner .nav-partner-logo.ffessm-logo {
+  max-height: 18px;
 }
 
-/* Mobile panel background consistency */
-.mpanel {
-  background: var(--color-bg);
+/* Mobile menu partner logos side-by-side and smaller */
+.mpanel .menu-partner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 0 0 0;
 }
-.mpanel .links.container,
-.mpanel .actions.container,
-.mpanel .menu-partner.container,
-.mpanel .mpanel-submenu {
-  background: transparent;
+.mpanel .menu-partner .nav-partner-logo {
+  max-height: 18px;
 }
-.mpanel .actions.container {
-  padding: 0 16px 8px;
-}
-.menu-partner.container {
-  padding: 6px 0 8px 0;
-  margin: 4px auto;
-  text-align: center;
+.mpanel .menu-partner .nav-partner-logo.ffessm-logo {
+  max-height: 16px;
 }
 
 /* 6. Buttons */
