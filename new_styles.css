@@ -407,16 +407,16 @@ header.nav.nav-transparent .brand-logo-white {
 .nav-partner {
   display: none;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.2rem 0.55rem;
-  margin-left: 0.5rem;
+  gap: 0.25rem;
+  padding: 0.15rem 0.45rem;
+  margin-left: 0.35rem;
   border-radius: 999px;
   border: 1px solid var(--color-border-soft);
   background: rgba(21, 32, 64, 0.04);
   white-space: nowrap;
 }
 .nav-partner-logo {
-  max-height: 26px;
+  max-height: 18px;
   width: auto;
   min-height: 0;
   background: none !important;
@@ -429,7 +429,7 @@ header.nav.nav-transparent .brand-logo-white {
   transform: none !important;
 }
 .nav-partner-logo.ffessm-logo {
-  max-height: 22px;
+  max-height: 16px;
 }
 .nav-partner-note {
   font-size: 0.68rem;
@@ -743,6 +743,148 @@ header.nav.nav-transparent .burger i,
 header.nav.nav-transparent .burger i::before,
 header.nav.nav-transparent .burger i::after {
   background: rgba(255,255,255,0.85);
+}
+
+/* Language switch */
+.nav-locale {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  padding-bottom: 4px; /* space for the dropdown so hover stays active */
+}
+.lang-current,
+.lang-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  font-family: "Manrope", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.lang-current {
+  pointer-events: none;
+}
+.lang-option {
+  display: none;
+  position: absolute;
+  top: 18px;
+  left: 0;
+  padding-top: 6px;
+  z-index: 5;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 4px 0;
+  box-shadow: none;
+}
+.nav-locale:hover .lang-option,
+.nav-locale:focus-within .lang-option {
+  display: inline-flex;
+}
+header.nav.nav-transparent .nav-locale .lang-current,
+header.nav.nav-transparent .nav-locale .lang-option {
+  color: #fff;
+}
+.lang-flag {
+  width: 18px;
+  height: 12px;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+  background: transparent !important;
+  min-height: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+@media (min-width: 860px) {
+  .nav-locale {
+    display: inline-flex;
+  }
+}
+.mpanel .nav-locale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 0 4px 0;
+  width: auto;
+  margin: 4px auto 2px;
+  border: none;
+  background: transparent;
+}
+.mpanel .lang-option {
+  display: inline-flex;
+  position: static;
+  padding-top: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+.mpanel .lang-current {
+  font-weight: 800;
+  border-bottom: none;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: rgba(21, 32, 64, 0.08);
+}
+.mpanel .lang-option {
+  font-weight: 700;
+  opacity: 0.9;
+}
+.mpanel .lang-current,
+.mpanel .lang-option {
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Tighten spacing in mobile menu actions and partner logos */
+.mpanel .actions.container {
+  gap: 8px;
+  margin: 4px 0 4px;
+  padding: 0 12px;
+}
+.menu-partner.container {
+  margin: 6px auto 4px;
+  padding: 0;
+  text-align: center;
+}
+.menu-partner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+.menu-partner .nav-partner-logo {
+  max-height: 20px;
+  width: auto;
+}
+.menu-partner .nav-partner-logo.ffessm-logo {
+  max-height: 18px;
+}
+
+/* Mobile menu partner logos side-by-side and smaller */
+.mpanel .menu-partner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 0 0 0;
+}
+.mpanel .menu-partner .nav-partner-logo {
+  max-height: 18px;
+}
+.mpanel .menu-partner .nav-partner-logo.ffessm-logo {
+  max-height: 16px;
 }
 
 /* 6. Buttons */
