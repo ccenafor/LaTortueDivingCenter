@@ -1,4 +1,11 @@
 (() => {
+  const isFrench = () => window.location.pathname.startsWith('/fr/');
+  const normalizePath = (path) => {
+    if (!path) return '/index.html';
+    if (path === '/') return '/index.html';
+    return path.replace(/^\/fr/, '') || '/index.html';
+  };
+
   const fetchHTML = async (url, placeholderId) => {
     try {
       const response = await fetch(url);
@@ -26,8 +33,11 @@
     }
 
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const normalizedCurrent = normalizePath(window.location.pathname);
     document.querySelectorAll('.nav-links a, .mpanel .links a').forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === currentPage);
+      const linkPath = new URL(link.href, window.location.origin).pathname.replace(/^\/fr/, '') || '/index.html';
+      const isIndex = normalizedCurrent === '/index.html' && (linkPath === '/' || linkPath === '/index.html');
+      link.classList.toggle('active', isIndex || linkPath === normalizedCurrent);
     });
 
     document.querySelectorAll('.mpanel-toggle').forEach(button => {
@@ -40,6 +50,25 @@
       });
     });
 
+    const langSwitches = document.querySelectorAll('[data-lang-switch]');
+    const currentPath = normalizePath(window.location.pathname);
+    const englishPath = currentPath;
+    const frenchPath = `/fr${currentPath}`;
+
+    langSwitches.forEach(langSwitch => {
+      if (isFrench()) {
+        langSwitch.href = englishPath;
+        langSwitch.setAttribute('hreflang', 'en');
+        langSwitch.setAttribute('aria-label', 'English version');
+        langSwitch.dataset.targetLang = 'en';
+      } else {
+        langSwitch.href = frenchPath;
+        langSwitch.setAttribute('hreflang', 'fr');
+        langSwitch.setAttribute('aria-label', 'Version française');
+        langSwitch.dataset.targetLang = 'fr';
+      }
+    });
+
     const header = document.querySelector('header.nav');
     if (header) {
       const updateNavState = () => header.classList.toggle('nav-transparent', window.scrollY <= 90);
@@ -49,6 +78,9 @@
   };
 
   const setupCourseToggles = () => {
+    const lang = (document.documentElement.lang || 'en').toLowerCase();
+    const moreLabel = lang === 'fr' ? 'Plus sur ce cours' : 'More about this course';
+    const hideLabel = lang === 'fr' ? 'Masquer les détails' : 'Hide details';
     const cards = Array.from(document.querySelectorAll('.card'));
     cards.forEach(card => {
       const button = card.querySelector('.course-toggle');
@@ -56,12 +88,15 @@
       if (!button || !details) return;
 
       button.setAttribute('aria-expanded', 'false');
+      if (!button.textContent.trim()) {
+        button.textContent = moreLabel;
+      }
 
       button.addEventListener('click', () => {
         const isOpening = !details.classList.contains('open');
         details.classList.toggle('open', isOpening);
         button.setAttribute('aria-expanded', String(isOpening));
-        button.textContent = isOpening ? 'Hide details' : 'More about this course';
+        button.textContent = isOpening ? hideLabel : moreLabel;
 
         if (!isOpening) {
           const headerOffset = 90;
@@ -77,6 +112,10 @@
     const isDivingPage = /^diving(?:[-.]|$)/.test(page);
     if (!isDivingPage) return;
 
+    const lang = (document.documentElement.lang || 'en').toLowerCase();
+    const bookLabel = lang === 'fr' ? 'Réserver une plongée' : 'Book a Dive';
+    const whatsappLabel = 'WhatsApp';
+
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
     const removeBar = () => {
@@ -90,8 +129,8 @@
       const bar = document.createElement('div');
       bar.className = 'mobile-dive-bar';
       bar.innerHTML = `
-        <a class="btn btn-primary" href="contact.html">Book a Dive</a>
-        <a class="btn btn-whatsapp" href="https://wa.me/639695291297" target="_blank" rel="noreferrer" aria-label="WhatsApp chat">WhatsApp</a>
+        <a class="btn btn-primary" href="contact.html">${bookLabel}</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/639695291297" target="_blank" rel="noreferrer" aria-label="WhatsApp chat">${whatsappLabel}</a>
       `;
       document.body.appendChild(bar);
       document.body.classList.add('has-mobile-dive-bar');
@@ -323,12 +362,15 @@
     if (initializing || hasInitialized) return;
     initializing = true;
 
+    const menuPath = isFrench() ? '/fr/menu.html' : '/menu.html';
+    const footerPath = isFrench() ? '/fr/footer.html' : '/footer.html';
+
     try {
       setupRevealAnimations();
 
       await Promise.all([
-        fetchHTML('menu.html', 'menu-placeholder'),
-        fetchHTML('footer.html', 'footer-placeholder')
+        fetchHTML(menuPath, 'menu-placeholder'),
+        fetchHTML(footerPath, 'footer-placeholder')
       ]);
 
       setupMenu();

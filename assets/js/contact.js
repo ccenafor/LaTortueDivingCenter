@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+  var lang = (document.documentElement.lang || 'en').toLowerCase();
+  var messages = {
+    en: {
+      pending: 'Sending your request...',
+      success: 'Thanks! Your request has been sent.',
+      error: 'Something went wrong. Please try again or email us at latortue.info@gmail.com.'
+    },
+    fr: {
+      pending: 'Envoi de votre demande...',
+      success: 'Merci ! Votre demande a bien été envoyée.',
+      error: 'Un problème est survenu. Réessayez ou écrivez à latortue.info@gmail.com.'
+    }
+  };
+  var msg = messages[lang] || messages.en;
+
   var countrySelect = document.querySelector('select[name="country_code"]');
   var interestSelect = document.querySelector('.contact-form select[name="subject"]');
   var dateRange = document.querySelector('[data-field="date-range"]');
@@ -255,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateDateVisibility() {
     if (!interestSelect) return;
     var value = (interestSelect.value || '').toLowerCase();
-    var showRange = value.includes('dive') || value.includes('room');
+    var showRange = value.includes('dive') || value.includes('room') || value.includes('plong') || value.includes('chambre');
     var showTable = value.includes('table');
     setVisibility(dateRange, showRange);
     setVisibility(tableDate, showTable);
@@ -294,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('form-name', formName);
       }
 
-      setFormStatus('pending', 'Sending your request...');
+      setFormStatus('pending', msg.pending);
 
       fetch(contactEndpoint, {
         method: 'POST',
@@ -303,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(function(response) {
         if (response.ok) {
-          setFormStatus('success', 'Thanks! Your request has been sent.');
+          setFormStatus('success', msg.success);
           contactForm.reset();
           updateDateVisibility();
         } else {
@@ -312,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .catch(function(error) {
         console.error('Form submission error:', error);
-        setFormStatus('error', 'Something went wrong. Please try again or email us at latortue.info@gmail.com.');
+        setFormStatus('error', msg.error);
       });
     });
   }
