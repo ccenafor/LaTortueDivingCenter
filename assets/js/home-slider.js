@@ -21,24 +21,24 @@
 
     function schedule(delay) {
       clearTimeout(timer);
-      timer = setTimeout(function next() { idx = (idx + 1) % total; render(); schedule(6000); }, delay || 6000);
+      timer = setTimeout(function next() { idx = (idx + 1) % total; render(); schedule(9000); }, delay || 9000);
     }
 
     function go(step, pause) {
       idx = (idx + step + total) % total;
       render();
-      schedule(pause || 6000);
+      schedule(pause || 9000);
     }
 
     dots.forEach(function(dot, i) {
-      dot.addEventListener('click', function() { idx = i; render(); schedule(5000); });
+      dot.addEventListener('click', function() { idx = i; render(); schedule(9000); });
     });
     var prev = document.querySelector('.prev');
     var next = document.querySelector('.next');
-    if (prev) prev.addEventListener('click', function() { go(-1, 5000); });
-    if (next) next.addEventListener('click', function() { go(1, 5000); });
+    if (prev) prev.addEventListener('click', function() { go(-1, 9000); });
+    if (next) next.addEventListener('click', function() { go(1, 9000); });
 
     render();
-    schedule(6000);
+    schedule(9000);
   }
 })();
