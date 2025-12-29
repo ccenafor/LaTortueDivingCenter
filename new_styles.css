@@ -2447,11 +2447,19 @@ a.btn[style*="background:#25D366"]:hover {
   background: linear-gradient(135deg, rgba(21,32,64,0.1), rgba(198,168,125,0.15));
   overflow: hidden;
 }
+.about-photo--story {
+  align-self: stretch;
+}
 .about-photo .ph {
   position: absolute;
   inset: 0;
   min-height: 0;
   height: 100%;
+}
+@media (min-width: 768px) {
+  .about-photo--story {
+    padding-top: 0;
+  }
 }
 .team-grid {
   display: grid;
