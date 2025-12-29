@@ -656,9 +656,9 @@ header.nav.nav-transparent .dropdown-menu::before {
 .dropdown-locale-row .flag-icon + .flag-icon {
   margin-left: 0.9rem;
 }
-.flag-gb { background-image: url('assets/Pictures/Icons/GB.svg'); }
-.flag-fr { background-image: url('assets/Pictures/Icons/FR.svg'); }
-.flag-ph { background-image: url('assets/Pictures/Icons/PH.svg'); }
+.flag-gb { background-image: url('assets/Pictures/Icons/Optimized/GB.webp'); }
+.flag-fr { background-image: url('assets/Pictures/Icons/Optimized/FR.webp'); }
+.flag-ph { background-image: url('assets/Pictures/Icons/Optimized/PH.webp'); }
 .dropdown-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -2621,10 +2621,10 @@ footer .social-icon-img {
   box-shadow: 0 0 0 1px rgba(255,255,255,0.3);
 }
 footer .social-icon-fb {
-  background-image: url('assets/Pictures/Icons/Facebook-la-tortue-diving-center.jpg');
+  background-image: url('assets/Pictures/Icons/Optimized/Facebook-la-tortue-diving-center.webp');
 }
 footer .social-icon-ig {
-  background-image: url('assets/Pictures/Icons/Instagram-la-tortue-diving-center-dauin.jpg');
+  background-image: url('assets/Pictures/Icons/Optimized/Instagram-la-tortue-diving-center-dauin.webp');
 }
 footer .social-text {
   color: inherit;
