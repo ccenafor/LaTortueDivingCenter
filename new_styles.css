@@ -1809,6 +1809,21 @@ a.btn[style*="background:#25D366"]:hover {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+
+@media (max-width: 540px) {
+  .package-box {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .package-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .package-rate {
+    width: 100%;
+  }
+}
 .price-footnote {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -2160,11 +2175,13 @@ a.btn[style*="background:#25D366"]:hover {
 }
 @media (max-width: 560px) {
   .feature-grid.nav-cards {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
   }
   .feature-grid.nav-cards .feature-card {
     width: 100%;
-    flex-basis: auto;
+    flex: 1 1 auto;
   }
 }
 .feature-card {
@@ -2239,6 +2256,12 @@ a.btn[style*="background:#25D366"]:hover {
   margin-top: 1.5rem;
   text-align: center;
 }
+.section-cta.split-cta {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
 .btn-lg {
   padding: 0.85rem 1.75rem;
   font-size: 1rem;
@@ -2293,6 +2316,19 @@ a.btn[style*="background:#25D366"]:hover {
 .card-wide-cta .btn {
   flex: 1 1 160px;
   min-width: 160px;
+}
+@media (max-width: 640px) {
+  .section-cta.split-cta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .section-cta.split-cta .btn {
+    width: 100%;
+    padding: 0.55rem 0.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
 }
 @media (max-width: 768px) {
   .card.card-wide {
