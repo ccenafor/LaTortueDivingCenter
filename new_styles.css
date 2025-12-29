@@ -2497,6 +2497,18 @@ a.btn[style*="background:#25D366"]:hover {
   min-height: 0;
   height: 100%;
 }
+@media (max-width: 768px) {
+  .about-photo--story {
+    padding-top: 0;
+  }
+  .about-photo--story .ph {
+    position: static;
+  }
+  .about-photo--story img {
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
 @media (min-width: 768px) {
   .about-photo--story {
     padding-top: 0;
