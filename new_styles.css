@@ -415,6 +415,11 @@ header.nav.nav-transparent .brand-logo-white {
   background: rgba(21, 32, 64, 0.04);
   white-space: nowrap;
 }
+.nav-partner-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
 .nav-partner-logo {
   max-height: 18px;
   width: auto;
