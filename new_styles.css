@@ -1692,6 +1692,10 @@ a.btn[style*="background:#25D366"]:hover {
   font-style: italic;
   color: var(--color-text-muted);
 }
+.course-subheading {
+  margin: 2.5rem 0 1.5rem;
+  text-align: center;
+}
 .course-grid {
   grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
   gap: 2.25rem;
