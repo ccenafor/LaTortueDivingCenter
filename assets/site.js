@@ -77,6 +77,279 @@
     }
   };
 
+  const gtmId = 'GTM-NKSBQWHS';
+  let gtmLoaded = false;
+  let openCookieSettingsModal = null;
+  let cookieSettingsBound = false;
+  const loadGtm = () => {
+    if (gtmLoaded || !gtmId) return;
+    gtmLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`;
+
+    const firstScript = document.getElementsByTagName('script')[0];
+    if (firstScript && firstScript.parentNode) {
+      firstScript.parentNode.insertBefore(script, firstScript);
+    } else {
+      document.head.appendChild(script);
+    }
+  };
+
+  const setupCookieBanner = () => {
+    const storageKey = 'lt_cookie_consent';
+    const prefsKey = 'lt_cookie_prefs';
+    const defaultPrefs = { analytics: true };
+    const getStoredConsent = () => {
+      try {
+        return window.localStorage.getItem(storageKey);
+      } catch (error) {
+        return null;
+      }
+    };
+    const setStoredConsent = (value) => {
+      try {
+        window.localStorage.setItem(storageKey, value);
+      } catch (error) {
+        // Ignore storage failures and keep showing the banner.
+      }
+    };
+    const getStoredPrefs = () => {
+      try {
+        const raw = window.localStorage.getItem(prefsKey);
+        if (!raw) return { ...defaultPrefs };
+        const parsed = JSON.parse(raw);
+        return { ...defaultPrefs, ...parsed };
+      } catch (error) {
+        return { ...defaultPrefs };
+      }
+    };
+    const setStoredPrefs = (prefs) => {
+      try {
+        window.localStorage.setItem(prefsKey, JSON.stringify(prefs));
+      } catch (error) {
+        // Ignore storage failures and keep showing the banner.
+      }
+    };
+    const applyConsent = (value, prefs) => {
+      setStoredConsent(value);
+      if (prefs) {
+        setStoredPrefs(prefs);
+      }
+      const allowAnalytics = value === 'accepted' || (value === 'custom' && prefs && prefs.analytics);
+      if (allowAnalytics) {
+        loadGtm();
+      }
+    };
+
+    const lang = (document.documentElement.lang || 'en').toLowerCase();
+    const isFrench = lang.startsWith('fr');
+    const copy = isFrench ? {
+      label: 'Banniere de consentement aux cookies',
+      text: 'Nous utilisons des cookies pour am&eacute;liorer votre navigation et mesurer la fr&eacute;quentation du site. Merci d&#39;accepter !',
+      accept: 'Accepter',
+      params: 'Param&egrave;tres',
+      modalTitle: 'G&eacute;rer mes pr&eacute;f&eacute;rences',
+      modalIntro: 'Vous pouvez ajuster vos pr&eacute;f&eacute;rences de cookies. Les cookies essentiels sont toujours activ&eacute;s.',
+      essentialTitle: 'Cookies essentiels (obligatoires)',
+      essentialDesc: 'Indispensables au bon fonctionnement du site (navigation, s&eacute;curit&eacute; et chargement des pages).',
+      essentialCookieName: 'Fonctionnement du site',
+      essentialCookieDesc: 'Navigation, s&eacute;curit&eacute; et pr&eacute;f&eacute;rences de base.',
+      essentialStatus: 'Toujours actifs',
+      analyticsTitle: 'Cookies statistiques (optionnels)',
+      analyticsDesc: 'Aident &agrave; mesurer la fr&eacute;quentation et &agrave; am&eacute;liorer le site via Google Tag Manager.',
+      analyticsCookieName: 'Google Tag Manager',
+      analyticsCookieDesc: 'Mesure de l&#39;audience et des interactions du site.',
+      toggleOn: 'Oui',
+      toggleOff: 'Non',
+      save: 'Sauvegarder',
+      close: 'Fermer',
+      closeLabel: 'Fermer la fenetre',
+      requiredTag: 'Requis'
+    } : {
+      label: 'Cookie consent banner',
+      text: 'We use cookies to improve your experience and measure site traffic. Thank you for accepting!',
+      accept: 'Accept',
+      params: 'Settings',
+      modalTitle: 'Manage Cookie Settings',
+      modalIntro: 'You can adjust your cookie preferences. Essential cookies are always on.',
+      essentialTitle: 'Essential cookies (required)',
+      essentialDesc: 'Required for site navigation, security, and page loading.',
+      essentialCookieName: 'Site functionality',
+      essentialCookieDesc: 'Navigation, security, and core preferences.',
+      essentialStatus: 'Always on',
+      analyticsTitle: 'Analytics cookies',
+      analyticsDesc: 'Help us measure traffic and improve the site via Google Tag Manager.',
+      analyticsCookieName: 'Google Tag Manager',
+      analyticsCookieDesc: 'Measures site usage and interactions.',
+      toggleOn: 'On',
+      toggleOff: 'Off',
+      save: 'Save settings',
+      close: 'Close',
+      closeLabel: 'Close settings',
+      requiredTag: 'Required'
+    };
+
+    let banner = null;
+    const dismissBanner = () => {
+      if (!banner || !banner.isConnected) return;
+      banner.remove();
+      document.body.classList.remove('has-cookie-banner');
+    };
+
+    const openModal = () => {
+      if (document.querySelector('.cookie-modal')) return;
+      const prefs = getStoredPrefs();
+      let analyticsEnabled = Boolean(prefs.analytics);
+      const modal = document.createElement('div');
+      modal.className = 'cookie-modal';
+      modal.innerHTML = `
+        <div class="cookie-modal__overlay" data-cookie-modal="close"></div>
+        <div class="cookie-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title">
+          <div class="cookie-modal__header">
+            <h3 class="cookie-modal__title" id="cookie-modal-title">${copy.modalTitle}</h3>
+            <button class="cookie-modal__close" type="button" aria-label="${copy.closeLabel}" data-cookie-modal="close">&times;</button>
+          </div>
+          <div class="cookie-modal__body">
+            <p class="cookie-modal__intro">${copy.modalIntro}</p>
+            <div class="cookie-modal__section cookie-modal__section--essential">
+              <div class="cookie-modal__section-header">
+                <h4 class="cookie-modal__section-title">${copy.essentialTitle}</h4>
+                <span class="cookie-modal__pill">${copy.requiredTag}</span>
+              </div>
+              <p class="cookie-modal__section-text">${copy.essentialDesc}</p>
+              <div class="cookie-modal__row">
+                <div class="cookie-modal__row-info">
+                  <strong>${copy.essentialCookieName}</strong>
+                  <span>${copy.essentialCookieDesc}</span>
+                </div>
+                <span class="cookie-modal__status">${copy.essentialStatus}</span>
+              </div>
+            </div>
+            <div class="cookie-modal__section">
+              <div class="cookie-modal__section-header">
+                <h4 class="cookie-modal__section-title">${copy.analyticsTitle}</h4>
+                <button class="cookie-toggle" type="button" data-cookie-toggle="analytics" aria-pressed="false">
+                  <span class="cookie-toggle__track"><span class="cookie-toggle__thumb"></span></span>
+                  <span class="cookie-toggle__label" data-cookie-toggle-label="analytics">${copy.toggleOff}</span>
+                </button>
+              </div>
+              <p class="cookie-modal__section-text">${copy.analyticsDesc}</p>
+              <div class="cookie-modal__row">
+                <div class="cookie-modal__row-info">
+                  <strong>${copy.analyticsCookieName}</strong>
+                  <span>${copy.analyticsCookieDesc}</span>
+                </div>
+              </div>
+            </div>
+            <div class="cookie-modal__actions">
+              <button class="btn btn-outline" type="button" data-cookie-action="close">${copy.close}</button>
+              <button class="btn btn-primary" type="button" data-cookie-action="save">${copy.save}</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+      document.body.classList.add('no-scroll');
+
+      const closeButtons = modal.querySelectorAll('[data-cookie-modal="close"], [data-cookie-action="close"]');
+      const toggleBtn = modal.querySelector('[data-cookie-toggle="analytics"]');
+      const toggleLabel = modal.querySelector('[data-cookie-toggle-label="analytics"]');
+      const saveBtn = modal.querySelector('[data-cookie-action="save"]');
+
+      const syncToggle = () => {
+        if (!toggleBtn) return;
+        toggleBtn.setAttribute('aria-pressed', analyticsEnabled ? 'true' : 'false');
+        toggleBtn.classList.toggle('is-on', analyticsEnabled);
+        if (toggleLabel) {
+          toggleLabel.textContent = analyticsEnabled ? copy.toggleOn : copy.toggleOff;
+        }
+      };
+
+      const closeModal = () => {
+        modal.remove();
+        document.body.classList.remove('no-scroll');
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+
+      const handleKeyDown = (event) => {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      };
+
+      closeButtons.forEach(button => button.addEventListener('click', closeModal));
+      toggleBtn?.addEventListener('click', () => {
+        analyticsEnabled = !analyticsEnabled;
+        syncToggle();
+      });
+      saveBtn?.addEventListener('click', () => {
+        const nextPrefs = { analytics: analyticsEnabled };
+        applyConsent('custom', nextPrefs);
+        closeModal();
+        dismissBanner();
+      });
+
+      syncToggle();
+      document.addEventListener('keydown', handleKeyDown);
+      modal.querySelector('.cookie-modal__close')?.focus();
+    };
+
+    openCookieSettingsModal = openModal;
+    if (!cookieSettingsBound) {
+      document.addEventListener('click', (event) => {
+        const trigger = event.target.closest('[data-cookie-settings]');
+        if (!trigger) return;
+        event.preventDefault();
+        openCookieSettingsModal?.();
+      });
+      cookieSettingsBound = true;
+    }
+
+    const existing = getStoredConsent();
+    if (existing === 'accepted') {
+      loadGtm();
+      return;
+    }
+    if (existing === 'custom') {
+      const prefs = getStoredPrefs();
+      if (prefs.analytics) {
+        loadGtm();
+      }
+      return;
+    }
+    if (existing === 'rejected') return;
+
+    banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-label', copy.label);
+    banner.innerHTML = `
+      <div class="cookie-banner__inner">
+        <p class="cookie-banner__text">${copy.text}</p>
+        <div class="cookie-banner__actions">
+          <button class="btn btn-outline cookie-banner__btn cookie-banner__btn--accept" type="button" data-cookie-action="accept">${copy.accept}</button>
+          <button class="btn btn-primary cookie-banner__btn cookie-banner__btn--params" type="button" data-cookie-action="params">${copy.params}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(banner);
+    document.body.classList.add('has-cookie-banner');
+
+    const acceptBtn = banner.querySelector('[data-cookie-action="accept"]');
+    const paramsBtn = banner.querySelector('[data-cookie-action="params"]');
+    acceptBtn?.addEventListener('click', () => {
+      applyConsent('accepted', { analytics: true });
+      dismissBanner();
+    });
+    paramsBtn?.addEventListener('click', openModal);
+  };
+
   const setupCourseToggles = () => {
     const lang = (document.documentElement.lang || 'en').toLowerCase();
     const moreLabel = lang === 'fr' ? 'Plus sur ce cours' : 'More about this course';
@@ -367,6 +640,7 @@
 
     try {
       setupRevealAnimations();
+      setupCookieBanner();
 
       await Promise.all([
         fetchHTML(menuPath, 'menu-placeholder'),
