@@ -236,25 +236,29 @@
 
 .gallery-close {
   position: absolute;
-  top: -40px;
-  right: 0;
-  background: white;
-  color: var(--color-primary);
-  border: none;
+  top: 12px;
+  right: 12px;
+  background: rgba(4, 6, 10, 0.72);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.28);
   width: 40px;
   height: 40px;
   font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  border-radius: 50%;
-  display: flex;
+  border-radius: 999px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  z-index: 2;
   transition: background var(--transition-speed);
 }
 
 .gallery-close:hover {
-  background: var(--color-secondary);
-  color: white;
+  background: rgba(4, 6, 10, 0.88);
+  color: #fff;
 }
 
 .gallery-nav {
@@ -390,7 +394,7 @@
   }
   
   .gallery-close {
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
   }
 }
