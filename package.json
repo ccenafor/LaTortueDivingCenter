@@ -1,0 +1,12 @@
+{
+  "name": "la-tortue-diving-center",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "cssnano": "^7.0.4",
+    "postcss": "^8.4.38",
+    "terser": "^5.31.1"
+  }
+}
