@@ -2,7 +2,8 @@
   "name": "la-tortue-diving-center",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "update-domain": "node scripts/update-domain.js"
   },
   "devDependencies": {
     "cssnano": "^7.0.4",
