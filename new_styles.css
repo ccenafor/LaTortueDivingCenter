@@ -53,6 +53,7 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-bottom: var(--cookie-banner-space, 0px);
   overflow-x: hidden;
 }
 body.no-scroll {
@@ -638,7 +639,7 @@ header.nav.nav-transparent .dropdown-menu::before {
   margin: 0.05rem 0 0.1rem;
   font-size: 1.55rem;
   font-weight: 1000;
-  letter-spacing: 0.52em;
+  letter-spacing: 0.12rem;
   color: var(--color-text-muted);
   line-height: 1.2;
   gap: 1rem;
@@ -973,12 +974,22 @@ header.nav.nav-transparent .nav-locale .lang-option {
 }
 @media (max-width: 768px) {
   body.has-mobile-dive-bar {
-    padding-bottom: 96px;
+    padding-bottom: var(--cookie-banner-combined-space, 96px);
   }
 }
 @media (min-width: 769px) {
   .mobile-dive-bar {
     display: none;
+  }
+}
+
+html.cookie-pending {
+  --cookie-banner-space: 120px;
+}
+@media (max-width: 768px) {
+  html.cookie-pending {
+    --cookie-banner-space-mobile: 180px;
+    --cookie-banner-combined-space: 260px;
   }
 }
 
@@ -1027,13 +1038,13 @@ header.nav.nav-transparent .nav-locale .lang-option {
   padding: 0.4rem 0.85rem;
   font-size: 0.82rem;
 }
-body.has-cookie-banner {
-  padding-bottom: 120px;
-}
 body.has-mobile-dive-bar.has-cookie-banner .cookie-banner {
   bottom: 96px;
 }
 @media (max-width: 768px) {
+  body {
+    padding-bottom: var(--cookie-banner-space-mobile, var(--cookie-banner-space, 0px));
+  }
   .cookie-banner__inner {
     flex-direction: column;
     align-items: stretch;
@@ -1044,12 +1055,6 @@ body.has-mobile-dive-bar.has-cookie-banner .cookie-banner {
   }
   .cookie-banner__btn--accept {
     flex: 0 0 auto;
-  }
-  body.has-cookie-banner {
-    padding-bottom: 180px;
-  }
-  body.has-mobile-dive-bar.has-cookie-banner {
-    padding-bottom: 260px;
   }
 }
 
