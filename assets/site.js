@@ -223,6 +223,7 @@
     const dismissBanner = () => {
       if (!banner || !banner.isConnected) return;
       banner.remove();
+      document.documentElement.classList.remove('cookie-pending');
       document.body.classList.remove('has-cookie-banner');
     };
 
