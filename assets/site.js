@@ -81,10 +81,34 @@
   let gtmLoaded = false;
   let openCookieSettingsModal = null;
   let cookieSettingsBound = false;
+  let consentInitialized = false;
+
+  const ensureDataLayer = () => {
+    if (!window.dataLayer) {
+      window.dataLayer = [];
+    }
+    if (!window.gtag) {
+      window.gtag = function() { window.dataLayer.push(arguments); };
+    }
+  };
+
+  const initConsentDefaults = () => {
+    if (consentInitialized) return;
+    consentInitialized = true;
+    ensureDataLayer();
+    window.gtag('consent', 'default', { 'analytics_storage': 'denied' });
+  };
+
+  const updateConsent = (allowAnalytics) => {
+    ensureDataLayer();
+    const state = allowAnalytics ? 'granted' : 'denied';
+    window.gtag('consent', 'update', { 'analytics_storage': state });
+  };
+
   const loadGtm = () => {
     if (gtmLoaded || !gtmId) return;
     gtmLoaded = true;
-    window.dataLayer = window.dataLayer || [];
+    ensureDataLayer();
     window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 
     const script = document.createElement('script');
@@ -140,11 +164,13 @@
         setStoredPrefs(prefs);
       }
       const allowAnalytics = value === 'accepted' || (value === 'custom' && prefs && prefs.analytics);
+      updateConsent(allowAnalytics);
       if (allowAnalytics) {
         loadGtm();
       }
     };
 
+    initConsentDefaults();
     const lang = (document.documentElement.lang || 'en').toLowerCase();
     const isFrench = lang.startsWith('fr');
     const copy = isFrench ? {
@@ -312,17 +338,22 @@
 
     const existing = getStoredConsent();
     if (existing === 'accepted') {
+      updateConsent(true);
       loadGtm();
       return;
     }
     if (existing === 'custom') {
       const prefs = getStoredPrefs();
+      updateConsent(Boolean(prefs.analytics));
       if (prefs.analytics) {
         loadGtm();
       }
       return;
     }
-    if (existing === 'rejected') return;
+    if (existing === 'rejected') {
+      updateConsent(false);
+      return;
+    }
 
     banner = document.createElement('div');
     banner.className = 'cookie-banner';
