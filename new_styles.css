@@ -3411,6 +3411,11 @@ section.hero {
 }
 .contact__recaptcha {
   margin: 1rem 0;
+  max-width: 100%;
+}
+.contact__recaptcha > div,
+.contact__recaptcha iframe {
+  max-width: 100%;
 }
 @media (max-width: 640px) {
   .menu-lightbox-content {
