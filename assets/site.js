@@ -671,9 +671,10 @@
     if (!('IntersectionObserver' in window)) return;
 
     const revealNow = (el) => {
-      el.classList.remove('is-visible');
-      void el.offsetWidth; // force reflow so transition triggers
-      setTimeout(() => el.classList.add('is-visible'), 24);
+      if (!el || el.classList.contains('is-visible')) return;
+      requestAnimationFrame(() => {
+        el.classList.add('is-visible');
+      });
     };
 
     const observer = new IntersectionObserver((entries) => {
