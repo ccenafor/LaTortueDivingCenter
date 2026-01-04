@@ -2356,6 +2356,7 @@ a.btn[style*="background:#25D366"]:hover {
   position: relative;
   padding: 4.5rem 1rem;
   color: #fff;
+  background-image: url('/assets/Pictures/Backgrounds/optimized/Home-review-la-tortue-diving-center-1200.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2471,12 +2472,19 @@ a.btn[style*="background:#25D366"]:hover {
 @media (max-width: 768px) {
   .reviews {
     padding: 3.4rem 1rem;
+    background-image: url('/assets/Pictures/Backgrounds/optimized/Home-review-la-tortue-diving-center-768.webp');
   }
   .review-slide {
     padding: 1.25rem;
   }
   .review-quote {
     font-size: 1rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .reviews {
+    background-image: url('/assets/Pictures/Backgrounds/optimized/Home-review-la-tortue-diving-center.webp');
   }
 }
 
@@ -3465,4 +3473,19 @@ section.hero {
 }
 .fun-lightbox-subtitle.is-empty {
   display: none;
+}
+
+
+@media (max-width: 480px) {
+  body.page-contact section.sand {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  body.page-contact section.sand .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  body.page-contact section.sand .card {
+    padding: 0.75rem;
+  }
 }
