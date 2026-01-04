@@ -678,6 +678,12 @@
       });
     };
 
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const earlyReveal = page === 'diving.html';
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const observerOptions = earlyReveal
+      ? { threshold: 0.05, rootMargin: isMobile ? '20% 0px 20% 0px' : '20% 0px 10% 0px' }
+      : { threshold: 0.1, rootMargin: '20% 0px -5% 0px' };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -685,7 +691,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '20% 0px -5%' });
+    }, observerOptions);
 
     const tagTargets = (elements, { stagger = false } = {}) => {
       elements.forEach((el, idx) => {
