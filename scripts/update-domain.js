@@ -3,7 +3,7 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..');
 
-const DEFAULT_DOMAIN = 'https://www.latortuediving.com';
+const DEFAULT_DOMAIN = 'https://latortuediving.com';
 const KNOWN_DOMAINS = [
   'https://latortuedivingcenter.com',
   'http://latortuedivingcenter.com',
@@ -11,8 +11,8 @@ const KNOWN_DOMAINS = [
   'http://www.latortuedivingcenter.com',
   'https://latortuediving.com',
   'http://latortuediving.com',
-  'https://www.latortuediving.com',
-  'http://www.latortuediving.com'
+  'https://latortuediving.com',
+  'http://latortuediving.com'
 ];
 
 const SKIP_DIRS = new Set(['.git', 'node_modules', 'dist', 'scripts']);

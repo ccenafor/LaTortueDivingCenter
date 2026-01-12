@@ -52,8 +52,9 @@
 
     const langSwitches = document.querySelectorAll('[data-lang-switch]');
     const currentPath = normalizePath(window.location.pathname);
-    const englishPath = currentPath;
-    const frenchPath = `/fr${currentPath}`;
+    const isIndexPage = currentPath === '/index.html';
+    const englishPath = isIndexPage ? '/' : currentPath;
+    const frenchPath = isIndexPage ? '/fr/' : `/fr${currentPath}`;
 
     langSwitches.forEach(langSwitch => {
       if (isFrench()) {
@@ -706,20 +707,28 @@
     };
 
     const runInitialPass = () => {
+      const revealTargets = new Set();
+
       observer.takeRecords().forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          revealTargets.add(entry.target);
         }
       });
-      document.querySelectorAll('.reveal').forEach(el => {
-        if (el.classList.contains('is-visible')) return;
+
+      const candidates = Array.from(document.querySelectorAll('.reveal'))
+        .filter(el => !el.classList.contains('is-visible'));
+      const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      candidates.forEach(el => {
         const rect = el.getBoundingClientRect();
-        const viewHeight = window.innerHeight || document.documentElement.clientHeight;
         if (rect.top < viewHeight && rect.bottom > 0) {
-          revealNow(el);
-          observer.unobserve(el);
+          revealTargets.add(el);
         }
+      });
+
+      revealTargets.forEach(el => {
+        revealNow(el);
+        observer.unobserve(el);
       });
     };
 
