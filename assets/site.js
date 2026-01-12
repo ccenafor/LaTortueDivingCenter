@@ -52,8 +52,9 @@
 
     const langSwitches = document.querySelectorAll('[data-lang-switch]');
     const currentPath = normalizePath(window.location.pathname);
-    const englishPath = currentPath;
-    const frenchPath = `/fr${currentPath}`;
+    const isIndexPage = currentPath === '/index.html';
+    const englishPath = isIndexPage ? '/' : currentPath;
+    const frenchPath = isIndexPage ? '/fr/' : `/fr${currentPath}`;
 
     langSwitches.forEach(langSwitch => {
       if (isFrench()) {
