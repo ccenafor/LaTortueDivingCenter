@@ -225,12 +225,6 @@ img:hover,
     transform: none;
   }
 }
-.slide .hero.ph {
-  background-image: url('assets/Pictures/Backgrounds/diving-bg.webp');
-  background-size: cover;
-  background-position: center;
-}
-
 section {
   padding: 4rem 1rem;
   border-bottom: 1px solid #e5e5e5;
@@ -1302,14 +1296,6 @@ a.btn[style*="background:#25D366"]:hover {
   background-size: cover;
   background-position: center;
 }
-/* All slider hero sections will now use diving-bg.webp */
-.slide .hero.ph {
-  background-image: url('assets/Pictures/Backgrounds/diving-bg.webp');
-  background-size: cover;
-  background-position: center;
-}
-
-
 .slide .caption {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
