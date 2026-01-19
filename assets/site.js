@@ -1,9 +1,19 @@
 (() => {
-  const isFrench = () => window.location.pathname.startsWith('/fr/');
+  const isFrench = () => /^\/fr(\/|$)/.test(window.location.pathname);
   const normalizePath = (path) => {
-    if (!path) return '/index.html';
-    if (path === '/') return '/index.html';
-    return path.replace(/^\/fr/, '') || '/index.html';
+    if (!path) return '/';
+    let clean = path;
+    if (/^\/fr(\/|$)/.test(clean)) {
+      clean = clean.replace(/^\/fr/, '') || '/';
+    }
+    if (clean === '/index.html') return '/';
+    if (clean.endsWith('/index.html')) {
+      clean = clean.replace(/\/index\.html$/, '/');
+    }
+    if (clean.length > 1 && clean.endsWith('/')) {
+      clean = clean.slice(0, -1);
+    }
+    return clean || '/';
   };
 
   const fetchHTML = async (url, placeholderId) => {
@@ -32,12 +42,10 @@
       });
     }
 
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const normalizedCurrent = normalizePath(window.location.pathname);
     document.querySelectorAll('.nav-links a, .mpanel .links a').forEach(link => {
-      const linkPath = new URL(link.href, window.location.origin).pathname.replace(/^\/fr/, '') || '/index.html';
-      const isIndex = normalizedCurrent === '/index.html' && (linkPath === '/' || linkPath === '/index.html');
-      link.classList.toggle('active', isIndex || linkPath === normalizedCurrent);
+      const linkPath = normalizePath(new URL(link.href, window.location.origin).pathname);
+      link.classList.toggle('active', linkPath === normalizedCurrent);
     });
 
     document.querySelectorAll('.mpanel-toggle').forEach(button => {
@@ -52,7 +60,7 @@
 
     const langSwitches = document.querySelectorAll('[data-lang-switch]');
     const currentPath = normalizePath(window.location.pathname);
-    const isIndexPage = currentPath === '/index.html';
+    const isIndexPage = currentPath === '/';
     const englishPath = isIndexPage ? '/' : currentPath;
     const frenchPath = isIndexPage ? '/fr/' : `/fr${currentPath}`;
 
