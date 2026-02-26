@@ -58,7 +58,8 @@
       <h1>Contact</h1>
       <p class="muted">Écrivez-nous pour les réservations, cours et préparation de séjour.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#contact-form">Envoyer une demande</a>
+        <a class="btn btn-primary" href="#room-booking-widget">Réserver une chambre sur Booking.com</a>
+        <a class="btn btn-outline" href="#contact-form">Envoyer une demande</a>
       </div>
     </div>
   </div>
@@ -69,7 +70,32 @@
     <h2>Contact & Réservation</h2>
     <div class="row row-2">
       <div class="card">
-        <strong>Demande rapide</strong>
+        <div class="bookingcom-card contact-room-booking" id="room-booking-widget" data-bookingcom-widget data-booking-base="https://www.booking.com/hotel/ph/la-tortue-diving-center.en-gb.html" data-min-nights="2" data-min-nights-dormitory="1" data-note-room="Toutes les chambres ont un minimum de 2 nuits, sauf les lits en dortoir." data-note-dormitory="" data-note-error-prefix="Le sejour minimum est de" data-note-error-suffix="nuit(s) pour ce type de sejour." data-note-missing-checkin="Veuillez selectionner une date d'arrivee." data-note-missing-checkout="Veuillez selectionner une date de depart.">
+          <strong class="bookingcom-title">Réservez votre chambre sur Booking.com</strong>
+          <p class="muted bookingcom-intro">Choisissez le type de séjour, puis vos dates, et poursuivez sur Booking.com pour les tarifs et disponibilités en direct.</p>
+          <div class="bookingcom-grid bookingcom-grid-contact">
+            <div class="bookingcom-field bookingcom-field-staytype">
+              <label for="booking-stay-type-contact-fr">Type de séjour</label>
+              <select id="booking-stay-type-contact-fr" data-stay-type>
+                <option value="room">Chambre (minimum 2 nuits)</option>
+                <option value="dormitory">Lit en dortoir</option>
+              </select>
+            </div>
+            <div class="bookingcom-field">
+              <label for="booking-checkin-contact-fr">Arrivée</label>
+              <input id="booking-checkin-contact-fr" type="date" data-booking-checkin required>
+            </div>
+            <div class="bookingcom-field">
+              <label for="booking-checkout-contact-fr">Départ</label>
+              <input id="booking-checkout-contact-fr" type="date" data-booking-checkout required>
+            </div>
+            <a class="btn btn-primary bookingcom-action" data-booking-submit target="_blank" rel="noopener nofollow">Voir les disponibilités sur Booking.com</a>
+          </div>
+          <p class="bookingcom-note" data-booking-hint>Toutes les chambres ont un minimum de 2 nuits, sauf les lits en dortoir.</p>
+        </div>
+        <div class="contact-section-divider"><span>Autres demandes</span></div>
+        <div class="contact-form-shell">
+        <strong class="contact-form-shell-title">Demande rapide (plongée, table, autres)</strong>
         <form
           id="contact-form"
           class="contact-form contact__form"
@@ -104,10 +130,10 @@
               <select id="contact-interest" name="subject" required>
                 <option value="">Choisir une option</option>
                 <option>Réserver une plongée</option>
-                <option>Réserver une chambre</option>
                 <option>Réserver une table</option>
                 <option>Autres demandes</option>
               </select>
+              <p class="room-policy-note">Pour les chambres, utilisez le module Booking.com ci-dessus.</p>
             </div>
             <div class="form-row form-dates" data-field="date-range">
               <div class="form-field">
@@ -137,6 +163,7 @@
           </div>
           <div id="contact-status" class="form-status" hidden aria-live="polite"></div>
         </form>
+        </div>
       </div>
       <div class="card">
         <strong>Nous trouver</strong>
@@ -158,6 +185,7 @@
 </section>
 
 <div id="footer-placeholder"></div>
+<script defer src="/assets/js/booking-com.js?v=20260226"></script>
 <script defer src="/assets/js/contact.js?v=20260202"></script>
 <script src="/assets/site.js?v=20260202"></script>
 </body></html>

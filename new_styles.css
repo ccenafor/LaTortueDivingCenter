@@ -3326,6 +3326,123 @@ form .row {
 .is-hidden {
   display: none !important;
 }
+.bookingcom-card {
+  margin: 1rem 0 1.5rem;
+  padding: 1.15rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--card-radius);
+  background: linear-gradient(145deg, #ffffff 0%, #f6f1e8 100%);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+}
+.bookingcom-title {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-primary);
+}
+.bookingcom-intro {
+  margin: 0 0 0.85rem;
+}
+.bookingcom-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  align-items: end;
+}
+.bookingcom-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.bookingcom-field label {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+.bookingcom-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 100%;
+  text-align: center;
+  line-height: 1.3;
+}
+.bookingcom-note {
+  margin: 0.8rem 0 0;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+.bookingcom-note.bookingcom-note-error {
+  color: #842029;
+  font-weight: 700;
+}
+.contact-room-booking {
+  border: 2px solid rgba(198, 168, 125, 0.9);
+  background: linear-gradient(140deg, #fffaf2 0%, #f5eee2 100%);
+}
+.contact-section-divider {
+  margin: 1.1rem 0 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.contact-section-divider::before,
+.contact-section-divider::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--color-border-soft);
+}
+.contact-section-divider span {
+  white-space: nowrap;
+}
+.contact-form-shell {
+  padding: 1rem 1rem 0.75rem;
+  border: 1px solid var(--color-border-soft);
+  background: #fff;
+  border-radius: var(--card-radius);
+}
+.contact-form-shell-title {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-primary);
+}
+.room-policy-note {
+  margin-top: 0.25rem;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+@media (min-width: 700px) {
+  .bookingcom-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .bookingcom-action {
+    grid-column: 1 / -1;
+  }
+  .bookingcom-grid.bookingcom-grid-contact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bookingcom-grid.bookingcom-grid-contact .bookingcom-field-staytype {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1024px) {
+  .bookingcom-grid.bookingcom-grid-compact {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .bookingcom-grid.bookingcom-grid-compact .bookingcom-action {
+    grid-column: auto;
+  }
+}
 
 /* 11. Page-specific adjustments */
 

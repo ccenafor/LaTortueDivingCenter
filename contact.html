@@ -58,7 +58,8 @@
       <h1>Contact</h1>
       <p class="muted">Reach us for bookings, courses, and trip planning.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#contact-form">Send a Request</a>
+        <a class="btn btn-primary" href="#room-booking-widget">Book Room on Booking.com</a>
+        <a class="btn btn-outline" href="#contact-form">Send a Request</a>
       </div>
     </div>
   </div>
@@ -69,7 +70,32 @@
     <h2>Contact & Booking</h2>
     <div class="row row-2">
       <div class="card">
-        <strong>Quick Request</strong>
+        <div class="bookingcom-card contact-room-booking" id="room-booking-widget" data-bookingcom-widget data-booking-base="https://www.booking.com/hotel/ph/la-tortue-diving-center.en-gb.html" data-min-nights="2" data-min-nights-dormitory="1" data-note-room="All rooms have a 2-night minimum stay, except dormitory beds." data-note-dormitory="">
+          <strong class="bookingcom-title">Book your room on Booking.com</strong>
+          <p class="muted bookingcom-intro">Choose stay type, select your dates, and continue to Booking.com for live rates and availability.</p>
+          <div class="bookingcom-grid bookingcom-grid-contact">
+            <div class="bookingcom-field bookingcom-field-staytype">
+              <label for="booking-stay-type-contact">Stay type</label>
+              <select id="booking-stay-type-contact" data-stay-type>
+                <option value="room">Room (2-night minimum)</option>
+                <option value="dormitory">Dormitory bed</option>
+              </select>
+            </div>
+            <div class="bookingcom-field">
+              <label for="booking-checkin-contact">Check-in</label>
+              <input id="booking-checkin-contact" type="date" data-booking-checkin required>
+            </div>
+            <div class="bookingcom-field">
+              <label for="booking-checkout-contact">Check-out</label>
+              <input id="booking-checkout-contact" type="date" data-booking-checkout required>
+            </div>
+            <a class="btn btn-primary bookingcom-action" data-booking-submit target="_blank" rel="noopener nofollow">Check availability on Booking.com</a>
+          </div>
+          <p class="bookingcom-note" data-booking-hint>All rooms have a 2-night minimum stay, except dormitory beds.</p>
+        </div>
+        <div class="contact-section-divider"><span>Other requests</span></div>
+        <div class="contact-form-shell">
+        <strong class="contact-form-shell-title">Quick Request (dives, table, other)</strong>
         <form
           id="contact-form"
           class="contact-form contact__form"
@@ -104,10 +130,10 @@
               <select id="contact-interest" name="subject" required>
                 <option value="">Select an option</option>
                 <option>Book a dive</option>
-                <option>Book a room</option>
                 <option>Book a table</option>
                 <option>Other inquiries</option>
               </select>
+              <p class="room-policy-note">For room bookings, use the Booking.com widget above.</p>
             </div>
             <div class="form-row form-dates" data-field="date-range">
               <div class="form-field">
@@ -137,6 +163,7 @@
           </div>
           <div id="contact-status" class="form-status" hidden aria-live="polite"></div>
         </form>
+        </div>
       </div>
       <div class="card">
         <strong>Find Us</strong>
@@ -158,6 +185,7 @@
 </section>
 
 <div id="footer-placeholder"></div>
+<script defer src="assets/js/booking-com.js?v=20260226"></script>
 <script defer src="assets/js/contact.js?v=20260202"></script>
 <script src="assets/site.js?v=20260202"></script>
 </body></html>
