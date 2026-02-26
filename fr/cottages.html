@@ -64,7 +64,7 @@
         <h1>Chambres &mdash; Bambou face à la mer</h1>
         <p class="muted">Dormez au bord de l'eau dans des chambres en bambou avec vue.</p>
         <div class="cta">
-          <a class="btn btn-primary" href="/fr/contact.html">Réserver un séjour</a>
+          <a class="btn btn-primary" href="#booking-com-widget">Réserver sur Booking.com</a>
         </div>
       </div>
     </div>
@@ -72,6 +72,29 @@
 
   <section class="sand">
     <div class="container">
+      <div class="bookingcom-card" id="booking-com-widget" data-bookingcom-widget data-booking-base="https://www.booking.com/hotel/ph/la-tortue-diving-center.en-gb.html" data-min-nights="2" data-min-nights-dormitory="1" data-note-room="Toutes les chambres ont un minimum de 2 nuits, sauf les lits en dortoir." data-note-dormitory="" data-note-error-prefix="Le sejour minimum est de" data-note-error-suffix="nuit(s) pour ce type de sejour." data-note-missing-checkin="Veuillez selectionner une date d'arrivee." data-note-missing-checkout="Veuillez selectionner une date de depart.">
+        <strong class="bookingcom-title">Réservez votre séjour sur Booking.com</strong>
+        <p class="muted bookingcom-intro">Choisissez le type de séjour, puis vos dates, et continuez sur Booking.com pour voir les disponibilités et tarifs en direct.</p>
+        <div class="bookingcom-grid bookingcom-grid-compact">
+          <div class="bookingcom-field">
+            <label for="booking-stay-type-cottages-fr">Type de séjour</label>
+            <select id="booking-stay-type-cottages-fr" data-stay-type>
+              <option value="room">Chambre (minimum 2 nuits)</option>
+              <option value="dormitory">Lit en dortoir</option>
+            </select>
+          </div>
+          <div class="bookingcom-field">
+            <label for="booking-checkin-cottages-fr">Arrivée</label>
+            <input id="booking-checkin-cottages-fr" type="date" data-booking-checkin required>
+          </div>
+          <div class="bookingcom-field">
+            <label for="booking-checkout-cottages-fr">Départ</label>
+            <input id="booking-checkout-cottages-fr" type="date" data-booking-checkout required>
+          </div>
+          <a class="btn btn-primary bookingcom-action" data-booking-submit target="_blank" rel="noopener nofollow">Voir les disponibilités sur Booking.com</a>
+        </div>
+        <p class="bookingcom-note" data-booking-hint>Toutes les chambres ont un minimum de 2 nuits, sauf les lits en dortoir.</p>
+      </div>
       
       <!-- Seaview Cottage -->
       <div class="room-section">
@@ -214,6 +237,7 @@
         <div class="room-description">
           <h4>Détails</h4>
           <p>Dortoir partagé pour 4 personnes maximum, lits superposés confortables dans une ambiance conviviale.</p>
+          <p class="room-policy-note">Les lits en dortoir peuvent se reserver a partir d'une nuit.</p>
           <div class="room-features">
             <span class="feature-tag">Lits superposés</span>
             <span class="feature-tag">Espace partagé</span>
@@ -322,7 +346,7 @@
       </div>
 
       <div class="booking-cta">
-        <a class="btn btn-primary btn-large" href="/fr/contact.html">Réserver votre séjour</a>
+        <a class="btn btn-primary btn-large" href="#booking-com-widget">Réserver sur Booking.com</a>
       </div>
 
     </div>
@@ -371,6 +395,7 @@
   <div id="footer-placeholder"></div>
 
   <script src="/assets/site.js?v=20260202"></script>
+  <script defer src="/assets/js/booking-com.js?v=20260226"></script>
   <script src="/assets/js/rooms-gallery.js?v=20260202"></script>
 </body>
 </html>

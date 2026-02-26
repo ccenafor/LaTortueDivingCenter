@@ -64,7 +64,7 @@
         <h1>Rooms &mdash; Bamboo by the Sea</h1>
         <p class="muted">Sleep by the sea in cozy bamboo rooms with stunning views.</p>
         <div class="cta">
-          <a class="btn btn-primary" href="contact.html">Book a Stay</a>
+          <a class="btn btn-primary" href="#booking-com-widget">Book on Booking.com</a>
         </div>
       </div>
     </div>
@@ -72,6 +72,29 @@
 
   <section class="sand">
     <div class="container">
+      <div class="bookingcom-card" id="booking-com-widget" data-bookingcom-widget data-booking-base="https://www.booking.com/hotel/ph/la-tortue-diving-center.en-gb.html" data-min-nights="2" data-min-nights-dormitory="1" data-note-room="All rooms have a 2-night minimum stay, except dormitory beds." data-note-dormitory="">
+        <strong class="bookingcom-title">Book your stay on Booking.com</strong>
+        <p class="muted bookingcom-intro">Choose stay type, select your dates, and continue to Booking.com for live rates and availability.</p>
+        <div class="bookingcom-grid bookingcom-grid-compact">
+          <div class="bookingcom-field">
+            <label for="booking-stay-type-cottages">Stay type</label>
+            <select id="booking-stay-type-cottages" data-stay-type>
+              <option value="room">Room (2-night minimum)</option>
+              <option value="dormitory">Dormitory bed</option>
+            </select>
+          </div>
+          <div class="bookingcom-field">
+            <label for="booking-checkin-cottages">Check-in</label>
+            <input id="booking-checkin-cottages" type="date" data-booking-checkin required>
+          </div>
+          <div class="bookingcom-field">
+            <label for="booking-checkout-cottages">Check-out</label>
+            <input id="booking-checkout-cottages" type="date" data-booking-checkout required>
+          </div>
+          <a class="btn btn-primary bookingcom-action" data-booking-submit target="_blank" rel="noopener nofollow">Check availability on Booking.com</a>
+        </div>
+        <p class="bookingcom-note" data-booking-hint>All rooms have a 2-night minimum stay, except dormitory beds.</p>
+      </div>
       
       <!-- Seaview Cottage -->
       <div class="room-section">
@@ -214,6 +237,7 @@
         <div class="room-description">
           <h4>Room Details</h4>
           <p>Shared dormitory cottage for up to 4 persons with comfortable bunk beds in a friendly atmosphere.</p>
+          <p class="room-policy-note">Dormitory beds can be booked from 1 night.</p>
           <div class="room-features">
             <span class="feature-tag">Bunk Beds</span>
             <span class="feature-tag">Shared Space</span>
@@ -322,7 +346,7 @@
       </div>
 
       <div class="booking-cta">
-        <a class="btn btn-primary btn-large" href="contact.html">Book Your Stay</a>
+        <a class="btn btn-primary btn-large" href="#booking-com-widget">Book on Booking.com</a>
       </div>
 
     </div>
@@ -371,6 +395,7 @@
   <div id="footer-placeholder"></div>
 
   <script src="assets/site.js?v=20260202"></script>
+  <script defer src="assets/js/booking-com.js?v=20260226"></script>
   <script src="assets/js/rooms-gallery.js?v=20260202"></script>
 </body>
 </html>
