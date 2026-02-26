@@ -1,0 +1,3 @@
+[build]
+  command = "node scripts/netlify-noindex-guard.js"
+  publish = "."

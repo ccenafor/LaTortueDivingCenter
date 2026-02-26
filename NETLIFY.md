@@ -109,11 +109,22 @@ To add reCAPTCHA protection (optional):
 1. Push code to GitHub repository
 2. Connect repository to Netlify
 3. Set build settings:
-   - Build command: (leave empty - static site)
-   - Publish directory: `/` (root directory)
+   - Build command: configured in `netlify.toml` (`node scripts/netlify-noindex-guard.js`)
+   - Publish directory: `.` (root directory)
 4. Deploy site
 5. Configure form notifications in Netlify dashboard
 6. Test the contact form on the live site
+
+## Preprod Indexing Protection
+
+To prevent `https://preprod.latortuediving.com/` from being indexed:
+
+- `scripts/netlify-noindex-guard.js` runs during Netlify builds.
+- In non-production contexts (including preprod), it applies:
+  - `robots.txt` => `Disallow: /`
+  - `_headers` => `X-Robots-Tag: noindex, nofollow, noarchive`
+  - `<meta name="robots" content="noindex, nofollow, noarchive">` on HTML pages when missing
+- In production context, it does nothing, so the main site stays indexable.
 
 ## Custom Domain Setup
 
