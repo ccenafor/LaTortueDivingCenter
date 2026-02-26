@@ -7,7 +7,13 @@ Official website for La Tortue Diving Center, a diving resort and accommodation 
 ### Collaboration Workflow
 - Do not create or push git commits unless explicitly requested by the project owner; stage changes only when asked.
 - Do not delete branches (local or remote) unless explicitly requested by the project owner.
-- When asked to commit, choose a relevant commit message without asking for one.\n
+- When asked to commit, choose a relevant commit message without asking for one.
+
+Recommended flow now:
+- Create feature branches from `preprod`.
+- Merge tested features into `preprod` and deploy preprod env.
+- Promote `preprod` changes into `main` when validated.
+
 ### Coding Best Practices
 
 All code contributions must follow industry best practices:
