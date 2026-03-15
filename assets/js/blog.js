@@ -1,6 +1,28 @@
 (function () {
+  var PREVIEW_POST_FLOOR = 18;
+
   function byNewest(a, b) {
     return new Date(b.dateISO) - new Date(a.dateISO);
+  }
+
+  function clonePost(post) {
+    return Object.assign({}, post);
+  }
+
+  function buildListingPosts(posts) {
+    var listingPosts = posts.slice();
+
+    // Keep the scroll experience meaningful while the listing still uses dummy content.
+    if (posts.length && posts.length <= 6) {
+      while (listingPosts.length < PREVIEW_POST_FLOOR) {
+        posts.forEach(function (post) {
+          if (listingPosts.length >= PREVIEW_POST_FLOOR) return;
+          listingPosts.push(clonePost(post));
+        });
+      }
+    }
+
+    return listingPosts;
   }
 
   function renderTags(tags) {
@@ -27,6 +49,122 @@
     ].join('');
   }
 
+  function getInitialBatchSize() {
+    if (window.matchMedia('(max-width: 640px)').matches) return 4;
+    if (window.matchMedia('(max-width: 1100px)').matches) return 5;
+    return 4;
+  }
+
+  function getScrollBatchSize() {
+    if (window.matchMedia('(max-width: 640px)').matches) return 2;
+    if (window.matchMedia('(max-width: 1100px)').matches) return 3;
+    return 3;
+  }
+
+  function initInfiniteBlogListing(grid, posts, labels) {
+    var listingPosts = buildListingPosts(posts);
+    var cursor = 0;
+    var observer = null;
+    var sentinel = null;
+    var isAppending = false;
+    var scrollFallbackBound = false;
+
+    function ensureSentinel() {
+      if (sentinel && sentinel.isConnected) return sentinel;
+
+      sentinel = document.createElement('div');
+      sentinel.className = 'blog-feed-sentinel';
+      sentinel.setAttribute('aria-hidden', 'true');
+      sentinel.innerHTML = '<span class="blog-feed-sentinel__line"></span>';
+      grid.parentNode.appendChild(sentinel);
+      return sentinel;
+    }
+
+    function setSentinelState(state) {
+      var currentSentinel = ensureSentinel();
+      currentSentinel.classList.toggle('is-loading', state === 'loading');
+      currentSentinel.classList.toggle('is-finished', state === 'finished');
+    }
+
+    function revealCards(cards) {
+      if (!cards.length) return;
+
+      cards.forEach(function (card, index) {
+        card.style.setProperty('--blog-card-delay', Math.min(index * 120, 420) + 'ms');
+      });
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          cards.forEach(function (card) {
+            card.classList.add('is-visible');
+          });
+          isAppending = false;
+          if (cursor >= listingPosts.length) {
+            setSentinelState('finished');
+          } else {
+            setSentinelState('idle');
+            maybeLoadMoreFromScroll();
+          }
+        });
+      });
+    }
+
+    function appendBatch(size) {
+      if (isAppending || cursor >= listingPosts.length) return;
+
+      var nextPosts = listingPosts.slice(cursor, cursor + size);
+      if (!nextPosts.length) return;
+
+      isAppending = true;
+      setSentinelState('loading');
+
+      var startIndex = cursor;
+      grid.insertAdjacentHTML('beforeend', nextPosts.map(function (post, index) {
+        return renderListingCard(post, startIndex + index, labels);
+      }).join(''));
+
+      cursor += nextPosts.length;
+
+      var cards = Array.prototype.slice.call(grid.querySelectorAll('.blog-card')).slice(-nextPosts.length);
+      cards.forEach(function (card) {
+        card.classList.add('blog-card--enter');
+      });
+
+      revealCards(cards);
+    }
+
+    function maybeLoadMoreFromScroll() {
+      if (isAppending || cursor >= listingPosts.length) return;
+
+      var currentSentinel = ensureSentinel();
+      var rect = currentSentinel.getBoundingClientRect();
+      if (rect.top - window.innerHeight < 180) {
+        appendBatch(getScrollBatchSize());
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      ensureSentinel();
+      observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          appendBatch(getScrollBatchSize());
+        });
+      }, {
+        rootMargin: '0px 0px 140px 0px',
+        threshold: 0
+      });
+
+      observer.observe(ensureSentinel());
+    } else if (!scrollFallbackBound) {
+      scrollFallbackBound = true;
+      window.addEventListener('scroll', maybeLoadMoreFromScroll, { passive: true });
+      window.addEventListener('resize', maybeLoadMoreFromScroll, { passive: true });
+    }
+
+    appendBatch(getInitialBatchSize());
+  }
+
   function renderTeaserCard(post, labels) {
     return [
       '<article class="blog-teaser-card">',
@@ -50,12 +188,8 @@
     var posts = window.ltSiteContent.posts.slice().sort(byNewest);
     var grid = document.getElementById('blog-grid');
     if (grid) {
-      var listingPosts = posts.concat(posts.map(function (post) {
-        return Object.assign({}, post);
-      }));
-      grid.innerHTML = listingPosts.map(function (post, index) {
-        return renderListingCard(post, index, labels);
-      }).join('');
+      grid.innerHTML = '';
+      initInfiniteBlogListing(grid, posts, labels);
     }
 
     var count = document.getElementById('blog-count');
