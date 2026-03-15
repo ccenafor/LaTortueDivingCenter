@@ -15,6 +15,7 @@
     }
     return clean || '/';
   };
+  const whatsappUrl = 'https://wa.me/639695291297';
 
   const fetchHTML = async (url, placeholderId) => {
     try {
@@ -86,6 +87,25 @@
       updateNavState();
       window.addEventListener('scroll', updateNavState, { passive: true });
     }
+  };
+
+  const setupFloatingWhatsApp = () => {
+    if (document.querySelector('.floating-whatsapp')) return;
+
+    const lang = (document.documentElement.lang || 'en').toLowerCase();
+    const ariaLabel = lang === 'fr' ? 'Contacter La Tortue Diving sur WhatsApp' : 'Contact La Tortue Diving on WhatsApp';
+    const button = document.createElement('a');
+    button.className = 'floating-whatsapp';
+    button.href = whatsappUrl;
+    button.target = '_blank';
+    button.rel = 'noopener noreferrer';
+    button.setAttribute('aria-label', ariaLabel);
+    button.innerHTML = `
+      <span class="floating-whatsapp__icon" aria-hidden="true">
+        <img src="/assets/Pictures/Icons/Optimized/whatsapp-icon.webp" alt="" width="128" height="128" loading="eager" decoding="async">
+      </span>
+    `;
+    document.body.appendChild(button);
   };
 
   const gtmId = 'GTM-NKSBQWHS';
@@ -430,7 +450,6 @@
 
     const lang = (document.documentElement.lang || 'en').toLowerCase();
     const bookLabel = lang === 'fr' ? 'Réserver une plongée' : 'Book a Dive';
-    const whatsappLabel = 'WhatsApp';
 
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
@@ -444,10 +463,7 @@
       if (document.querySelector('.mobile-dive-bar')) return;
       const bar = document.createElement('div');
       bar.className = 'mobile-dive-bar';
-      bar.innerHTML = `
-        <a class="btn btn-primary" href="contact.html">${bookLabel}</a>
-        <a class="btn btn-whatsapp" href="https://wa.me/639695291297" target="_blank" rel="noreferrer" aria-label="WhatsApp chat">${whatsappLabel}</a>
-      `;
+      bar.innerHTML = `<a class="btn btn-primary" href="contact.html">${bookLabel}</a>`;
       document.body.appendChild(bar);
       document.body.classList.add('has-mobile-dive-bar');
     };
@@ -786,6 +802,7 @@
       ]);
 
       setupMenu();
+      setupFloatingWhatsApp();
       setupCourseToggles();
       setupMobileDiveBar();
       setupReviewSliders();
@@ -817,3 +834,5 @@
     }
   });
 })();
+
+
