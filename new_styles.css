@@ -707,6 +707,11 @@ header.nav.nav-transparent .dropdown-menu::before {
 .nav-cta .btn {
     padding: 0.4rem 0.8rem;
     font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    min-height: 40px;
     border-radius: 0;
     transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
@@ -3761,15 +3766,23 @@ section.hero {
 }
 
 .nav-search {
-  min-width: 42px;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  padding-inline: 0.45rem !important;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  flex: 0 0 40px;
+  padding: 0 !important;
+  line-height: 1;
 }
 
 .nav-search svg {
   width: 18px;
   height: 18px;
   display: block;
+  margin: 0 auto;
 }
 
 .mpanel-search-link {
@@ -3909,6 +3922,14 @@ section.sand.blog-listing-section .blog-index-shell--full {
 .blog-card__media img {
   width: 100%;
   object-fit: cover;
+  transform: scale(1.01);
+  transition: transform 0.8s cubic-bezier(.25,.1,.25,1);
+  will-change: transform;
+}
+
+.blog-card:hover .blog-card__media img,
+.blog-card__link:focus-visible .blog-card__media img {
+  transform: scale(1.06);
 }
 
 .blog-card__overlay {
