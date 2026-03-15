@@ -3789,6 +3789,19 @@ section.hero {
   font-weight: 700 !important;
 }
 
+.mpanel-search-button {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.mpanel-search-button:hover,
+.mpanel-search-button:focus-visible {
+  background: #b99769;
+  border-color: #b99769;
+  color: var(--color-primary);
+}
+
 .home-blog-strip,
 .blog-index-shell,
 .search-shell {
