@@ -1,0 +1,219 @@
+(function () {
+  function decodeHTML(value) {
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = value || '';
+    return textarea.value;
+  }
+
+  function escapeHTML(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function findPost(slug) {
+    var posts = (window.ltSiteContent && window.ltSiteContent.posts) || [];
+    return posts.find(function (post) { return post.slug === slug; }) || null;
+  }
+
+  function sharedTagScore(source, candidate) {
+    var score = 0;
+    (source.tags || []).forEach(function (tag) {
+      if ((candidate.tags || []).indexOf(tag) !== -1) score += 1;
+    });
+    return score;
+  }
+
+  function renderRelated(post, labels) {
+    var posts = (window.ltSiteContent && window.ltSiteContent.posts) || [];
+    var related = posts
+      .filter(function (item) { return item.slug !== post.slug; })
+      .sort(function (a, b) {
+        return sharedTagScore(post, b) - sharedTagScore(post, a) || new Date(b.dateISO) - new Date(a.dateISO);
+      })
+      .slice(0, 3);
+
+    return related.map(function (item) {
+      return [
+        '<article class="blog-teaser-card blog-teaser-card--compact">',
+        '  <a class="blog-teaser-card__media" href="' + item.url + '">',
+        '    <img loading="lazy" decoding="async" src="' + item.image + '" alt="' + item.imageAlt + '">',
+        '  </a>',
+        '  <div class="blog-teaser-card__body">',
+        '    <ul class="blog-chip-list">' + (item.tags || []).map(function (tag) { return '<li><span>' + tag + '</span></li>'; }).join('') + '</ul>',
+        '    <h3><a href="' + item.url + '">' + item.title + '</a></h3>',
+        '    <a class="text-link" href="' + item.url + '">' + labels.readArticle + '</a>',
+        '  </div>',
+        '</article>'
+      ].join('');
+    }).join('');
+  }
+
+  function setMeta(selector, attribute, value) {
+    var element = document.querySelector(selector);
+    if (!element || !value) return;
+    element.setAttribute(attribute, value);
+  }
+
+  function injectStructuredData(post, pageTitle, pageDescription, pageUrl) {
+    var existing = document.getElementById('blog-post-structured-data');
+    if (existing) existing.remove();
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'blog-post-structured-data';
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: decodeHTML(pageTitle),
+      description: decodeHTML(pageDescription),
+      datePublished: post.dateISO,
+      author: {
+        '@type': 'Organization',
+        name: decodeHTML(post.author)
+      },
+      image: [window.location.origin + post.image],
+      mainEntityOfPage: pageUrl,
+      publisher: {
+        '@type': 'Organization',
+        name: 'La Tortue Diving Center'
+      }
+    });
+    document.head.appendChild(script);
+  }
+
+  function renderPost() {
+    if (!window.ltSiteContent || !window.ltSiteContent.posts) return;
+
+    var labels = window.ltSiteContent.labels || {};
+    var isFrench = (window.location.pathname || '').indexOf('/fr/') === 0;
+    var homeUrl = isFrench ? '/fr/' : '/';
+    var blogIndexUrl = isFrench ? '/fr/blog.html' : '/blog.html';
+    var homeLabel = isFrench ? 'Accueil' : 'Home';
+    var params = new URLSearchParams(window.location.search);
+    var slug = params.get('slug');
+    var post = findPost(slug);
+    var articleRoot = document.getElementById('blog-post-root');
+    if (!articleRoot) return;
+
+    if (!post) {
+      articleRoot.innerHTML = [
+        '<section class="sand"><div class="container article-missing">',
+        '  <h1>' + labels.articleMissingTitle + '</h1>',
+        '  <p>' + labels.articleMissingText + '</p>',
+        '  <a class="btn btn-primary" href="' + blogIndexUrl + '">' + labels.backToBlog + '</a>',
+        '</div></section>'
+      ].join('');
+      return;
+    }
+
+    var pageTitle = decodeHTML(post.title) + ' | La Tortue Blog';
+    var pageDescription = decodeHTML(post.excerpt);
+    var pageUrl = window.location.origin + window.location.pathname + '?slug=' + encodeURIComponent(post.slug);
+
+    document.title = pageTitle;
+    setMeta('meta[name="description"]', 'content', pageDescription);
+    setMeta('meta[property="og:title"]', 'content', pageTitle);
+    setMeta('meta[property="og:description"]', 'content', pageDescription);
+    setMeta('meta[property="og:url"]', 'content', pageUrl);
+    setMeta('meta[property="og:image"]', 'content', window.location.origin + post.image);
+    setMeta('meta[name="twitter:title"]', 'content', pageTitle);
+    setMeta('meta[name="twitter:description"]', 'content', pageDescription);
+    setMeta('meta[name="twitter:image"]', 'content', window.location.origin + post.image);
+    setMeta('link[rel="canonical"]', 'href', pageUrl);
+
+    var hreflangEn = document.querySelector('link[hreflang="en"]');
+    var hreflangFr = document.querySelector('link[hreflang="fr"]');
+    var xDefault = document.querySelector('link[hreflang="x-default"]');
+    if (hreflangEn) hreflangEn.setAttribute('href', window.location.origin + '/blog-post.html?slug=' + encodeURIComponent(post.slug));
+    if (hreflangFr) hreflangFr.setAttribute('href', window.location.origin + '/fr/blog-post.html?slug=' + encodeURIComponent(post.slug));
+    if (xDefault) xDefault.setAttribute('href', window.location.origin + '/blog-post.html?slug=' + encodeURIComponent(post.slug));
+
+    injectStructuredData(post, pageTitle, pageDescription, pageUrl);
+
+    var sectionsHTML = (post.sections || []).map(function (section) {
+      return [
+        '<section class="article-section">',
+        '  <h2>' + section.heading + '</h2>',
+        (section.paragraphs || []).map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join(''),
+        '</section>'
+      ].join('');
+    }).join('');
+
+    var tagsHTML = (post.tags || []).map(function (tag) {
+      return '<li><span>' + tag + '</span></li>';
+    }).join('');
+
+    articleRoot.innerHTML = [
+      '<section class="hero hero-blog-post">',
+      '  <div class="banner article-banner">',
+      '    <img class="hero-banner-image" src="' + post.image + '" alt="' + post.imageAlt + '">',
+      '    <div class="hero-banner-overlay"></div>',
+      '  </div>',
+      '  <div class="inner container">',
+      '    <div class="article-hero-copy">',
+      '      <p class="article-eyebrow">' + labels.articleIntroEyebrow + '</p>',
+      '      <h1>' + post.title + '</h1>',
+      '      <p class="muted article-hero-excerpt">' + post.excerpt + '</p>',
+      '    </div>',
+      '  </div>',
+      '</section>',
+      '<section class="article-breadcrumb-bar">',
+      '  <div class="container">',
+      '    <nav class="breadcrumb-trail" aria-label="' + (isFrench ? 'Fil d&#39;Ariane' : 'Breadcrumb') + '">',
+      '      <a href="' + homeUrl + '">' + homeLabel + '</a>',
+      '      <span>/</span>',
+      '      <a href="' + blogIndexUrl + '">Blog</a>',
+      '      <span>/</span>',
+      '      <span>' + post.title + '</span>',
+      '    </nav>',
+      '  </div>',
+      '</section>',
+      '<section class="sand">',
+      '  <div class="container article-layout">',
+      '    <aside class="article-sidebar">',
+      '      <div class="article-meta-card">',
+      '        <div class="article-meta-row"><span>' + labels.articlePublished + '</span><strong>' + post.dateLabel + '</strong></div>',
+      '        <div class="article-meta-row"><span>' + labels.articleBy + '</span><strong>' + post.author + '</strong></div>',
+      '        <div class="article-meta-row"><span>' + labels.articleTags + '</span><ul class="blog-chip-list blog-chip-list--stacked">' + tagsHTML + '</ul></div>',
+      '      </div>',
+      '    </aside>',
+      '    <article class="article-content">',
+      '      <p class="article-intro">' + post.intro + '</p>',
+      post.figureImage ? [
+        '      <figure class="article-figure">',
+        '        <img loading="lazy" decoding="async" src="' + post.figureImage + '" alt="' + post.figureAlt + '">',
+        '        <figcaption>' + post.figureCaption + '</figcaption>',
+        '      </figure>'
+      ].join('') : '',
+      sectionsHTML,
+      '      <div class="article-cta-box">',
+      '        <h2>' + labels.articleCtaTitle + '</h2>',
+      '        <p>' + labels.articleCtaText + '</p>',
+      '        <div class="article-cta-actions">',
+      '          <a class="btn btn-primary" href="' + (isFrench ? '/fr/contact.html' : '/contact.html') + '">' + labels.articleCtaPrimary + '</a>',
+      '          <a class="btn btn-outline" href="' + blogIndexUrl + '">' + labels.articleCtaSecondary + '</a>',
+      '        </div>',
+      '      </div>',
+      '    </article>',
+      '  </div>',
+      '</section>',
+      '<section class="ocean">',
+      '  <div class="container">',
+      '    <div class="section-header section-header--left">',
+      '      <h2>' + labels.relatedPosts + '</h2>',
+      '    </div>',
+      '    <div class="blog-teaser-grid">' + renderRelated(post, labels) + '</div>',
+      '  </div>',
+      '</section>'
+    ].join('');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderPost);
+  } else {
+    renderPost();
+  }
+})();

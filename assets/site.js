@@ -45,7 +45,8 @@
     const normalizedCurrent = normalizePath(window.location.pathname);
     document.querySelectorAll('.nav-links a, .mpanel .links a').forEach(link => {
       const linkPath = normalizePath(new URL(link.href, window.location.origin).pathname);
-      link.classList.toggle('active', linkPath === normalizedCurrent);
+      const isBlogDetail = normalizedCurrent === '/blog-post.html' && linkPath === '/blog.html';
+      link.classList.toggle('active', linkPath === normalizedCurrent || isBlogDetail);
     });
 
     document.querySelectorAll('.mpanel-toggle').forEach(button => {
@@ -61,17 +62,18 @@
     const langSwitches = document.querySelectorAll('[data-lang-switch]');
     const currentPath = normalizePath(window.location.pathname);
     const isIndexPage = currentPath === '/';
+    const currentSuffix = `${window.location.search || ''}${window.location.hash || ''}`;
     const englishPath = isIndexPage ? '/' : currentPath;
     const frenchPath = isIndexPage ? '/fr/' : `/fr${currentPath}`;
 
     langSwitches.forEach(langSwitch => {
       if (isFrench()) {
-        langSwitch.href = englishPath;
+        langSwitch.href = `${englishPath}${currentSuffix}`;
         langSwitch.setAttribute('hreflang', 'en');
         langSwitch.setAttribute('aria-label', 'English version');
         langSwitch.dataset.targetLang = 'en';
       } else {
-        langSwitch.href = frenchPath;
+        langSwitch.href = `${frenchPath}${currentSuffix}`;
         langSwitch.setAttribute('hreflang', 'fr');
         langSwitch.setAttribute('aria-label', 'Version française');
         langSwitch.dataset.targetLang = 'fr';
