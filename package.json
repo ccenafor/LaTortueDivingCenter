@@ -2,6 +2,7 @@
   "name": "la-tortue-diving-center",
   "private": true,
   "scripts": {
+    "generate-search-index": "node scripts/generate-search-index.js",
     "build": "node scripts/build.js",
     "update-domain": "node scripts/update-domain.js"
   },

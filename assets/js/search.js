@@ -25,6 +25,12 @@
   }
 
   function buildEntries() {
+    if (window.ltSearchIndex) {
+      return []
+        .concat(window.ltSearchIndex.pages || [])
+        .concat(window.ltSearchIndex.posts || []);
+    }
+
     if (!window.ltSiteContent) return [];
     var pageEntries = (window.ltSiteContent.pages || []).map(function (page) {
       return {

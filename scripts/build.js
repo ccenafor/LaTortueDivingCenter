@@ -3,6 +3,7 @@ const path = require('path');
 const postcss = require('postcss');
 const cssnano = require('cssnano');
 const terser = require('terser');
+const { generateSearchIndex } = require('./generate-search-index');
 
 const root = path.resolve(__dirname, '..');
 const dist = path.join(root, 'dist');
@@ -78,6 +79,7 @@ const minifyAssets = async (dir) => {
 };
 
 const main = async () => {
+  generateSearchIndex();
   await fs.promises.rm(dist, { recursive: true, force: true });
   await copyRecursive(root, dist);
   await minifyAssets(dist);
