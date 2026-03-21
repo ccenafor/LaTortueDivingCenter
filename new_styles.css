@@ -4318,6 +4318,18 @@ section.sand.blog-listing-section .blog-index-shell--full {
   padding: 1rem;
 }
 
+.search-result-card__snippet {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.search-result-card__snippet mark {
+  background: rgba(198, 168, 125, 0.28);
+  color: var(--color-primary);
+  padding: 0 0.18em;
+  font-weight: 700;
+}
+
 .search-result-card__type {
   display: inline-flex;
   width: fit-content;
