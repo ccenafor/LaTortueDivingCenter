@@ -1,4 +1,4 @@
-(() => {
+﻿(() => {
   const isFrench = () => /^\/fr(\/|$)/.test(window.location.pathname);
   const normalizePath = (path) => {
     if (!path) return '/';
@@ -76,7 +76,7 @@
       } else {
         langSwitch.href = `${frenchPath}${currentSuffix}`;
         langSwitch.setAttribute('hreflang', 'fr');
-        langSwitch.setAttribute('aria-label', 'Version française');
+        langSwitch.setAttribute('aria-label', 'Version franÃ§aise');
         langSwitch.dataset.targetLang = 'fr';
       }
     });
@@ -416,23 +416,32 @@
   const setupCourseToggles = () => {
     const lang = (document.documentElement.lang || 'en').toLowerCase();
     const moreLabel = lang === 'fr' ? 'Plus sur ce cours' : 'More about this course';
-    const hideLabel = lang === 'fr' ? 'Masquer les détails' : 'Hide details';
+    const hideLabel = lang === 'fr' ? 'Masquer les dÃ©tails' : 'Hide details';
     const cards = Array.from(document.querySelectorAll('.card'));
-    cards.forEach(card => {
+
+    const setCardState = (card, isOpen) => {
       const button = card.querySelector('.course-toggle');
       const details = card.querySelector('.course-details');
       if (!button || !details) return;
 
-      button.setAttribute('aria-expanded', 'false');
+      details.classList.toggle('open', isOpen);
+      button.setAttribute('aria-expanded', String(isOpen));
+      button.textContent = isOpen ? hideLabel : moreLabel;
+    };
+
+    cards.forEach(card => {
+      const button = card.querySelector('.course-toggle');
+      const details = card.querySelector('.course-details');
+      if (!button || !details || button.dataset.courseToggleBound === 'true') return;
+
+      setCardState(card, false);
       if (!button.textContent.trim()) {
         button.textContent = moreLabel;
       }
 
       button.addEventListener('click', () => {
         const isOpening = !details.classList.contains('open');
-        details.classList.toggle('open', isOpening);
-        button.setAttribute('aria-expanded', String(isOpening));
-        button.textContent = isOpening ? hideLabel : moreLabel;
+        setCardState(card, isOpening);
 
         if (!isOpening) {
           const headerOffset = 90;
@@ -440,7 +449,32 @@
           window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
         }
       });
+
+      button.dataset.courseToggleBound = 'true';
     });
+
+    const syncCourseHashTarget = () => {
+      const hash = decodeURIComponent(window.location.hash || '').replace(/^#/, '');
+      if (!hash) return;
+
+      const target = document.getElementById(hash);
+      if (!target) return;
+
+      const card = target.closest('.card');
+      if (!card) return;
+
+      setCardState(card, true);
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ block: 'start' });
+      });
+    };
+
+    if (window.ltCourseHashHandler) {
+      window.removeEventListener('hashchange', window.ltCourseHashHandler);
+    }
+    window.ltCourseHashHandler = syncCourseHashTarget;
+    window.addEventListener('hashchange', syncCourseHashTarget);
+    syncCourseHashTarget();
   };
 
   const setupMobileDiveBar = () => {
@@ -449,7 +483,7 @@
     if (!isDivingPage) return;
 
     const lang = (document.documentElement.lang || 'en').toLowerCase();
-    const bookLabel = lang === 'fr' ? 'Réserver une plongée' : 'Book a Dive';
+    const bookLabel = lang === 'fr' ? 'RÃ©server une plongÃ©e' : 'Book a Dive';
 
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
@@ -834,5 +868,6 @@
     }
   });
 })();
+
 
 

@@ -220,6 +220,7 @@
     if (window.ltSearchIndex) {
       return []
         .concat(window.ltSearchIndex.pages || [])
+        .concat(window.ltSearchIndex.blocks || [])
         .concat(window.ltSearchIndex.posts || []);
     }
 
@@ -306,6 +307,7 @@
   }
 
   function buildDirectResultUrl(entry, fragmentText) {
+    if ((entry.url || '').indexOf('#') !== -1) return entry.url;
     if (!fragmentText) return entry.url;
     return entry.url + '#:~:text=' + encodeURIComponent(fragmentText);
   }
