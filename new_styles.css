@@ -2299,6 +2299,15 @@ a.btn[style*="background:#25D366"]:hover {
   flex-direction: column;
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
+.feature-card[id],
+.course-grid .card[id],
+.itc-callout[id],
+#ssi-courses,
+#ssi-pro-training,
+#ffessm-courses,
+#apo-highlights {
+  scroll-margin-top: 110px;
+}
 .feature-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.12);

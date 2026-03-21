@@ -15,6 +15,15 @@ const configs = [
   }
 ];
 
+const blockIndexedPageUrls = new Set([
+  '/diving.html',
+  '/fr/diving.html',
+  '/diving-sites.html',
+  '/fr/diving-sites.html',
+  '/diving-apo-trips.html',
+  '/fr/diving-apo-trips.html'
+]);
+
 function loadSiteContent(filePath) {
   const source = fs.readFileSync(filePath, 'utf8');
   const sandbox = { window: {} };
@@ -43,6 +52,11 @@ function urlToFilePath(url) {
   return path.join(root, relativeUrl);
 }
 
+function cleanUrlPath(url) {
+  const cleanUrl = String(url || '').replace(/^https?:\/\/[^/]+/i, '');
+  return cleanUrl || '/';
+}
+
 function extractBody(html) {
   const match = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   return match ? match[1] : html;
@@ -62,10 +76,200 @@ function stripHtml(html) {
     .trim();
 }
 
+function unique(values) {
+  return Array.from(new Set((values || []).filter(Boolean)));
+}
+
+function escapeRegExp(value) {
+  return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function extractAttribute(html, attribute) {
+  const regex = new RegExp(`${attribute}=(['"])(.*?)\\1`, 'i');
+  const match = html.match(regex);
+  return match ? match[2] : '';
+}
+
+function firstParagraph(html) {
+  const match = html.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  return stripHtml(match ? match[1] : html);
+}
+
+function courseTagsForId(page, id) {
+  const courseLabel = (page.tags || [])[0] || 'Courses';
+  const ssiLabel = (page.tags || []).find((tag) => /ssi/i.test(tag)) || 'SSI';
+  const ffessmLabel = (page.tags || []).find((tag) => /ffessm/i.test(tag)) || 'FFESSM';
+  const proLabel = 'SSI Pro';
+
+  if (id.includes('ffessm')) {
+    return unique([courseLabel, ffessmLabel]);
+  }
+
+  if (id.includes('divemaster') || id.includes('instructor') || id.includes('itc')) {
+    return unique([courseLabel, proLabel]);
+  }
+
+  return unique([courseLabel, ssiLabel]);
+}
+
+function buildBlockEntry(page, data) {
+  const contentText = [data.title, data.meta, data.excerpt, data.body, data.imageAlt].filter(Boolean).join(' ');
+
+  return {
+    type: 'block',
+    anchorId: data.id,
+    parentUrl: page.url,
+    url: `${page.url}#${data.id}`,
+    title: data.title,
+    excerpt: data.excerpt || page.excerpt,
+    tags: unique(data.tags),
+    image: data.image || page.image,
+    imageAlt: data.imageAlt || page.imageAlt,
+    contentText,
+    searchText: [contentText, data.searchText || ''].filter(Boolean).join(' ')
+  };
+}
+
+function extractFeatureBlocks(page, html) {
+  const regex = /<div class="feature-card" id="([^"]+)">[\s\S]*?<div class="media">([\s\S]*?)<\/div>\s*<div class="feature-content">[\s\S]*?<span class="badge">([\s\S]*?)<\/span>\s*<h3>([\s\S]*?)<\/h3>\s*<p class="feature-meta">([\s\S]*?)<\/p>\s*<p class="muted">([\s\S]*?)<\/p>\s*<ul class="feature-list">([\s\S]*?)<\/ul>\s*<\/div>\s*<\/div>/gi;
+  const blocks = [];
+  let match;
+
+  while ((match = regex.exec(html)) !== null) {
+    const [, id, mediaHtml, badgeHtml, titleHtml, metaHtml, excerptHtml, listHtml] = match;
+    blocks.push(buildBlockEntry(page, {
+      id,
+      title: stripHtml(titleHtml),
+      meta: stripHtml(metaHtml),
+      excerpt: stripHtml(excerptHtml),
+      body: stripHtml(listHtml),
+      image: extractAttribute(mediaHtml, 'src'),
+      imageAlt: extractAttribute(mediaHtml, 'alt'),
+      tags: unique([stripHtml(badgeHtml)]),
+      searchText: [stripHtml(badgeHtml), stripHtml(metaHtml), stripHtml(listHtml)].join(' ')
+    }));
+  }
+
+  return blocks;
+}
+
+function extractCourseBlocks(page, html) {
+  const regex = /<div class="card" id="([^"]+)">[\s\S]*?<img\b([^>]*?)>\s*<strong>([\s\S]*?)<\/strong>\s*<div class="muted">([\s\S]*?)<\/div>\s*<div class="course-details">([\s\S]*?)<\/div>\s*<button class="btn btn-outline course-toggle"/gi;
+  const blocks = [];
+  let match;
+
+  while ((match = regex.exec(html)) !== null) {
+    const [, id, imgAttrs, titleHtml, metaHtml, detailsHtml] = match;
+    blocks.push(buildBlockEntry(page, {
+      id,
+      title: stripHtml(titleHtml),
+      meta: stripHtml(metaHtml),
+      excerpt: firstParagraph(detailsHtml),
+      body: stripHtml(detailsHtml),
+      image: extractAttribute(imgAttrs, 'src'),
+      imageAlt: extractAttribute(imgAttrs, 'alt'),
+      tags: courseTagsForId(page, id),
+      searchText: stripHtml(detailsHtml)
+    }));
+  }
+
+  return blocks;
+}
+
+function extractItcCallout(page, html) {
+  const regex = /<div class="itc-callout" id="([^"]+)"[^>]*>\s*<div class="itc-media">\s*<img\b([^>]*?)>\s*<\/div>\s*<div class="itc-content">\s*<h4>([\s\S]*?)<\/h4>\s*<p>([\s\S]*?)<\/p>/i;
+  const match = html.match(regex);
+  if (!match) return [];
+
+  const [, id, imgAttrs, titleHtml, bodyHtml] = match;
+  return [buildBlockEntry(page, {
+    id,
+    title: stripHtml(titleHtml),
+    excerpt: stripHtml(bodyHtml),
+    body: stripHtml(bodyHtml),
+    image: extractAttribute(imgAttrs, 'src'),
+    imageAlt: extractAttribute(imgAttrs, 'alt'),
+    tags: courseTagsForId(page, id),
+    searchText: stripHtml(bodyHtml)
+  })];
+}
+
+function extractHeadingBlock(page, html, config) {
+  const pattern = new RegExp(
+    `<h[1-6][^>]*id="${escapeRegExp(config.id)}"[^>]*>([\\s\\S]*?)<\\/h[1-6]>(?:\\s*<p[^>]*>([\\s\\S]*?)<\\/p>)?`,
+    'i'
+  );
+  const match = html.match(pattern);
+  if (!match) return [];
+
+  const [, titleHtml, excerptHtml = ''] = match;
+  return [buildBlockEntry(page, {
+    id: config.id,
+    title: stripHtml(titleHtml),
+    excerpt: stripHtml(excerptHtml) || config.excerpt || page.excerpt,
+    body: stripHtml(excerptHtml),
+    image: config.image || page.image,
+    imageAlt: config.imageAlt || page.imageAlt,
+    tags: unique(config.tags || []),
+    searchText: [config.searchText || '', stripHtml(excerptHtml)].filter(Boolean).join(' ')
+  })];
+}
+
+function extractHeadingBlocks(page, html) {
+  const pageUrl = cleanUrlPath(page.url);
+  const configsByPage = {
+    '/diving.html': [
+      { id: 'ssi-courses', tags: ['Courses', 'SSI'] },
+      { id: 'ssi-pro-training', tags: ['Courses', 'SSI Pro'], searchText: 'professional training divemaster instructor' },
+      { id: 'ffessm-courses', tags: ['Courses', 'FFESSM'] }
+    ],
+    '/fr/diving.html': [
+      { id: 'ssi-courses', tags: ['Cours', 'SSI'] },
+      { id: 'ssi-pro-training', tags: ['Cours', 'SSI Pro'], searchText: 'formation professionnelle divemaster instructeur' },
+      { id: 'ffessm-courses', tags: ['Cours', 'FFESSM'] }
+    ],
+    '/diving-apo-trips.html': [
+      { id: 'apo-highlights', tags: ['Apo Island', 'Highlights'], searchText: 'apo island highlights reef sites' }
+    ],
+    '/fr/diving-apo-trips.html': [
+      { id: 'apo-highlights', tags: ['Apo Island', 'Incontournables'], searchText: 'apo island incontournables sites recif' }
+    ]
+  };
+
+  return (configsByPage[pageUrl] || []).flatMap((config) => extractHeadingBlock(page, html, config));
+}
+
+function extractBlockEntries(page, html) {
+  const pageUrl = cleanUrlPath(page.url);
+
+  if (pageUrl === '/diving-sites.html' || pageUrl === '/fr/diving-sites.html') {
+    return extractFeatureBlocks(page, html);
+  }
+
+  if (pageUrl === '/diving-apo-trips.html' || pageUrl === '/fr/diving-apo-trips.html') {
+    return extractHeadingBlocks(page, html).concat(extractFeatureBlocks(page, html));
+  }
+
+  if (pageUrl === '/diving.html' || pageUrl === '/fr/diving.html') {
+    return extractHeadingBlocks(page, html)
+      .concat(extractCourseBlocks(page, html))
+      .concat(extractItcCallout(page, html));
+  }
+
+  return [];
+}
+
 function buildPageEntry(page) {
   const filePath = urlToFilePath(page.url);
   const html = fs.readFileSync(filePath, 'utf8');
   const pageText = stripHtml(html);
+  const pageUrl = cleanUrlPath(page.url);
+  const contentText = blockIndexedPageUrls.has(pageUrl)
+    ? [page.title, page.excerpt, ...(page.tags || [])].filter(Boolean).join(' ')
+    : pageText;
+  const searchText = blockIndexedPageUrls.has(pageUrl)
+    ? [page.title, page.excerpt, ...(page.tags || []), page.searchText || ''].filter(Boolean).join(' ')
+    : [pageText, page.searchText || ''].filter(Boolean).join(' ');
 
   return {
     type: 'page',
@@ -75,8 +279,8 @@ function buildPageEntry(page) {
     tags: page.tags || [],
     image: page.image,
     imageAlt: page.imageAlt,
-    contentText: pageText,
-    searchText: [pageText, page.searchText || ''].filter(Boolean).join(' ')
+    contentText,
+    searchText
   };
 }
 
@@ -110,8 +314,19 @@ function buildPostEntry(post) {
 }
 
 function writeIndex(outputPath, siteContent) {
+  const pageEntries = (siteContent.pages || []).map((page) => {
+    const filePath = urlToFilePath(page.url);
+    const html = fs.readFileSync(filePath, 'utf8');
+
+    return {
+      page: buildPageEntry(page),
+      blocks: extractBlockEntries(page, html)
+    };
+  });
+
   const payload = {
-    pages: (siteContent.pages || []).map(buildPageEntry),
+    pages: pageEntries.map((entry) => entry.page),
+    blocks: pageEntries.flatMap((entry) => entry.blocks),
     posts: (siteContent.posts || []).map(buildPostEntry)
   };
 
