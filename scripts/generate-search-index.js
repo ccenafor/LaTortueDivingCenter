@@ -75,6 +75,7 @@ function buildPageEntry(page) {
     tags: page.tags || [],
     image: page.image,
     imageAlt: page.imageAlt,
+    contentText: pageText,
     searchText: [pageText, page.searchText || ''].filter(Boolean).join(' ')
   };
 }
@@ -83,6 +84,16 @@ function buildPostEntry(post) {
   const sectionText = (post.sections || [])
     .map((section) => [section.heading, ...(section.paragraphs || [])].filter(Boolean).join(' '))
     .join(' ');
+  const contentText = [
+    post.title,
+    post.excerpt,
+    post.author,
+    post.dateLabel,
+    (post.tags || []).join(' '),
+    post.intro,
+    sectionText,
+    post.figureCaption
+  ].filter(Boolean).join(' ');
 
   return {
     type: 'blog',
@@ -93,17 +104,8 @@ function buildPostEntry(post) {
     image: post.image,
     imageAlt: post.imageAlt,
     dateISO: post.dateISO,
-    searchText: [
-      post.title,
-      post.excerpt,
-      post.author,
-      post.dateLabel,
-      (post.tags || []).join(' '),
-      post.intro,
-      sectionText,
-      post.figureCaption,
-      post.searchText || ''
-    ].filter(Boolean).join(' ')
+    contentText: contentText,
+    searchText: [contentText, post.searchText || ''].filter(Boolean).join(' ')
   };
 }
 
