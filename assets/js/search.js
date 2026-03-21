@@ -150,11 +150,14 @@
     return parts.join('');
   }
 
-  function buildSnippet(entry, terms) {
-    var source = [entry.excerpt, entry.searchText].filter(Boolean).join(' ');
+  function buildSnippetData(entry, terms) {
+    var source = entry.contentText || entry.searchText || entry.excerpt || '';
     var mapped = buildSearchMap(source);
     if (!mapped.original || !mapped.normalized) {
-      return escapeHTML(decodeHTML(entry.excerpt || ''));
+      return {
+        html: escapeHTML(decodeHTML(entry.excerpt || '')),
+        fragmentText: ''
+      };
     }
 
     var queryPhrase = terms.join(' ');
@@ -207,7 +210,10 @@
       return [start, end];
     });
 
-    return prefix + escapeWithHighlights(snippetText, originalRanges) + suffix;
+    return {
+      html: prefix + escapeWithHighlights(snippetText, originalRanges) + suffix,
+      fragmentText: snippetText
+    };
   }
 
   function buildEntries() {
@@ -299,7 +305,16 @@
     }).join('');
   }
 
+  function buildDirectResultUrl(entry, fragmentText) {
+    if (!fragmentText) return entry.url;
+    return entry.url + '#:~:text=' + encodeURIComponent(fragmentText);
+  }
+
   function renderResult(entry, labels, terms) {
+    var snippet = buildSnippetData(entry, terms);
+    var lang = (document.documentElement.lang || 'en').toLowerCase();
+    var jumpLabel = labels.searchJumpToResult || (lang.indexOf('fr') === 0 ? 'Aller au r&eacute;sultat' : 'Go to result');
+
     return [
       '<article class="search-result-card">',
       '  <a class="search-result-card__media" href="' + entry.url + '">',
@@ -308,8 +323,11 @@
       '  <div class="search-result-card__body">',
       '    <span class="search-result-card__type">' + resultTypeLabel(entry, labels) + '</span>',
       '    <h2><a href="' + entry.url + '">' + entry.title + '</a></h2>',
-      '    <p class="search-result-card__snippet">' + buildSnippet(entry, terms) + '</p>',
-      '    <ul class="blog-chip-list">' + (entry.tags || []).map(function (tag) { return '<li><span>' + tag + '</span></li>'; }).join('') + '</ul>',
+      '    <p class="search-result-card__snippet">' + snippet.html + '</p>',
+      '    <div class="search-result-card__footer">',
+      '      <ul class="blog-chip-list">' + (entry.tags || []).map(function (tag) { return '<li><span>' + tag + '</span></li>'; }).join('') + '</ul>',
+      '      <a class="search-result-card__jump" href="' + buildDirectResultUrl(entry, snippet.fragmentText) + '">' + jumpLabel + '</a>',
+      '    </div>',
       '  </div>',
       '</article>'
     ].join('');

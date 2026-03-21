@@ -4318,6 +4318,14 @@ section.sand.blog-listing-section .blog-index-shell--full {
   padding: 1rem;
 }
 
+.search-result-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .search-result-card__snippet {
   margin: 0;
   color: var(--color-text-muted);
@@ -4328,6 +4336,20 @@ section.sand.blog-listing-section .blog-index-shell--full {
   color: var(--color-primary);
   padding: 0 0.18em;
   font-weight: 700;
+}
+
+.search-result-card__jump {
+  margin-left: auto;
+  color: var(--color-primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.search-result-card__jump:hover {
+  color: var(--color-secondary);
 }
 
 .search-result-card__type {
