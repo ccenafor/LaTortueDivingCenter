@@ -14,6 +14,47 @@
       .replace(/'/g, '&#39;');
   }
 
+  function escapeAttribute(value) {
+    return escapeHTML(decodeHTML(value || ''));
+  }
+
+  function renderImageTag(config) {
+    if (!config || !config.src) return '';
+
+    var attributes = [];
+    if (config.className) attributes.push('class="' + escapeAttribute(config.className) + '"');
+    if (config.loading) attributes.push('loading="' + escapeAttribute(config.loading) + '"');
+    if (config.fetchPriority) attributes.push('fetchpriority="' + escapeAttribute(config.fetchPriority) + '"');
+    attributes.push('decoding="' + escapeAttribute(config.decoding || 'async') + '"');
+    attributes.push('src="' + escapeAttribute(config.src) + '"');
+    attributes.push('alt="' + escapeAttribute(config.alt) + '"');
+    if (config.srcSet) attributes.push('srcset="' + escapeAttribute(config.srcSet) + '"');
+    if (config.sizes) attributes.push('sizes="' + escapeAttribute(config.sizes) + '"');
+    if (config.width) attributes.push('width="' + escapeAttribute(config.width) + '"');
+    if (config.height) attributes.push('height="' + escapeAttribute(config.height) + '"');
+
+    return '<img ' + attributes.join(' ') + '>';
+  }
+
+  function renderFigure(figure) {
+    if (!figure || !figure.src) return '';
+
+    return [
+      '<figure class="article-figure">',
+      '  ' + renderImageTag({
+        src: figure.src,
+        alt: figure.alt,
+        srcSet: figure.srcSet,
+        sizes: figure.sizes,
+        width: figure.width,
+        height: figure.height,
+        loading: figure.loading || 'lazy'
+      }),
+      figure.caption ? '  <figcaption>' + figure.caption + '</figcaption>' : '',
+      '</figure>'
+    ].join('');
+  }
+
   function findPost(slug) {
     var posts = (window.ltSiteContent && window.ltSiteContent.posts) || [];
     return posts.find(function (post) { return post.slug === slug; }) || null;
@@ -133,11 +174,32 @@
 
     injectStructuredData(post, pageTitle, pageDescription, pageUrl);
 
+    var sharedBanner = {
+      src: '/assets/Pictures/Blog/Optimized/blog-post-banner.webp',
+      alt: isFrench ? 'Banni&egrave;re du blog La Tortue Diving Center' : 'La Tortue Diving Center blog banner',
+      srcSet: '/assets/Pictures/Blog/Optimized/blog-post-banner-960.webp 960w, /assets/Pictures/Blog/Optimized/blog-post-banner.webp 1193w',
+      sizes: '100vw',
+      width: 1193,
+      height: 658,
+      className: 'hero-banner-image',
+      loading: 'eager',
+      fetchPriority: 'high'
+    };
+
     var sectionsHTML = (post.sections || []).map(function (section) {
       return [
         '<section class="article-section">',
         '  <h2>' + section.heading + '</h2>',
         (section.paragraphs || []).map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join(''),
+        renderFigure(section.figureImage ? {
+          src: section.figureImage,
+          alt: section.figureAlt,
+          srcSet: section.figureSrcSet,
+          sizes: section.figureSizes,
+          width: section.figureWidth,
+          height: section.figureHeight,
+          caption: section.figureCaption
+        } : null),
         '</section>'
       ].join('');
     }).join('');
@@ -149,7 +211,7 @@
     articleRoot.innerHTML = [
       '<section class="hero hero-blog-post">',
       '  <div class="banner article-banner">',
-      '    <img class="hero-banner-image" src="' + post.image + '" alt="' + post.imageAlt + '">',
+      '    ' + renderImageTag(sharedBanner),
       '    <div class="hero-banner-overlay"></div>',
       '  </div>',
       '  <div class="inner container">',
@@ -182,12 +244,15 @@
       '    </aside>',
       '    <article class="article-content">',
       '      <p class="article-intro">' + post.intro + '</p>',
-      post.figureImage ? [
-        '      <figure class="article-figure">',
-        '        <img loading="lazy" decoding="async" src="' + post.figureImage + '" alt="' + post.figureAlt + '">',
-        '        <figcaption>' + post.figureCaption + '</figcaption>',
-        '      </figure>'
-      ].join('') : '',
+      renderFigure(post.figureImage ? {
+        src: post.figureImage,
+        alt: post.figureAlt,
+        srcSet: post.figureSrcSet,
+        sizes: post.figureSizes,
+        width: post.figureWidth,
+        height: post.figureHeight,
+        caption: post.figureCaption
+      } : null),
       sectionsHTML,
       '      <div class="article-cta-box">',
       '        <h2>' + labels.articleCtaTitle + '</h2>',

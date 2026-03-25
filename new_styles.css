@@ -4257,8 +4257,8 @@ section.sand.blog-listing-section .blog-index-shell--full {
 
 .article-figure img {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
 .article-figure figcaption {

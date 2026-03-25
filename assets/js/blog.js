@@ -31,12 +31,35 @@
       .join('');
   }
 
+  function escapeAttribute(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;');
+  }
+
+  function renderPostImage(post, loading) {
+    var attributes = [
+      'loading="' + (loading || 'lazy') + '"',
+      'decoding="async"',
+      'src="' + escapeAttribute(post.image) + '"',
+      'alt="' + escapeAttribute(post.imageAlt) + '"'
+    ];
+
+    if (post.imageSrcSet) attributes.push('srcset="' + escapeAttribute(post.imageSrcSet) + '"');
+    if (post.imageSizes) attributes.push('sizes="' + escapeAttribute(post.imageSizes) + '"');
+    if (post.imageWidth) attributes.push('width="' + escapeAttribute(post.imageWidth) + '"');
+    if (post.imageHeight) attributes.push('height="' + escapeAttribute(post.imageHeight) + '"');
+
+    return '<img ' + attributes.join(' ') + '>';
+  }
+
   function renderListingCard(post, index, labels) {
     return [
       '<article class="blog-card blog-card--' + (post.listingClass || 'standard') + '">',
       '  <a class="blog-card__link" href="' + post.url + '">',
       '    <div class="blog-card__media">',
-      '      <img loading="lazy" decoding="async" src="' + post.image + '" alt="' + post.imageAlt + '">',
+      '      ' + renderPostImage(post, 'lazy'),
       '    </div>',
       '    <div class="blog-card__overlay">',
       index === 0 ? '      <span class="blog-card__flag">' + labels.featuredLabel + '</span>' : '',
@@ -169,7 +192,7 @@
     return [
       '<article class="blog-teaser-card">',
       '  <a class="blog-teaser-card__media" href="' + post.url + '">',
-      '    <img loading="lazy" decoding="async" src="' + post.image + '" alt="' + post.imageAlt + '">',
+      '    ' + renderPostImage(post, 'lazy'),
       '  </a>',
       '  <div class="blog-teaser-card__body">',
       '    <ul class="blog-chip-list">' + renderTags(post.tags) + '</ul>',
