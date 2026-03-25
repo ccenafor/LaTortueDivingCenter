@@ -4297,6 +4297,7 @@ section.sand.blog-listing-section .blog-index-shell--full {
   padding: 1.5rem;
   border: 1px solid var(--color-border-soft);
   background: var(--color-block);
+  text-align: center;
 }
 
 .article-cta-actions {
@@ -4304,6 +4305,7 @@ section.sand.blog-listing-section .blog-index-shell--full {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1rem;
+  justify-content: center;
 }
 
 .article-missing {
