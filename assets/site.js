@@ -99,6 +99,8 @@
     button.href = whatsappUrl;
     button.target = '_blank';
     button.rel = 'noopener noreferrer';
+    button.dataset.ctaName = 'whatsapp';
+    button.dataset.ctaLocation = 'floating_whatsapp';
     button.setAttribute('aria-label', ariaLabel);
     button.innerHTML = `
       <span class="floating-whatsapp__icon" aria-hidden="true">
@@ -113,6 +115,7 @@
   let openCookieSettingsModal = null;
   let cookieSettingsBound = false;
   let consentInitialized = false;
+  let ctaTrackingBound = false;
 
   const ensureDataLayer = () => {
     if (!window.dataLayer) {
@@ -152,6 +155,192 @@
     } else {
       document.head.appendChild(script);
     }
+  };
+
+  const collapseWhitespace = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+
+  const slugify = (value) => collapseWhitespace(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '') || 'cta';
+
+  const resolveTargetUrl = (value) => {
+    if (!value) return '';
+    try {
+      return new URL(value, window.location.origin).href;
+    } catch (error) {
+      return String(value || '');
+    }
+  };
+
+  const getPageType = () => {
+    const path = normalizePath(window.location.pathname);
+    if (path === '/') return 'home';
+    if (path === '/blog.html') return 'blog_listing';
+    if (path === '/blog-post.html') return 'blog_post';
+    if (path === '/search.html') return 'search';
+    if (path === '/contact.html') return 'contact';
+    if (path === '/cottages.html') return 'rooms';
+    if (path === '/dining.html') return 'restaurant';
+    if (path === '/diving.html') return 'diving_courses';
+    if (path === '/diving-fun-dives.html') return 'fun_dives';
+    if (path === '/diving-sites.html') return 'dive_sites';
+    if (path === '/diving-apo-trips.html') return 'apo_island';
+    if (path === '/about.html') return 'about';
+    return slugify(path.replace(/\//g, ' '));
+  };
+
+  const getCtaText = (control) => {
+    return collapseWhitespace(
+      control.getAttribute('data-cta-label') ||
+      control.getAttribute('aria-label') ||
+      control.getAttribute('title') ||
+      control.textContent ||
+      control.value ||
+      ''
+    ).slice(0, 140);
+  };
+
+  const getTargetDetails = (control) => {
+    if (control.tagName === 'A') {
+      const rawHref = control.getAttribute('href') || control.href || '';
+      const href = resolveTargetUrl(rawHref);
+      if (!rawHref) return { url: '', type: 'none' };
+      if (rawHref.charAt(0) === '#') return { url: href, type: 'hash' };
+      if (/^(mailto|tel):/i.test(rawHref)) return { url: rawHref, type: 'external' };
+
+      try {
+        const target = new URL(href);
+        return {
+          url: target.href,
+          type: target.origin === window.location.origin ? 'internal' : 'external'
+        };
+      } catch (error) {
+        return { url: href, type: 'internal' };
+      }
+    }
+
+    if (control.form) {
+      return {
+        url: resolveTargetUrl(control.form.getAttribute('action') || window.location.pathname),
+        type: 'submit'
+      };
+    }
+
+    return { url: '', type: 'none' };
+  };
+
+  const getCtaLocation = (control) => {
+    if (control.dataset.ctaLocation) return control.dataset.ctaLocation;
+    if (control.closest('.mobile-dive-bar')) return 'mobile_dive_bar';
+    if (control.closest('.floating-whatsapp')) return 'floating_whatsapp';
+    if (control.closest('.nav-cta')) return 'nav_desktop';
+    if (control.closest('.mpanel .actions')) return 'nav_mobile';
+    if (control.closest('header.nav')) return 'nav';
+    if (control.closest('.bookingcom-card')) return 'booking_widget';
+    if (control.closest('.article-cta-box')) return 'blog_post_cta';
+    if (control.closest('.contact-form-shell')) return 'contact_form';
+    if (control.closest('.contact-social')) return 'contact_social';
+    if (control.closest('.search-shell')) return 'search';
+    if (control.closest('.search-result-card')) return 'search_results';
+    if (control.closest('#search-suggestions')) return 'search_suggestions';
+    if (control.closest('.hero')) return 'hero';
+    if (control.closest('footer')) return 'footer';
+
+    const section = control.closest('section');
+    if (section) {
+      const className = collapseWhitespace(section.className).split(' ').filter(Boolean)[0];
+      if (className) return slugify(className);
+    }
+
+    return 'page';
+  };
+
+  const getCtaName = (control, target, ctaText) => {
+    if (control.dataset.ctaName) return control.dataset.ctaName;
+    if (control.matches('.floating-whatsapp') || /wa\.me|whatsapp/i.test(target.url)) return 'whatsapp';
+    if (control.matches('.nav-search, .mpanel-search-button') || /\/search\.html/i.test(target.url)) return 'site_search';
+    if (control.matches('[data-booking-submit], .bookingcom-action') || /booking\.com/i.test(target.url)) return 'booking_com_check_availability';
+    if (control.matches('.search-result-card__jump')) return 'search_result_jump';
+    if (control.matches('.search-suggestion')) return 'search_suggestion';
+    if (control.matches('.text-link')) return 'text_link';
+    if (control.closest('.mobile-dive-bar')) return 'book_dive';
+    if (control.closest('.article-cta-box') && /contact\.html/i.test(target.url)) return 'blog_contact';
+    if (control.closest('.article-cta-box') && /blog\.html/i.test(target.url)) return 'blog_index';
+    if (control.closest('.contact-form-shell') && control.matches('[type="submit"]')) return 'contact_form_submit';
+    if (/facebook\.com/i.test(target.url)) return 'facebook';
+    if (/instagram\.com/i.test(target.url)) return 'instagram';
+    if (target.type === 'hash' && /booking-com-widget|room-booking-widget/i.test(target.url)) return 'jump_to_booking_widget';
+    if (target.type === 'hash' && /contact-form/i.test(target.url)) return 'jump_to_contact_form';
+    if (/contact\.html/i.test(target.url) && /book/i.test(ctaText)) return 'book_now';
+    return slugify(ctaText || target.url || control.id || control.className);
+  };
+
+  const isTrackableCta = (control) => {
+    if (!control) return false;
+    if (control.matches('.burger, .mpanel-toggle, .course-toggle')) return false;
+    if (
+      control.closest('.cookie-banner') ||
+      control.closest('.cookie-modal') ||
+      control.closest('.menu-lightbox') ||
+      control.closest('#dining-lightbox') ||
+      control.closest('#fun-lightbox')
+    ) return false;
+    if (
+      control.hasAttribute('data-cookie-action') ||
+      control.hasAttribute('data-cookie-settings') ||
+      control.hasAttribute('data-cookie-modal') ||
+      control.hasAttribute('data-cookie-toggle')
+    ) return false;
+
+    return control.matches('.btn, .floating-whatsapp, .text-link, .search-result-card__jump, .search-suggestion, [type="submit"]');
+  };
+
+  const pushTrackingEvent = (payload) => {
+    ensureDataLayer();
+    window.dataLayer.push(payload);
+  };
+
+  const setupCtaTracking = () => {
+    if (ctaTrackingBound) return;
+    ctaTrackingBound = true;
+
+    document.addEventListener('click', (event) => {
+      const control = event.target.closest('a, button, input[type="submit"], input[type="button"]');
+      if (!isTrackableCta(control) || event.defaultPrevented) return;
+
+      const target = getTargetDetails(control);
+      const ctaText = getCtaText(control);
+      pushTrackingEvent({
+        event: 'cta_click',
+        cta_name: getCtaName(control, target, ctaText),
+        cta_text: ctaText,
+        cta_location: getCtaLocation(control),
+        cta_target_url: target.url,
+        cta_target_type: target.type,
+        page_type: getPageType(),
+        page_path: window.location.pathname,
+        page_language: isFrench() ? 'fr' : 'en'
+      });
+    });
+
+    document.addEventListener('submit', (event) => {
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement)) return;
+      if (!form.matches('.contact-form, [data-netlify="true"]')) return;
+
+      pushTrackingEvent({
+        event: 'form_submit',
+        form_name: form.getAttribute('name') || form.id || 'form',
+        form_id: form.id || '',
+        form_action: resolveTargetUrl(form.getAttribute('action') || window.location.pathname),
+        page_type: getPageType(),
+        page_path: window.location.pathname,
+        page_language: isFrench() ? 'fr' : 'en'
+      });
+    });
   };
 
   const setupCookieBanner = () => {
@@ -497,7 +686,7 @@
       if (document.querySelector('.mobile-dive-bar')) return;
       const bar = document.createElement('div');
       bar.className = 'mobile-dive-bar';
-      bar.innerHTML = `<a class="btn btn-primary" href="contact.html">${bookLabel}</a>`;
+      bar.innerHTML = `<a class="btn btn-primary" href="contact.html" data-cta-name="book_dive" data-cta-location="mobile_dive_bar">${bookLabel}</a>`;
       document.body.appendChild(bar);
       document.body.classList.add('has-mobile-dive-bar');
     };
@@ -829,6 +1018,7 @@
     try {
       setupRevealAnimations();
       setupCookieBanner();
+      setupCtaTracking();
 
       await Promise.all([
         fetchHTML(menuPath, 'menu-placeholder'),
