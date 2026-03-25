@@ -4244,6 +4244,13 @@ section.sand.blog-listing-section .blog-index-shell--full {
   padding: 1.6rem;
 }
 
+.article-content p {
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+}
+
 .article-intro {
   color: var(--color-text-main);
   font-size: 1.08rem;
