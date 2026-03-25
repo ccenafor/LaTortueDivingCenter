@@ -4244,7 +4244,10 @@ section.sand.blog-listing-section .blog-index-shell--full {
   padding: 1.6rem;
 }
 
-.article-content p {
+.article-content > p,
+.article-content .article-section > p,
+.article-content > p:first-of-type,
+.article-content .article-section > p:first-of-type {
   text-align: left;
   margin-left: 0;
   margin-right: 0;
