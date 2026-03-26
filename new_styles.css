@@ -4505,4 +4505,47 @@ section.sand.blog-listing-section .blog-index-shell--full {
   .article-cta-actions {
     flex-direction: column;
   }
+
+  .hero-blog-post .inner.container {
+    min-height: 240px;
+    padding-top: 4.25rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .article-banner {
+    min-height: 280px;
+  }
+
+  .article-hero-copy {
+    max-width: 100%;
+    padding-bottom: 0.5rem;
+  }
+
+  .article-hero-copy h1 {
+    max-width: 14ch;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .article-hero-excerpt {
+    max-width: 24rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.95rem;
+  }
+
+  .article-layout {
+    display: block;
+  }
+
+  .article-sidebar {
+    margin-bottom: 1rem;
+  }
+
+  .article-content {
+    padding: 1.1rem;
+  }
 }
