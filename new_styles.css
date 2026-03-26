@@ -4311,6 +4311,14 @@ section.sand.blog-listing-section .blog-index-shell--full {
   justify-content: center;
 }
 
+.blog-post-static-section.reveal,
+.blog-post-static-section.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: none;
+}
+
 .article-missing {
   max-width: 720px;
   display: grid;
