@@ -85,14 +85,15 @@
 
     return [
       '<article class="blog-card blog-card--' + (post.listingClass || 'standard') + '">',
+      '  <a class="blog-card__stretched-link" href="' + post.url + '" aria-label="' + escapeAttribute(readArticleLabel) + '"></a>',
       '  <div class="blog-card__link">',
-      '    <a class="blog-card__media" href="' + post.url + '" aria-label="' + escapeAttribute(readArticleLabel) + '">',
+      '    <div class="blog-card__media">',
       '      ' + renderPostImage(post, 'lazy'),
-      '    </a>',
+      '    </div>',
       '    <div class="blog-card__overlay">',
       index === 0 ? '      <span class="blog-card__flag">' + labels.featuredLabel + '</span>' : '',
       '      <ul class="blog-chip-list">' + renderTags(post.tags, blogIndexUrl) + '</ul>',
-      '      <h3><a class="blog-card__title-link" href="' + post.url + '">' + post.title + '</a></h3>',
+      '      <h3>' + post.title + '</h3>',
       '      <div class="blog-card__meta">' + post.dateLabel + '</div>',
       '    </div>',
       '  </div>',
