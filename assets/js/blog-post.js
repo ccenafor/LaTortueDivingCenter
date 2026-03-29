@@ -18,6 +18,16 @@
     return escapeHTML(decodeHTML(value || ''));
   }
 
+  function buildTagHref(tag, blogIndexUrl) {
+    return blogIndexUrl + '?tag=' + encodeURIComponent(decodeHTML(tag));
+  }
+
+  function renderTagList(tags, blogIndexUrl) {
+    return (tags || []).map(function (tag) {
+      return '<li><a class="blog-chip-link" href="' + escapeAttribute(buildTagHref(tag, blogIndexUrl)) + '" data-tag="' + escapeAttribute(decodeHTML(tag)) + '">' + tag + '</a></li>';
+    }).join('');
+  }
+
   function renderImageTag(config) {
     if (!config || !config.src) return '';
 
@@ -68,7 +78,7 @@
     return score;
   }
 
-  function renderRelated(post, labels) {
+  function renderRelated(post, labels, blogIndexUrl) {
     var posts = (window.ltSiteContent && window.ltSiteContent.posts) || [];
     var related = posts
       .filter(function (item) { return item.slug !== post.slug; })
@@ -84,7 +94,7 @@
         '    <img loading="lazy" decoding="async" src="' + item.image + '" alt="' + item.imageAlt + '">',
         '  </a>',
         '  <div class="blog-teaser-card__body">',
-        '    <ul class="blog-chip-list">' + (item.tags || []).map(function (tag) { return '<li><span>' + tag + '</span></li>'; }).join('') + '</ul>',
+        '    <ul class="blog-chip-list">' + renderTagList(item.tags, blogIndexUrl) + '</ul>',
         '    <h3><a href="' + item.url + '">' + item.title + '</a></h3>',
         '    <a class="text-link" href="' + item.url + '">' + labels.readArticle + '</a>',
         '  </div>',
@@ -204,9 +214,7 @@
       ].join('');
     }).join('');
 
-    var tagsHTML = (post.tags || []).map(function (tag) {
-      return '<li><span>' + tag + '</span></li>';
-    }).join('');
+    var tagsHTML = renderTagList(post.tags, blogIndexUrl);
 
     articleRoot.innerHTML = [
       '<section class="hero hero-blog-post">',
@@ -270,7 +278,7 @@
       '    <div class="section-header section-header--left">',
       '      <h2>' + labels.relatedPosts + '</h2>',
       '    </div>',
-      '    <div class="blog-teaser-grid">' + renderRelated(post, labels) + '</div>',
+      '    <div class="blog-teaser-grid">' + renderRelated(post, labels, blogIndexUrl) + '</div>',
       '  </div>',
       '</section>'
     ].join('');
