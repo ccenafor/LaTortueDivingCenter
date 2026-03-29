@@ -29,7 +29,10 @@
       articleCtaSecondary: 'See all blog posts',
       articleMissingTitle: 'Post not found',
       articleMissingText: 'This post is not available yet. Go back to the blog listing to pick another article.',
-      featuredLabel: 'Newest post'
+      featuredLabel: 'Newest post',
+      filteredByTag: 'Filtered by tag',
+      clearTagFilter: 'Show all posts',
+      noTaggedPosts: 'No posts match this tag yet.'
     },
     searchSuggestions: ['Dauin', 'Apo Island', 'SSI courses', 'Private room', 'Restaurant', 'Instructor'],
     posts: [
@@ -167,7 +170,7 @@
         figureHeight: 1050,
         figureCaption: 'Training in Dauin meant applying skills underwater every day, not just talking about them in a classroom.',
         listingClass: 'tall',
-        tags: ['SSI', 'ITC', 'Instructor', 'Dauin'],
+        tags: ['Dauin', 'Diving', 'Instructor Training Course', 'SSI'],
         searchText: 'antoine bodier instructor training course itc ssi divemaster dauin diving marine biologist international career ffessm camille detavernier panglao',
         intro: 'Before becoming a dive professional, I was already working in marine research as a marine biologist. Diving was part of my job, and I had completed FFESSM Level 4 in France, essentially a Divemaster-level certification. But there was a limitation: that path did not really allow me to work internationally as a dive professional. That is what pushed me to look seriously at SSI.',
         sections: [

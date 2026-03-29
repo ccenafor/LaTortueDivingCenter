@@ -29,7 +29,10 @@
       articleCtaSecondary: 'Voir tous les articles',
       articleMissingTitle: 'Article introuvable',
       articleMissingText: 'Cet article n\'est pas encore disponible. Revenez &agrave; la liste du blog pour choisir un autre sujet.',
-      featuredLabel: 'Article le plus r&eacute;cent'
+      featuredLabel: 'Article le plus r&eacute;cent',
+      filteredByTag: 'Filtr&eacute; par tag',
+      clearTagFilter: 'Voir tous les articles',
+      noTaggedPosts: 'Aucun article ne correspond encore &agrave; ce tag.'
     },
     searchSuggestions: ['Dauin', 'Apo Island', 'Cours SSI', 'Chambre priv&eacute;e', 'Restaurant', 'Instructeur'],
     posts: [
@@ -167,7 +170,7 @@
         figureHeight: 1050,
         figureCaption: 'Se former &agrave; Dauin, c&rsquo;&eacute;tait appliquer les comp&eacute;tences sous l&rsquo;eau tous les jours, pas seulement en parler en salle.',
         listingClass: 'tall',
-        tags: ['SSI', 'ITC', 'Instructeur', 'Dauin'],
+        tags: ['Dauin', 'Plong&eacute;e', 'Cours de formation instructeur', 'SSI'],
         searchText: 'antoine bodier formation instructeur itc ssi divemaster dauin plongee biologiste marin carriere internationale ffessm camille detavernier panglao',
         intro: 'Avant de devenir professionnel de la plong&eacute;e, je travaillais d&eacute;j&agrave; dans la recherche marine comme biologiste marin. La plong&eacute;e faisait partie de mon m&eacute;tier et j&rsquo;avais obtenu le niveau 4 FFESSM en France, soit une certification de niveau Divemaster. Mais il y avait une limite : ce parcours ne me permettait pas vraiment de travailler &agrave; l&rsquo;international comme professionnel de la plong&eacute;e. C&rsquo;est ce qui m&rsquo;a pouss&eacute; &agrave; m&rsquo;int&eacute;resser s&eacute;rieusement &agrave; SSI.',
         sections: [

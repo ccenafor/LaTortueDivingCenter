@@ -1,6 +1,12 @@
 (function () {
   var PREVIEW_POST_FLOOR = 18;
 
+  function decodeHTML(value) {
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = value || '';
+    return textarea.value;
+  }
+
   function byNewest(a, b) {
     return new Date(b.dateISO) - new Date(a.dateISO);
   }
@@ -9,11 +15,12 @@
     return Object.assign({}, post);
   }
 
-  function buildListingPosts(posts) {
+  function buildListingPosts(posts, options) {
     var listingPosts = posts.slice();
+    var allowPreviewDuplication = !options || options.allowPreviewDuplication !== false;
 
     // Keep the scroll experience meaningful while the listing still uses dummy content.
-    if (posts.length && posts.length <= 6) {
+    if (allowPreviewDuplication && posts.length && posts.length <= 6) {
       while (listingPosts.length < PREVIEW_POST_FLOOR) {
         posts.forEach(function (post) {
           if (listingPosts.length >= PREVIEW_POST_FLOOR) return;
@@ -25,9 +32,28 @@
     return listingPosts;
   }
 
-  function renderTags(tags) {
+  function escapeHTML(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function normalizeTag(value) {
+    return decodeHTML(value || '').trim().toLowerCase();
+  }
+
+  function buildTagHref(tag, blogIndexUrl) {
+    return blogIndexUrl + '?tag=' + encodeURIComponent(decodeHTML(tag));
+  }
+
+  function renderTags(tags, blogIndexUrl) {
     return (tags || [])
-      .map(function (tag) { return '<li><span>' + tag + '</span></li>'; })
+      .map(function (tag) {
+        return '<li><a class="blog-chip-link" href="' + escapeAttribute(buildTagHref(tag, blogIndexUrl)) + '" data-tag="' + escapeAttribute(decodeHTML(tag)) + '">' + tag + '</a></li>';
+      })
       .join('');
   }
 
@@ -54,20 +80,22 @@
     return '<img ' + attributes.join(' ') + '>';
   }
 
-  function renderListingCard(post, index, labels) {
+  function renderListingCard(post, index, labels, blogIndexUrl) {
+    var readArticleLabel = decodeHTML(labels.readArticle || 'Read article') + ': ' + decodeHTML(post.title);
+
     return [
       '<article class="blog-card blog-card--' + (post.listingClass || 'standard') + '">',
-      '  <a class="blog-card__link" href="' + post.url + '">',
-      '    <div class="blog-card__media">',
+      '  <div class="blog-card__link">',
+      '    <a class="blog-card__media" href="' + post.url + '" aria-label="' + escapeAttribute(readArticleLabel) + '">',
       '      ' + renderPostImage(post, 'lazy'),
-      '    </div>',
+      '    </a>',
       '    <div class="blog-card__overlay">',
       index === 0 ? '      <span class="blog-card__flag">' + labels.featuredLabel + '</span>' : '',
-      '      <ul class="blog-chip-list">' + renderTags(post.tags) + '</ul>',
-      '      <h3>' + post.title + '</h3>',
+      '      <ul class="blog-chip-list">' + renderTags(post.tags, blogIndexUrl) + '</ul>',
+      '      <h3><a class="blog-card__title-link" href="' + post.url + '">' + post.title + '</a></h3>',
       '      <div class="blog-card__meta">' + post.dateLabel + '</div>',
       '    </div>',
-      '  </a>',
+      '  </div>',
       '</article>'
     ].join('');
   }
@@ -84,8 +112,8 @@
     return 3;
   }
 
-  function initInfiniteBlogListing(grid, posts, labels) {
-    var listingPosts = buildListingPosts(posts);
+  function initInfiniteBlogListing(grid, posts, labels, blogIndexUrl, options) {
+    var listingPosts = buildListingPosts(posts, options);
     var cursor = 0;
     var observer = null;
     var sentinel = null;
@@ -143,7 +171,7 @@
 
       var startIndex = cursor;
       grid.insertAdjacentHTML('beforeend', nextPosts.map(function (post, index) {
-        return renderListingCard(post, startIndex + index, labels);
+        return renderListingCard(post, startIndex + index, labels, blogIndexUrl);
       }).join(''));
 
       cursor += nextPosts.length;
@@ -188,14 +216,14 @@
     appendBatch(getInitialBatchSize());
   }
 
-  function renderTeaserCard(post, labels) {
+  function renderTeaserCard(post, labels, blogIndexUrl) {
     return [
       '<article class="blog-teaser-card">',
       '  <a class="blog-teaser-card__media" href="' + post.url + '">',
       '    ' + renderPostImage(post, 'lazy'),
       '  </a>',
       '  <div class="blog-teaser-card__body">',
-      '    <ul class="blog-chip-list">' + renderTags(post.tags) + '</ul>',
+      '    <ul class="blog-chip-list">' + renderTags(post.tags, blogIndexUrl) + '</ul>',
       '    <h3><a href="' + post.url + '">' + post.title + '</a></h3>',
       '    <p>' + post.excerpt + '</p>',
       '    <a class="text-link" href="' + post.url + '">' + labels.readArticle + '</a>',
@@ -208,22 +236,60 @@
     if (!window.ltSiteContent || !window.ltSiteContent.posts) return;
 
     var labels = window.ltSiteContent.labels || {};
+    var isFrench = (window.location.pathname || '').indexOf('/fr/') === 0;
+    var blogIndexUrl = isFrench ? '/fr/blog.html' : '/blog.html';
+    var params = new URLSearchParams(window.location.search);
+    var selectedTag = decodeHTML(params.get('tag') || '').trim();
     var posts = window.ltSiteContent.posts.slice().sort(byNewest);
+    var filteredPosts = selectedTag
+      ? posts.filter(function (post) {
+          return (post.tags || []).some(function (tag) {
+            return normalizeTag(tag) === normalizeTag(selectedTag);
+          });
+        })
+      : posts;
     var grid = document.getElementById('blog-grid');
     if (grid) {
       grid.innerHTML = '';
-      initInfiniteBlogListing(grid, posts, labels);
+
+      var filterState = document.getElementById('blog-filter-state');
+      if (!filterState) {
+        filterState = document.createElement('div');
+        filterState.id = 'blog-filter-state';
+        filterState.className = 'blog-filter-state';
+        grid.parentNode.insertBefore(filterState, grid);
+      }
+
+      if (selectedTag) {
+        filterState.hidden = false;
+        filterState.innerHTML = [
+          '<span class="blog-filter-state__label">' + (labels.filteredByTag || 'Filtered by tag') + '</span>',
+          '<strong class="blog-filter-state__tag">' + escapeHTML(selectedTag) + '</strong>',
+          '<a class="text-link blog-filter-state__clear" href="' + blogIndexUrl + '">' + (labels.clearTagFilter || 'Show all posts') + '</a>'
+        ].join('');
+      } else {
+        filterState.hidden = true;
+        filterState.innerHTML = '';
+      }
+
+      if (!filteredPosts.length) {
+        grid.innerHTML = '<div class="blog-empty-state">' + escapeHTML(labels.noTaggedPosts || 'No posts match this tag yet.') + '</div>';
+      } else {
+        initInfiniteBlogListing(grid, filteredPosts, labels, blogIndexUrl, {
+          allowPreviewDuplication: !selectedTag
+        });
+      }
     }
 
     var count = document.getElementById('blog-count');
     if (count) {
-      count.textContent = posts.length + ((window.location.pathname || '').indexOf('/fr/') === 0 ? ' articles' : ' posts');
+      count.textContent = filteredPosts.length + (isFrench ? ' articles' : ' posts');
     }
 
     var teaser = document.querySelector('[data-blog-teaser-grid]');
     if (teaser) {
       teaser.innerHTML = posts.slice(0, 3).map(function (post) {
-        return renderTeaserCard(post, labels);
+        return renderTeaserCard(post, labels, blogIndexUrl);
       }).join('');
     }
   }

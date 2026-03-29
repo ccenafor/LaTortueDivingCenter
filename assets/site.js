@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const isFrench = () => /^\/fr(\/|$)/.test(window.location.pathname);
   const normalizePath = (path) => {
     if (!path) return '/';
@@ -76,7 +76,7 @@
       } else {
         langSwitch.href = `${frenchPath}${currentSuffix}`;
         langSwitch.setAttribute('hreflang', 'fr');
-        langSwitch.setAttribute('aria-label', 'Version franÃ§aise');
+        langSwitch.setAttribute('aria-label', 'Version française');
         langSwitch.dataset.targetLang = 'fr';
       }
     });
@@ -605,7 +605,7 @@
   const setupCourseToggles = () => {
     const lang = (document.documentElement.lang || 'en').toLowerCase();
     const moreLabel = lang === 'fr' ? 'Plus sur ce cours' : 'More about this course';
-    const hideLabel = lang === 'fr' ? 'Masquer les dÃ©tails' : 'Hide details';
+    const hideLabel = lang === 'fr' ? 'Masquer les détails' : 'Hide details';
     const cards = Array.from(document.querySelectorAll('.card'));
 
     const setCardState = (card, isOpen) => {
@@ -672,7 +672,7 @@
     if (!isDivingPage) return;
 
     const lang = (document.documentElement.lang || 'en').toLowerCase();
-    const bookLabel = lang === 'fr' ? 'RÃ©server une plongÃ©e' : 'Book a Dive';
+    const bookLabel = lang === 'fr' ? 'Réserver une plongée' : 'Book a Dive';
 
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
