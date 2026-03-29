@@ -177,10 +177,10 @@
     var sharedBanner = {
       src: '/assets/Pictures/Blog/Optimized/blog-post-banner.webp',
       alt: isFrench ? 'Banni&egrave;re du blog La Tortue Diving Center' : 'La Tortue Diving Center blog banner',
-      srcSet: '/assets/Pictures/Blog/Optimized/blog-post-banner-960.webp 960w, /assets/Pictures/Blog/Optimized/blog-post-banner.webp 1193w',
+      srcSet: '/assets/Pictures/Blog/Optimized/blog-post-banner-960.webp 960w, /assets/Pictures/Blog/Optimized/blog-post-banner.webp 1905w',
       sizes: '100vw',
-      width: 1193,
-      height: 658,
+      width: 1905,
+      height: 434,
       className: 'hero-banner-image',
       loading: 'eager',
       fetchPriority: 'high'

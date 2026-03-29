@@ -149,7 +149,7 @@
         slug: 'instructor-training-experience-la-tortue',
         url: '/blog-post.html?slug=instructor-training-experience-la-tortue',
         title: 'Turning Passion into a Global Career: My Instructor Training Experience with La Tortue',
-        excerpt: 'Antoine Bodier shares how Divemaster and instructor training at La Tortue turned a local limitation into an international diving career path.',
+        excerpt: 'Antoine Bodier shares how training at La Tortue turned an FFESSM limitation into a practical SSI path toward working internationally.',
         author: 'Antoine Bodier',
         dateISO: '2026-03-25',
         dateLabel: 'March 25, 2026',
@@ -168,21 +168,67 @@
         figureCaption: 'Training in Dauin meant applying skills underwater every day, not just talking about them in a classroom.',
         listingClass: 'tall',
         tags: ['SSI', 'ITC', 'Instructor', 'Dauin'],
-        searchText: 'antoine bodier instructor training course itc ssi divemaster dauin diving marine biologist international career ffessm',
-        intro: 'Before becoming a dive professional, I was already working in marine research as a marine biologist. Diving was part of my job, and I had completed FFESSM Level 4 in France, essentially the equivalent of a Divemaster. What I still lacked was a certification path that would let me work internationally as a dive professional, which is what pushed me to look seriously at SSI and eventually to La Tortue in Dauin.',
+        searchText: 'antoine bodier instructor training course itc ssi divemaster dauin diving marine biologist international career ffessm camille detavernier panglao',
+        intro: 'Before becoming a dive professional, I was already working in marine research as a marine biologist. Diving was part of my job, and I had completed FFESSM Level 4 in France, essentially a Divemaster-level certification. But there was a limitation: that path did not really allow me to work internationally as a dive professional. That is what pushed me to look seriously at SSI.',
         sections: [
           {
-            heading: 'Why I Chose to Go Pro Again',
+            heading: 'Why I Chose to Go Pro (Again)',
             paragraphs: [
-              'Switching to SSI was never about collecting one more certification. I wanted my experience and skills to become practical, recognized worldwide, and strong enough to support real work in the dive industry.',
-              'Compared with other systems, SSI made sense to me in terms of flexibility, cost, and the way the training is structured. I was looking for a path that would prepare me not only to pass, but to actually work.'
+              'Switching to SSI was not just about getting one more certification. It was about making my skills practical and recognized worldwide.',
+              'Compared with other systems, SSI offered something that made sense for me in terms of flexibility, cost, and the way the training is structured.'
             ]
           },
           {
             heading: 'Training in Dauin with La Tortue',
             paragraphs: [
-              'I chose La Tortue Diving in Dauin, and that environment made a real difference. Dauin is a small, laid-back town. After spending time in Panglao for my Instructor Examination, the contrast felt sharp. Dauin is calmer, less crowded, and much easier to focus in when you are training seriously.',
-              'At La Tortue, the facilities are efficiently prepared, with indoor and outdoor classroom spaces and a swimming pool nearby. What stood out most was the team. It is a professional environment, but also a supportive one. Dive pros help each other, and that creates a positive atmosphere when you are going through intensive training.'
+              'I chose La Tortue Diving in Dauin, and honestly, that environment made a huge difference. Dauin is a small, laid-back town. Compared with my short stay in Panglao for the Instructor Examination, the contrast felt sharp. Dauin is much more relaxed, less crowded, and ideal when you need to focus on training.',
+              'At La Tortue, the facilities are efficiently prepared and we have access to outdoor and indoor classrooms as well as a swimming pool nearby. What stood out most was the team. It is a very professional environment, but also a supportive one. Dive pros help each other, and that creates a really positive atmosphere when you are going through intensive training.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-pool-team.webp',
+            figureAlt: 'Antoine with instructors and other candidates during training',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-pool-team-640.webp 640w, /assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-pool-team.webp 1024w',
+            figureSizes: '(max-width: 1100px) 92vw, 720px',
+            figureWidth: 1024,
+            figureHeight: 769,
+            figureCaption: 'Training in Dauin meant working closely with instructors and other candidates, not learning in isolation.'
+          },
+          {
+            heading: 'Learning Across Languages',
+            paragraphs: [
+              'One other thing that mattered a lot for me was language.',
+              'I was able to do my Divemaster training in French, which made the learning process smoother in the beginning. At the same time, the team is flexible, and French instructors can switch between French and English depending on what you need.',
+              'During the Instructor Training Course (ITC), all sessions were conducted in English so the training stays aligned with the reality of working internationally. I still had the option to clarify certain concepts in French when needed. I was fortunate to complete my ITC in-house with Camille Detavernier, Instructor Trainer at La Tortue. Many candidates need to travel to other islands to find an Instructor Training Center, so having that opportunity on-site made the process much more convenient and accessible.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-camille.webp',
+            figureAlt: 'Antoine with Camille Detavernier during instructor training at La Tortue',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-camille-640.webp 640w, /assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-camille.webp 900w',
+            figureSizes: '(max-width: 1100px) 78vw, 620px',
+            figureWidth: 900,
+            figureHeight: 1200,
+            figureCaption: 'Completing the ITC in-house with Camille Detavernier made the process more direct and more accessible.'
+          },
+          {
+            heading: 'Real Experience, Not Just Theory',
+            paragraphs: [
+              'During my time with La Tortue, I logged around 250 dives, including 71 dives during my Divemaster training alone.',
+              'What I appreciated most is that the training was not just theoretical. I was able to apply what I learned in real-life situations by guiding dives, assisting students, and building confidence step by step.',
+              'The Instructor Training itself was intense but well structured: about two weeks of daily pool sessions and classroom work, with a rest day in between. It is demanding, but it prepares you properly.'
+            ]
+          },
+          {
+            heading: 'What Comes Next',
+            paragraphs: [
+              'After becoming an instructor, the journey does not stop there.',
+              'The next step for me is to continue with specialty certifications, which open even more opportunities.',
+              'At the end of March, I will be leaving the Philippines. By October, I expect to have an opportunity in Indonesia to train my girlfriend, who is already a Rescue diver with Deep and Nitrox specialties, and help her gain more experience. Eventually I may be able to guide her toward becoming a Divemaster. After that, who knows, we could come back to the Philippines.'
+            ]
+          },
+          {
+            heading: 'Looking Back',
+            paragraphs: [
+              'What I really appreciated about La Tortue is the balance between professionalism and atmosphere.',
+              'The team is skilled, supportive, and genuinely invested in your progress. Everything is organized with guest experience in mind while never losing sight of safety.',
+              'More than that, it is a place where you feel encouraged to grow into the role.'
             ],
             figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-graduation.webp',
             figureAlt: 'Antoine with the La Tortue team after completing instructor training',
@@ -190,42 +236,24 @@
             figureSizes: '(max-width: 1100px) 92vw, 720px',
             figureWidth: 1024,
             figureHeight: 769,
-            figureCaption: 'A supportive team and a professional environment made the intensive training feel grounded and achievable.'
-          },
-          {
-            heading: 'Learning Across Languages',
-            paragraphs: [
-              'Language mattered a lot in my training. I was able to do my Divemaster in French, which made the learning process smoother at the start. At the same time, the team was flexible enough to switch between French and English depending on what I needed.',
-              'During the Instructor Training Course, everything moved into English. At first, that was a challenge. In the end, it became one of the biggest advantages because it pushed me to become more comfortable teaching and communicating in English, which is essential if you want to work internationally.'
-            ]
-          },
-          {
-            heading: 'Real Experience, Not Just Theory',
-            paragraphs: [
-              'During my time with La Tortue, I logged around 250 dives, including 71 dives during my Divemaster training alone. What I appreciated most is that the program was never only theoretical. I was able to apply what I learned in real situations by guiding dives, assisting students, and building confidence step by step.',
-              'The Instructor Training itself was intense but well structured: around two weeks of daily pool sessions and classroom work, with a rest day in between. It is demanding, but it prepares you properly.'
-            ]
-          },
-          {
-            heading: 'What Comes Next',
-            paragraphs: [
-              'After becoming an instructor, the journey does not stop there. My next step is to continue with specialty certifications, which open even more opportunities.',
-              'At the end of March, I will leave the Philippines. By October, I should have an opportunity in Indonesia to train my girlfriend, who is already a Rescue diver with Deep and Nitrox specialties, and help her build more experience. Eventually I may be able to guide her toward becoming a Divemaster. After that, who knows, we could even come back to the Philippines.'
-            ]
-          },
-          {
-            heading: 'Looking Back',
-            paragraphs: [
-              'What I really appreciated about La Tortue is the balance between professionalism and atmosphere. The team is skilled, supportive, and genuinely invested in your progress. Everything is organized with guest experience in mind while never losing sight of safety.',
-              'More than that, it is a place where you feel encouraged to grow into the role rather than just complete a checklist.'
-            ]
+            figureCaption: 'The professional support around the training made the whole process feel grounded and achievable.'
           },
           {
             heading: 'If You Are Thinking About It',
             paragraphs: [
               'If you are hesitating about becoming a dive professional, I understand. I was already in the industry, and I still had doubts about taking this step.',
-              'But if your goal is to work in diving, travel, and build a career around the ocean, the right training changes everything. You do not need to have everything figured out. You just need to start. For me, doing my Divemaster and Instructor training with La Tortue turned a limitation into an opportunity and opened the door to a completely new chapter.'
-            ]
+              'But if your goal is to work in diving, travel, and build a career around the ocean, getting the right training makes all the difference. You do not need to have everything figured out. You just need to start.',
+              'For me, choosing to do my Divemaster and Instructor training with La Tortue Diving turned a limitation into an opportunity and opened the door to a completely new chapter.',
+              'Take the step. You might be closer than you think.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-instructor-center.webp',
+            figureAlt: 'Antoine standing in front of the SSI Instructor Training Center banner at La Tortue',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-instructor-center-640.webp 640w, /assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-instructor-center.webp 900w',
+            figureSizes: '(max-width: 1100px) 78vw, 620px',
+            figureWidth: 900,
+            figureHeight: 1200,
+            figureCaption: 'Taking the next step into professional training becomes far more concrete when the path is visible in front of you.'
+            
           }
         ]
       },
