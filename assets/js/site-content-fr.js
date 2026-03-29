@@ -149,7 +149,7 @@
         slug: 'instructor-training-experience-la-tortue',
         url: '/fr/blog-post.html?slug=instructor-training-experience-la-tortue',
         title: 'Transformer une passion en carri&egrave;re internationale : mon exp&eacute;rience de formation instructeur avec La Tortue',
-        excerpt: 'Antoine Bodier raconte comment sa formation Divemaster puis instructeur &agrave; La Tortue a transform&eacute; une limite professionnelle en opportunit&eacute; internationale.',
+        excerpt: 'Antoine Bodier raconte comment la formation Divemaster puis instructeur de La Tortue a transform&eacute; une limite FFESSM en voie SSI concr&egrave;te &agrave; l&rsquo;international.',
         author: 'Antoine Bodier',
         dateISO: '2026-03-25',
         dateLabel: '25 mars 2026',
@@ -168,21 +168,67 @@
         figureCaption: 'Se former &agrave; Dauin, c&rsquo;&eacute;tait appliquer les comp&eacute;tences sous l&rsquo;eau tous les jours, pas seulement en parler en salle.',
         listingClass: 'tall',
         tags: ['SSI', 'ITC', 'Instructeur', 'Dauin'],
-        searchText: 'antoine bodier formation instructeur itc ssi divemaster dauin plongee biologiste marin carriere internationale ffessm',
-        intro: 'Avant de devenir professionnel de la plong&eacute;e, je travaillais d&eacute;j&agrave; dans la recherche marine comme biologiste marin. La plong&eacute;e faisait partie de mon m&eacute;tier et j&rsquo;avais obtenu le niveau 4 FFESSM en France, soit l&rsquo;&eacute;quivalent d&rsquo;un Divemaster. Ce qui me manquait encore, c&rsquo;&eacute;tait une voie de certification reconnue qui me permettrait de travailler &agrave; l&rsquo;international comme professionnel de la plong&eacute;e. C&rsquo;est ce qui m&rsquo;a pouss&eacute; &agrave; m&rsquo;int&eacute;resser s&eacute;rieusement &agrave; SSI puis &agrave; La Tortue &agrave; Dauin.',
+        searchText: 'antoine bodier formation instructeur itc ssi divemaster dauin plongee biologiste marin carriere internationale ffessm camille detavernier panglao',
+        intro: 'Avant de devenir professionnel de la plong&eacute;e, je travaillais d&eacute;j&agrave; dans la recherche marine comme biologiste marin. La plong&eacute;e faisait partie de mon m&eacute;tier et j&rsquo;avais obtenu le niveau 4 FFESSM en France, soit une certification de niveau Divemaster. Mais il y avait une limite : ce parcours ne me permettait pas vraiment de travailler &agrave; l&rsquo;international comme professionnel de la plong&eacute;e. C&rsquo;est ce qui m&rsquo;a pouss&eacute; &agrave; m&rsquo;int&eacute;resser s&eacute;rieusement &agrave; SSI.',
         sections: [
           {
             heading: 'Pourquoi j&rsquo;ai choisi de repartir sur une voie pro',
             paragraphs: [
-              'Passer chez SSI n&rsquo;&eacute;tait pas une question d&rsquo;ajouter une certification de plus. Je voulais que mon exp&eacute;rience et mes comp&eacute;tences deviennent concr&egrave;tes, reconnues dans le monde entier et assez solides pour travailler r&eacute;ellement dans l&rsquo;industrie de la plong&eacute;e.',
-              'Compar&eacute; &agrave; d&rsquo;autres syst&egrave;mes, SSI avait du sens pour moi en termes de flexibilit&eacute;, de co&ucirc;t et de structure de formation. Je cherchais une voie qui me pr&eacute;parerait non seulement &agrave; r&eacute;ussir l&rsquo;examen, mais surtout &agrave; exercer.'
+              'Passer chez SSI n&rsquo;&eacute;tait pas seulement une mani&egrave;re d&rsquo;ajouter une certification de plus. Il s&rsquo;agissait de rendre mes comp&eacute;tences concr&egrave;tes et reconnues dans le monde entier.',
+              'Compar&eacute; &agrave; d&rsquo;autres syst&egrave;mes, SSI me paraissait coh&eacute;rent en termes de flexibilit&eacute;, de co&ucirc;t et de structure de formation.'
             ]
           },
           {
             heading: 'Se former &agrave; Dauin avec La Tortue',
             paragraphs: [
-              'J&rsquo;ai choisi La Tortue Diving &agrave; Dauin, et cet environnement a vraiment fait la diff&eacute;rence. Dauin est une petite ville calme. Apr&egrave;s avoir pass&eacute; du temps &agrave; Panglao pour mon Instructor Examination, le contraste m&rsquo;a saut&eacute; aux yeux. Dauin est plus pos&eacute;e, moins encombr&eacute;e, et bien plus propice &agrave; une formation s&eacute;rieuse.',
-              'Chez La Tortue, les installations sont bien pens&eacute;es, avec des espaces de cours en int&eacute;rieur et en ext&eacute;rieur ainsi qu&rsquo;une piscine &agrave; proximit&eacute;. Ce qui m&rsquo;a le plus marqu&eacute;, c&rsquo;est l&rsquo;&eacute;quipe. L&rsquo;environnement est professionnel, mais aussi tr&egrave;s solidaire. Les pros de la plong&eacute;e s&rsquo;entraident, et cela cr&eacute;e une atmosph&egrave;re vraiment positive quand on suit une formation intensive.'
+              'J&rsquo;ai choisi La Tortue Diving &agrave; Dauin et, honn&ecirc;tement, cet environnement a fait une vraie diff&eacute;rence. Dauin est une petite ville calme. Par rapport &agrave; mon court passage &agrave; Panglao pour l&rsquo;Instructor Examination, le contraste &eacute;tait net. Dauin est plus d&eacute;tendue, moins encombr&eacute;e, et id&eacute;ale pour rester concentr&eacute; sur une formation s&eacute;rieuse.',
+              'Chez La Tortue, les installations sont bien pr&eacute;par&eacute;es et nous avons acc&egrave;s &agrave; des salles de cours ext&eacute;rieures et int&eacute;rieures ainsi qu&rsquo;&agrave; une piscine &agrave; proximit&eacute;. Ce qui m&rsquo;a le plus marqu&eacute;, c&rsquo;est l&rsquo;&eacute;quipe. L&rsquo;environnement est tr&egrave;s professionnel, mais aussi solidaire. Les pros de la plong&eacute;e s&rsquo;entraident, ce qui cr&eacute;e une ambiance vraiment positive quand on suit une formation intensive.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-pool-team.webp',
+            figureAlt: 'Antoine avec les instructeurs et les autres candidats pendant la formation',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-pool-team-640.webp 640w, /assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-pool-team.webp 1024w',
+            figureSizes: '(max-width: 1100px) 92vw, 720px',
+            figureWidth: 1024,
+            figureHeight: 769,
+            figureCaption: 'Se former &agrave; Dauin, c&rsquo;&eacute;tait travailler au quotidien avec l&rsquo;&eacute;quipe et les autres candidats, pas apprendre en vase clos.'
+          },
+          {
+            heading: 'Apprendre entre deux langues',
+            paragraphs: [
+              'Un autre point important pour moi, c&rsquo;&eacute;tait la langue.',
+              'J&rsquo;ai pu faire mon Divemaster en fran&ccedil;ais, ce qui a rendu le d&eacute;but de l&rsquo;apprentissage plus fluide. En m&ecirc;me temps, l&rsquo;&eacute;quipe reste flexible et les instructeurs francophones peuvent passer du fran&ccedil;ais &agrave; l&rsquo;anglais selon les besoins.',
+              'Pendant l&rsquo;Instructor Training Course (ITC), toutes les sessions se faisaient en anglais afin de coller &agrave; la r&eacute;alit&eacute; d&rsquo;un travail international. Je pouvais clarifier certains points en fran&ccedil;ais quand c&rsquo;&eacute;tait n&eacute;cessaire. J&rsquo;ai eu la chance de faire mon ITC sur place avec Camille Detavernier, Instructor Trainer &agrave; La Tortue. Beaucoup de candidats doivent voyager vers d&rsquo;autres &icirc;les pour trouver un Instructor Training Center ; avoir cette opportunit&eacute; directement sur place a rendu le parcours beaucoup plus pratique et accessible.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-camille.webp',
+            figureAlt: 'Antoine avec Camille Detavernier pendant sa formation instructeur &agrave; La Tortue',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-camille-640.webp 640w, /assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-camille.webp 900w',
+            figureSizes: '(max-width: 1100px) 78vw, 620px',
+            figureWidth: 900,
+            figureHeight: 1200,
+            figureCaption: 'Faire l&rsquo;ITC sur place avec Camille Detavernier a rendu le parcours plus direct et plus accessible.'
+          },
+          {
+            heading: 'Une exp&eacute;rience r&eacute;elle, pas seulement de la th&eacute;orie',
+            paragraphs: [
+              'Pendant mon temps avec La Tortue, j&rsquo;ai enregistr&eacute; environ 250 plong&eacute;es, dont 71 plong&eacute;es rien que pendant mon Divemaster.',
+              'Ce que j&rsquo;ai le plus appr&eacute;ci&eacute;, c&rsquo;est que la formation n&rsquo;&eacute;tait pas seulement th&eacute;orique. J&rsquo;ai pu appliquer ce que j&rsquo;apprenais dans des situations r&eacute;elles : guider des plong&eacute;es, assister des &eacute;l&egrave;ves et gagner en confiance &eacute;tape par &eacute;tape.',
+              'La formation instructeur elle-m&ecirc;me &eacute;tait intense mais bien structur&eacute;e : environ deux semaines de sessions quotidiennes en piscine et en salle, avec un jour de repos au milieu. C&rsquo;est exigeant, mais cela pr&eacute;pare vraiment.'
+            ]
+          },
+          {
+            heading: 'La suite',
+            paragraphs: [
+              'Apr&egrave;s &ecirc;tre devenu instructeur, le parcours ne s&rsquo;arr&ecirc;te pas l&agrave;.',
+              'La prochaine &eacute;tape pour moi est de continuer avec des sp&eacute;cialit&eacute;s, qui ouvrent encore plus d&rsquo;opportunit&eacute;s.',
+              'Fin mars, je quitterai les Philippines. D&rsquo;ici octobre, je devrais avoir une opportunit&eacute; en Indon&eacute;sie pour former ma copine, qui est d&eacute;j&agrave; Rescue diver avec les sp&eacute;cialit&eacute;s Deep et Nitrox, et l&rsquo;aider &agrave; gagner encore plus d&rsquo;exp&eacute;rience. Avec le temps, je pourrai peut-&ecirc;tre l&rsquo;accompagner vers le niveau Divemaster. Et ensuite, qui sait, nous pourrions revenir aux Philippines.'
+            ]
+          },
+          {
+            heading: 'Avec le recul',
+            paragraphs: [
+              'Ce que j&rsquo;ai vraiment appr&eacute;ci&eacute; chez La Tortue, c&rsquo;est l&rsquo;&eacute;quilibre entre professionnalisme et ambiance.',
+              'L&rsquo;&eacute;quipe est comp&eacute;tente, bienveillante et sinc&egrave;rement investie dans votre progression. Tout est organis&eacute; avec l&rsquo;exp&eacute;rience client en t&ecirc;te, sans jamais perdre de vue la s&eacute;curit&eacute;.',
+              'Au-del&agrave; de cela, c&rsquo;est un endroit o&ugrave; l&rsquo;on se sent encourag&eacute; &agrave; grandir dans le r&ocirc;le.'
             ],
             figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-graduation.webp',
             figureAlt: 'Antoine avec l&rsquo;&eacute;quipe de La Tortue apr&egrave;s sa formation instructeur',
@@ -190,42 +236,24 @@
             figureSizes: '(max-width: 1100px) 92vw, 720px',
             figureWidth: 1024,
             figureHeight: 769,
-            figureCaption: 'Une &eacute;quipe soud&eacute;e et un cadre pro ont rendu la formation intensive plus concr&egrave;te et plus accessible.'
-          },
-          {
-            heading: 'Apprendre entre deux langues',
-            paragraphs: [
-              'La langue comptait beaucoup dans mon parcours. J&rsquo;ai pu faire mon Divemaster en fran&ccedil;ais, ce qui a rendu le d&eacute;but de l&rsquo;apprentissage plus fluide. En m&ecirc;me temps, l&rsquo;&eacute;quipe &eacute;tait suffisamment flexible pour passer du fran&ccedil;ais &agrave; l&rsquo;anglais selon les besoins.',
-              'Pendant l&rsquo;Instructor Training Course, tout s&rsquo;est fait en anglais. Au d&eacute;but, c&rsquo;&eacute;tait un vrai d&eacute;fi. Finalement, cela s&rsquo;est transform&eacute; en l&rsquo;un des plus grands avantages de la formation, parce que cela m&rsquo;a forc&eacute; &agrave; devenir plus &agrave; l&rsquo;aise pour enseigner et communiquer en anglais, ce qui est indispensable quand on veut travailler &agrave; l&rsquo;international.'
-            ]
-          },
-          {
-            heading: 'Une exp&eacute;rience r&eacute;elle, pas seulement de la th&eacute;orie',
-            paragraphs: [
-              'Pendant mon temps avec La Tortue, j&rsquo;ai enregistr&eacute; environ 250 plong&eacute;es, dont 71 plong&eacute;es rien que pendant mon Divemaster. Ce que j&rsquo;ai le plus appr&eacute;ci&eacute;, c&rsquo;est que la formation n&rsquo;&eacute;tait jamais uniquement th&eacute;orique. J&rsquo;ai pu appliquer ce que j&rsquo;apprenais dans des situations r&eacute;elles, en guidant des plong&eacute;es, en assistant des &eacute;l&egrave;ves et en gagnant en confiance &eacute;tape par &eacute;tape.',
-              'La formation instructeur elle-m&ecirc;me &eacute;tait intense mais tr&egrave;s bien structur&eacute;e&nbsp;: environ deux semaines de sessions quotidiennes en piscine et en salle, avec un jour de repos au milieu. C&rsquo;est exigeant, mais cela pr&eacute;pare vraiment.'
-            ]
-          },
-          {
-            heading: 'La suite',
-            paragraphs: [
-              'Apr&egrave;s devenir instructeur, le parcours ne s&rsquo;arr&ecirc;te pas l&agrave;. Mon prochain objectif est de continuer avec des sp&eacute;cialit&eacute;s, qui ouvrent encore plus d&rsquo;opportunit&eacute;s.',
-              'Fin mars, je quitterai les Philippines. En octobre, je devrais avoir une opportunit&eacute; en Indon&eacute;sie pour former ma copine, qui est d&eacute;j&agrave; Rescue diver avec les sp&eacute;cialit&eacute;s Deep et Nitrox, et l&rsquo;aider &agrave; prendre plus d&rsquo;exp&eacute;rience. Avec le temps, je pourrai peut-&ecirc;tre l&rsquo;accompagner vers le niveau Divemaster. Et ensuite, qui sait, nous pourrions m&ecirc;me revenir aux Philippines.'
-            ]
-          },
-          {
-            heading: 'Avec le recul',
-            paragraphs: [
-              'Ce que j&rsquo;ai vraiment appr&eacute;ci&eacute; chez La Tortue, c&rsquo;est l&rsquo;&eacute;quilibre entre professionnalisme et ambiance. L&rsquo;&eacute;quipe est comp&eacute;tente, bienveillante et sinc&egrave;rement investie dans votre progression. Tout est organis&eacute; avec l&rsquo;exp&eacute;rience client en t&ecirc;te, sans jamais perdre de vue la s&eacute;curit&eacute;.',
-              'Au-del&agrave; de cela, c&rsquo;est un endroit o&ugrave; l&rsquo;on se sent encourag&eacute; &agrave; prendre sa place dans le r&ocirc;le, pas seulement &agrave; cocher des cases.'
-            ]
+            figureCaption: 'L&rsquo;encadrement professionnel autour de la formation a rendu tout le parcours plus concret et plus atteignable.'
           },
           {
             heading: 'Si vous y pensez',
             paragraphs: [
-              'Si vous h&eacute;sitez &agrave; devenir professionnel de la plong&eacute;e, je comprends. J&rsquo;&eacute;tais d&eacute;j&agrave; dans ce milieu, et j&rsquo;avais quand m&ecirc;me des doutes avant de franchir cette &eacute;tape.',
-              'Mais si votre objectif est de travailler dans la plong&eacute;e, voyager et construire une carri&egrave;re autour de l&rsquo;oc&eacute;an, la bonne formation change tout. Vous n&rsquo;avez pas besoin d&rsquo;avoir tout compris d&rsquo;avance. Il faut simplement commencer. Pour moi, faire mon Divemaster puis ma formation instructeur avec La Tortue a transform&eacute; une limite en opportunit&eacute; et a ouvert la porte &agrave; un tout nouveau chapitre.'
-            ]
+              'Si vous h&eacute;sitez &agrave; devenir professionnel de la plong&eacute;e, je comprends. J&rsquo;&eacute;tais d&eacute;j&agrave; dans ce milieu, et j&rsquo;avais encore des doutes avant de franchir cette &eacute;tape.',
+              'Mais si votre objectif est de travailler dans la plong&eacute;e, voyager et construire une carri&egrave;re autour de l&rsquo;oc&eacute;an, la bonne formation change tout. Vous n&rsquo;avez pas besoin d&rsquo;avoir tout compris d&rsquo;avance. Il faut simplement commencer.',
+              'Pour moi, choisir de faire mon Divemaster puis ma formation instructeur avec La Tortue Diving a transform&eacute; une limite en opportunit&eacute; et a ouvert la porte &agrave; un tout nouveau chapitre.',
+              'Passez le cap. Vous en &ecirc;tes peut-&ecirc;tre plus proche que vous ne le pensez.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-instructor-center.webp',
+            figureAlt: 'Antoine devant la banni&egrave;re SSI Instructor Training Center &agrave; La Tortue',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-instructor-center-640.webp 640w, /assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-instructor-center.webp 900w',
+            figureSizes: '(max-width: 1100px) 78vw, 620px',
+            figureWidth: 900,
+            figureHeight: 1200,
+            figureCaption: 'Le passage vers une formation professionnelle devient beaucoup plus concret quand le chemin est visible juste devant soi.'
+            
           }
         ]
       },
