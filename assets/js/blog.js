@@ -1,6 +1,4 @@
 (function () {
-  var PREVIEW_POST_FLOOR = 18;
-
   function decodeHTML(value) {
     var textarea = document.createElement('textarea');
     textarea.innerHTML = value || '';
@@ -11,25 +9,8 @@
     return new Date(b.dateISO) - new Date(a.dateISO);
   }
 
-  function clonePost(post) {
-    return Object.assign({}, post);
-  }
-
   function buildListingPosts(posts, options) {
-    var listingPosts = posts.slice();
-    var allowPreviewDuplication = !options || options.allowPreviewDuplication !== false;
-
-    // Keep the scroll experience meaningful while the listing still uses dummy content.
-    if (allowPreviewDuplication && posts.length && posts.length <= 6) {
-      while (listingPosts.length < PREVIEW_POST_FLOOR) {
-        posts.forEach(function (post) {
-          if (listingPosts.length >= PREVIEW_POST_FLOOR) return;
-          listingPosts.push(clonePost(post));
-        });
-      }
-    }
-
-    return listingPosts;
+    return posts.slice();
   }
 
   function escapeHTML(value) {
