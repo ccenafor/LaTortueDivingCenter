@@ -215,6 +215,7 @@
     }).join('');
 
     var tagsHTML = renderTagList(post.tags, blogIndexUrl);
+    var relatedHTML = renderRelated(post, labels, blogIndexUrl);
 
     articleRoot.innerHTML = [
       '<section class="hero hero-blog-post">',
@@ -273,14 +274,16 @@
       '    </article>',
       '  </div>',
       '</section>',
-      '<section class="ocean blog-post-static-section blog-post-related-section">',
-      '  <div class="container">',
-      '    <div class="section-header section-header--left">',
-      '      <h2>' + labels.relatedPosts + '</h2>',
-      '    </div>',
-      '    <div class="blog-teaser-grid">' + renderRelated(post, labels, blogIndexUrl) + '</div>',
-      '  </div>',
-      '</section>'
+      relatedHTML ? [
+        '<section class="ocean blog-post-static-section blog-post-related-section">',
+        '  <div class="container">',
+        '    <div class="section-header section-header--left">',
+        '      <h2>' + labels.relatedPosts + '</h2>',
+        '    </div>',
+        '    <div class="blog-teaser-grid">' + relatedHTML + '</div>',
+        '  </div>',
+        '</section>'
+      ].join('') : ''
     ].join('');
   }
 

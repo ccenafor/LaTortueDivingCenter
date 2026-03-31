@@ -302,4 +302,8 @@
       { url: '/fr/blog.html', title: 'Blog', excerpt: 'Articles et notes sur la plong&eacute;e, la vie au resort, le voyage et le rythme quotidien &agrave; Dauin.', image: '/assets/Pictures/Backgrounds/optimized/World-class-Dauin-muck-Apo-Island-La-tortue-diving-center-home.webp', imageAlt: 'Blog de La Tortue', tags: ['Blog', 'Articles', 'Journal'], searchText: 'blog articles journal dauin apo island chambres restaurant voyage' }
     ]
   };
+
+  window.ltSiteContent.posts = (window.ltSiteContent.posts || []).filter(function (post) {
+    return post.slug === 'instructor-training-experience-la-tortue';
+  });
 })();
