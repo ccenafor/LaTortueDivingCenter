@@ -274,13 +274,6 @@
         imageSizes: '(max-width: 640px) 86vw, (max-width: 1100px) 42vw, 24vw',
         imageWidth: 900,
         imageHeight: 760,
-        figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp',
-        figureAlt: 'Plongeur au-dessus du r&eacute;cif &agrave; Apo Island',
-        figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-900.webp 900w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp 1180w',
-        figureSizes: '(max-width: 1100px) 92vw, 760px',
-        figureWidth: 1180,
-        figureHeight: 666,
-        figureCaption: 'Dauin et Apo Island sont deux tr&egrave;s belles plong&eacute;es, mais elles ne r&eacute;pondent pas du tout aux m&ecirc;mes attentes sous l&rsquo;eau.',
         listingClass: 'standard',
         tags: ['Dauin', 'Apo Island', 'Plong&eacute;e muck'],
         searchText: 'dauin apo island negros oriental plongee muck diving macro tortues recifs coraux derive photo sous marine seiches flamboyantes frogfish nudibranches',
@@ -294,13 +287,19 @@
               '<strong>Id&eacute;al pour :</strong> les amateurs de macro, les photographes sous-marins et les plongeurs qui aiment prendre leur temps.',
               '<strong>L&rsquo;ambiance :</strong> des plong&eacute;es du bord calmes, des briefings curieux et l&rsquo;impression que chaque zone de sable peut cacher quelque chose de rare.'
             ],
-            figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp',
-            figureAlt: 'Seiche flamboyante sur un site muck de Dauin',
-            figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp 1200w',
-            figureSizes: '(max-width: 1100px) 92vw, 720px',
-            figureWidth: 1200,
-            figureHeight: 900,
-            figureCaption: 'Dauin r&eacute;compense les plongeurs qui ralentissent assez pour voir les d&eacute;tails &eacute;tranges cach&eacute;s dans le sable.'
+            figures: [
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp', alt: 'Seiche flamboyante sur une plong&eacute;e muck &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Seiche flamboyante sur le sable &agrave; Dauin.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-hairy-frogfish.webp', alt: 'Hairy frogfish photographi&eacute; &agrave; San Miguel &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-hairy-frogfish-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-hairy-frogfish.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Hairy frogfish de San Miguel.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-costasiella.webp', alt: 'Costasiella sur une algue &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-costasiella-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-costasiella.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Costasiella &agrave; Dauin.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-wonderpus.webp', alt: 'Wonderpus &agrave; El Dorado &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-wonderpus-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-wonderpus.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 675, caption: 'Wonderpus &agrave; El Dorado.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-clown-warty-frogfish.webp', alt: 'Clown warty frogfish sur un site muck de Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-clown-warty-frogfish-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-clown-warty-frogfish.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Clown warty frogfish &agrave; Dauin.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-coral-crab.webp', alt: 'Crabe de corail cach&eacute; sous le r&eacute;cif &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-coral-crab-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-coral-crab.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 675, caption: 'Crabe de corail sous le r&eacute;cif.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-anemone-shrimp.webp', alt: 'Crevette d&rsquo;an&eacute;mone sur un corail mou &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-anemone-shrimp-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-anemone-shrimp.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Crevette d&rsquo;an&eacute;mone dans les faibles fonds.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-nembrotha.webp', alt: 'Nudibranche Nembrotha sur une paroi &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-nembrotha-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-nembrotha.webp 900w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 900, height: 1200, caption: 'Nudibranche Nembrotha &agrave; Dauin.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-pygmy-cuttlefish.webp', alt: 'Pygmy cuttlefish sur le sable &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-pygmy-cuttlefish-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-pygmy-cuttlefish.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Pygmy cuttlefish sur le muck.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-xenia-nudibranch.webp', alt: 'Nudibranche Xenia &agrave; Kagamas &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-xenia-nudibranch-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-xenia-nudibranch.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Nudibranche Xenia de Kagamas.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish.webp', alt: 'Frogfish &agrave; Masaplod &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Frogfish rep&eacute;r&eacute; &agrave; Masaplod.' }
+            ]
           },
           {
             heading: 'Apo Island : vaste et dynamique',
@@ -310,13 +309,13 @@
               '<strong>Id&eacute;al pour :</strong> la photo grand angle, les amateurs de r&eacute;cifs et les plongeurs qui veulent une vraie journ&eacute;e bateau.',
               '<strong>L&rsquo;ambiance :</strong> plus de mouvement, plus de relief et une journ&eacute;e organis&eacute;e autour de l&rsquo;&icirc;le plut&ocirc;t qu&rsquo;autour d&rsquo;une mise &agrave; l&rsquo;eau locale.'
             ],
-            figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp',
-            figureAlt: 'Tortue de mer au-dessus du r&eacute;cif &agrave; Apo Island',
-            figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp 1180w',
-            figureSizes: '(max-width: 1100px) 92vw, 720px',
-            figureWidth: 1180,
-            figureHeight: 665,
-            figureCaption: 'Apo Island, c&rsquo;est l&rsquo;endroit o&ugrave; la vue s&rsquo;ouvre sur les tortues, la structure du r&eacute;cif et un environnement en mouvement permanent.'
+            figures: [
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp', alt: 'Plongeur au-dessus du r&eacute;cif &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-900.webp 900w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp 1180w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1180, height: 666, caption: 'Grande sc&egrave;ne de r&eacute;cif &agrave; Apo Island.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp', alt: 'Tortue de mer au-dessus du r&eacute;cif &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp 1180w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1180, height: 665, caption: 'Tortue de mer sur le r&eacute;cif.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver.webp', alt: 'Plongeur approchant une patate de corail &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 802, caption: 'Plongeur devant une patate de corail.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp', alt: 'Jardin corallien &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Jardin corallien &agrave; Apo Island.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group.webp', alt: 'Groupe de plongeurs sur le bateau pendant une journ&eacute;e &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group.webp 1024w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1024, height: 769, caption: 'L&rsquo;&eacute;quipe sur le bateau pour une journ&eacute;e &agrave; Apo Island.' }
+            ]
           },
           {
             heading: 'Lequel choisir ?',
@@ -332,14 +331,7 @@
               'Nous recommandons g&eacute;n&eacute;ralement de passer d&rsquo;abord quelques jours &agrave; Dauin. Les mises &agrave; l&rsquo;eau du bord sont faciles, les conditions sont confortables, et c&rsquo;est l&rsquo;endroit parfait pour caler votre flottabilit&eacute;, votre consommation d&rsquo;air et vos rep&egrave;res dans l&rsquo;eau.',
               'Une fois votre rythme trouv&eacute;, Apo Island devient encore plus agr&eacute;able. Vous montez sur le bateau avec tout bien en place et vous pouvez simplement profiter de la d&eacute;rive, du r&eacute;cif et des tortues sans vous sentir press&eacute;.',
               'Ce n&rsquo;est pas vraiment un d&eacute;bat. C&rsquo;est un ordre logique. Commencez par Dauin, puis allez &agrave; Apo Island, et vous profiterez du meilleur des deux.'
-            ],
-            figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp',
-            figureAlt: 'Sc&egrave;ne de r&eacute;cif &agrave; Apo Island apr&egrave;s une journ&eacute;e de plong&eacute;e depuis Dauin',
-            figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp 1200w',
-            figureSizes: '(max-width: 1100px) 92vw, 720px',
-            figureWidth: 1200,
-            figureHeight: 900,
-            figureCaption: 'En les faisant dans le bon ordre, on profite de la finesse macro de Dauin et de l&rsquo;&eacute;nergie r&eacute;cifale d&rsquo;Apo Island.'
+            ]
           }
         ]
       },

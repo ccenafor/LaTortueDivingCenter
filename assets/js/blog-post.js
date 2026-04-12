@@ -65,6 +65,27 @@
     ].join('');
   }
 
+  function renderFigureGroup(figures) {
+    var items = (figures || []).filter(function (figure) {
+      return figure && figure.src;
+    });
+
+    if (!items.length) return '';
+
+    return '<div class="article-figure-grid">' + items.map(function (figure) {
+      return renderFigure({
+        src: figure.src,
+        alt: figure.alt,
+        srcSet: figure.srcSet,
+        sizes: figure.sizes,
+        width: figure.width,
+        height: figure.height,
+        caption: figure.caption,
+        loading: figure.loading || 'lazy'
+      });
+    }).join('') + '</div>';
+  }
+
   function findPost(slug) {
     var posts = (window.ltSiteContent && window.ltSiteContent.posts) || [];
     return posts.find(function (post) { return post.slug === slug; }) || null;
@@ -210,6 +231,7 @@
           height: section.figureHeight,
           caption: section.figureCaption
         } : null),
+        renderFigureGroup(section.figures),
         '</section>'
       ].join('');
     }).join('');
