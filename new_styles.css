@@ -4383,6 +4383,17 @@ section.sand.blog-listing-section .blog-index-shell--full {
   color: var(--color-text-muted);
 }
 
+.article-figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+
+.article-figure-grid .article-figure {
+  margin: 0;
+}
+
 .article-section + .article-section {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
@@ -4658,5 +4669,9 @@ section.sand.blog-listing-section .blog-index-shell--full {
 
   .article-content {
     padding: 1.1rem;
+  }
+
+  .article-figure-grid {
+    grid-template-columns: 1fr;
   }
 }
