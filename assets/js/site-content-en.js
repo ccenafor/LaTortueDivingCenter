@@ -261,6 +261,89 @@
         ]
       },
       {
+        slug: 'dauin-vs-apo-island-debate',
+        url: '/blog-post.html?slug=dauin-vs-apo-island-debate',
+        title: 'The Dauin vs. Apo Island Debate: What You Need to Know',
+        excerpt: 'Planning dives in Negros Oriental usually means choosing between Dauin and Apo Island. Both are excellent, but they serve completely different kinds of dive days.',
+        author: 'La Tortue Dive Team',
+        dateISO: '2026-04-13',
+        dateLabel: 'April 13, 2026',
+        image: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-listing-cover.webp',
+        imageAlt: 'Divers swimming together during a La Tortue trip in Dauin and Apo Island',
+        imageSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-listing-cover-360.webp 360w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-listing-cover.webp 900w',
+        imageSizes: '(max-width: 640px) 86vw, (max-width: 1100px) 42vw, 24vw',
+        imageWidth: 900,
+        imageHeight: 760,
+        figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp',
+        figureAlt: 'Diver above the reef at Apo Island',
+        figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-900.webp 900w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp 1180w',
+        figureSizes: '(max-width: 1100px) 92vw, 760px',
+        figureWidth: 1180,
+        figureHeight: 666,
+        figureCaption: 'Dauin and Apo Island are both strong dives, but they answer very different expectations in the water.',
+        listingClass: 'standard',
+        tags: ['Dauin', 'Apo Island', 'Muck diving'],
+        searchText: 'dauin apo island negros oriental muck diving macro diving turtles coral reefs drift dives wide angle underwater photography flamboyant cuttlefish frogfish nudibranch',
+        intro: 'If you are planning to dive in Negros Oriental, you will keep hearing two names compared: Dauin and Apo Island. Both are incredible, but in completely different ways. The better question is not which one is better. It is which one matches the kind of diving you actually want to do.',
+        sections: [
+          {
+            heading: 'Dauin: Slow, Strange, and Addictive',
+            paragraphs: [
+              'In Dauin, you descend onto sandy bottoms that can look quiet at first. There are natural reefs and artificial reefs too, but the signature experience is often that first minute over dark sand, waiting for the site to reveal itself.',
+              'Then the details start appearing: flamboyant cuttlefish doing a psychedelic dance, frogfish disguised as sponges, octopus shifting shape, and nudibranchs staring straight back at you. This is muck diving, and it becomes addictive very quickly.',
+              '<strong>Best for:</strong> Macro lovers, underwater photographers, and divers who enjoy slow, relaxed dives with time to search.',
+              '<strong>The vibe:</strong> Calm shore dives, curious briefings, and the feeling that every patch of sand might hide something rare.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp',
+            figureAlt: 'Flamboyant cuttlefish on a Dauin muck site',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp 1200w',
+            figureSizes: '(max-width: 1100px) 92vw, 720px',
+            figureWidth: 1200,
+            figureHeight: 900,
+            figureCaption: 'Dauin rewards divers who slow down enough to notice the strange details hidden in the sand.'
+          },
+          {
+            heading: 'Apo Island: Vast and Busy',
+            paragraphs: [
+              'Apo Island gives you almost the opposite sensation. The reef feels open, bright, and constantly in motion, with coral gardens, white sand, and more visual range from the moment you descend.',
+              'It is the place for turtles, sea snakes, broad reef scenes, and the energy of drift dives, wall dives, and schools of fish moving through the current.',
+              '<strong>Best for:</strong> Wide-angle photography, reef lovers, and divers who want a full boat-day atmosphere.',
+              '<strong>The vibe:</strong> Dynamic diving, more movement, and a day built around the island rather than a quick local entry.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp',
+            figureAlt: 'Sea turtle swimming over the reef at Apo Island',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp 1180w',
+            figureSizes: '(max-width: 1100px) 92vw, 720px',
+            figureWidth: 1180,
+            figureHeight: 665,
+            figureCaption: 'Apo Island is where the view opens back up into turtles, coral structure, and constant reef movement.'
+          },
+          {
+            heading: 'Which One Should You Choose?',
+            paragraphs: [
+              'If you can only do one, choose Dauin when rare marine life and close-up behavior are the priority. Choose Apo Island when reefs, turtles, and broader underwater scenery are what you came for.',
+              'If you can do both, that is the strongest combination. Many divers start in Dauin and then head to Apo Island, which makes the contrast even more rewarding.'
+            ]
+          },
+          {
+            heading: 'Our Recommendation: Start with Dauin, Then Go Wide',
+            paragraphs: [
+              'Together, Dauin and Apo Island give a fuller picture of diving in this part of the Philippines. One teaches you to slow down and notice the small, unexpected things. The other opens the view back up and shows the reef in motion.',
+              'We usually recommend a few days in Dauin first. Shore entries are easy, conditions are forgiving, and it is the perfect place to settle buoyancy, air consumption, and comfort in the water.',
+              'Once you have found your rhythm, Apo Island becomes even better. You board the boat with everything dialed in and can simply enjoy the drift, the reef, and the turtles without feeling rushed.',
+              'It is not really a debate. It is a sequence. Do Dauin first, then Apo Island, and you get the best of both.'
+            ],
+            figureImage: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp',
+            figureAlt: 'Coral reef scene at Apo Island after a day of diving from Dauin',
+            figureSrcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp 1200w',
+            figureSizes: '(max-width: 1100px) 92vw, 720px',
+            figureWidth: 1200,
+            figureHeight: 900,
+            figureCaption: 'Doing both in the right order gives divers the macro detail of Dauin and the big reef energy of Apo Island.'
+          }
+        ]
+      },
+      {
         slug: 'dumaguete-to-dauin-arrival',
         url: '/blog-post.html?slug=dumaguete-to-dauin-arrival',
         title: 'Getting from Dumaguete to Dauin Without Losing a Dive Day',
@@ -304,6 +387,6 @@
   };
 
   window.ltSiteContent.posts = (window.ltSiteContent.posts || []).filter(function (post) {
-    return post.slug === 'instructor-training-experience-la-tortue';
+    return ['instructor-training-experience-la-tortue', 'dauin-vs-apo-island-debate'].indexOf(post.slug) !== -1;
   });
 })();
