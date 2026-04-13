@@ -12,10 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@500;600;700&display=swap" as="style" onload="this.rel='stylesheet'">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="new_styles.css?v=20260315">
-<script>(function(){try{if(!localStorage.getItem('lt_cookie_consent')){document.documentElement.classList.add('cookie-pending');}}catch(e){}})();</script>
+<script src="assets/js/cookie-pending.js"></script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contact La Tortue Diving Center | Book Dives, Rooms, Dining">
 <meta property="og:description" content="Contact La Tortue Diving Center in Dauin for dive bookings, Apo trips, rooms, and beach dining reservations in Negros Oriental, Philippines.">
@@ -51,7 +50,7 @@
 <div id="menu-placeholder"></div>
 <section class="hero">
   <div class="banner">
-    <div class="ph hero" style="background-image:url('assets/Pictures/Backgrounds/optimized/Contact-banner-la-tortue-diving-center.webp');"><label>Add image here</label></div>
+    <div class="ph hero contact-hero-image"><label>Add image here</label></div>
   </div>
   <div class="inner container">
     <div>
@@ -106,7 +105,7 @@
           data-netlify-recaptcha="true"
           action="/contact-success.html">
           <input type="hidden" name="form-name" value="contact">
-          <p style="display:none;">
+          <p class="sr-only">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
           </p>
           <div class="form-grid">
@@ -167,13 +166,13 @@
       </div>
       <div class="card">
         <strong>Find Us</strong>
-        <div class="muted" style="display:grid;gap:0.35rem;">
+        <div class="muted contact-address-block">
           <span>Masaplod Norte, Dauin, Negros Oriental, Philippines</span>
           <span>Reception: +63 969 529 1297</span>
           <span>latortue.info@gmail.com</span>
         </div>
         <a class="map-embed" href="https://www.google.com/maps/place/La+Tortue+Diving+Center+%26+Beach+Resort+Dauin/@9.6552638,123.1917381,9.75z/data=!4m9!3m8!1s0x33ab43da96504d6d:0x2da4a0efd1771bc2!5m2!4m1!1i2!8m2!3d9.1849181!4d123.2619068!16s%2Fg%2F11fnwvjbvw?authuser=0&entry=ttu&g_ep=EgoyMDI1MTIwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
-          <img loading="lazy" decoding="async" src="assets/Pictures/Others/Transportation-visayas-la-tortue-diving-center-dauin.webp" alt="Directions to La Tortue Diving Center in Negros Oriental" style="display:block;width:100%;height:600px;object-fit:cover;border:0;">
+          <img class="contact-map-image" loading="lazy" decoding="async" src="assets/Pictures/Others/Transportation-visayas-la-tortue-diving-center-dauin.webp" alt="Directions to La Tortue Diving Center in Negros Oriental">
         </a>
         <div class="contact-social">
           <a class="btn btn-primary" href="https://www.facebook.com/scubadivingdauin" target="_blank">Facebook</a>
