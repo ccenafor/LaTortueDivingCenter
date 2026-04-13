@@ -3335,6 +3335,17 @@ form .row {
 .contact-social .btn {
   margin-top: 0;
 }
+.contact-address-block {
+  display: grid;
+  gap: 0.35rem;
+}
+.contact-map-image {
+  display: block;
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  border: 0;
+}
   .form-status {
     display: block;
     margin-top: 0.35rem;
@@ -3551,6 +3562,9 @@ section.hero {
     width: 100%;
     opacity: 0.3;
     border-radius: 0;
+}
+.hero .banner .ph.hero.contact-hero-image {
+  background-image: url('assets/Pictures/Backgrounds/optimized/Contact-banner-la-tortue-diving-center.webp');
 }
 .hero .inner.container {
   position: relative;
