@@ -4394,6 +4394,25 @@ section.sand.blog-listing-section .blog-index-shell--full {
   margin: 0;
 }
 
+.article-list-block {
+  margin: 1rem 0 1.35rem;
+}
+
+.article-list-block__title {
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.article-bullet-list {
+  margin: 0;
+  padding-left: 1.35rem;
+}
+
+.article-bullet-list li + li {
+  margin-top: 0.35rem;
+}
+
 .article-section + .article-section {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
