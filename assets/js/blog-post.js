@@ -86,6 +86,21 @@
     }).join('') + '</div>';
   }
 
+  function renderBulletList(section) {
+    if (!section || !section.bulletItems || !section.bulletItems.length) return '';
+
+    return [
+      '<div class="article-list-block">',
+      section.bulletTitle ? '  <p class="article-list-block__title">' + section.bulletTitle + '</p>' : '',
+      '  <ul class="article-bullet-list">',
+      (section.bulletItems || []).map(function (item) {
+        return '    <li>' + item + '</li>';
+      }).join(''),
+      '  </ul>',
+      '</div>'
+    ].join('');
+  }
+
   function findPost(slug) {
     var posts = (window.ltSiteContent && window.ltSiteContent.posts) || [];
     return posts.find(function (post) { return post.slug === slug; }) || null;
@@ -222,6 +237,7 @@
         '<section class="article-section">',
         '  <h2>' + section.heading + '</h2>',
         (section.paragraphs || []).map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join(''),
+        renderBulletList(section),
         renderFigure(section.figureImage ? {
           src: section.figureImage,
           alt: section.figureAlt,

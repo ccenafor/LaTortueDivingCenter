@@ -263,8 +263,8 @@
       {
         slug: 'dauin-vs-apo-island-debate',
         url: '/fr/blog-post.html?slug=dauin-vs-apo-island-debate',
-        title: 'Le duel entre Dauin et Apo Island : ce qu&rsquo;il faut savoir',
-        excerpt: 'Pr&eacute;parer des plong&eacute;es &agrave; Negros Oriental revient souvent &agrave; choisir entre Dauin et Apo Island. Les deux sont excellents, mais ils correspondent &agrave; des journ&eacute;es de plong&eacute;e tr&egrave;s diff&eacute;rentes.',
+        title: 'Le d&eacute;bat Dauin vs Apo Island : ce qu&rsquo;il faut savoir',
+        excerpt: 'Dauin et Apo Island sont tous deux excellents, mais Dauin offre la plus grande diversit&eacute; sur une seule portion de c&ocirc;te, entre muck, r&eacute;cifs et plong&eacute;es faciles d&rsquo;acc&egrave;s.',
         author: '&Eacute;quipe plong&eacute;e La Tortue',
         dateISO: '2026-04-13',
         dateLabel: '13 avril 2026',
@@ -276,16 +276,24 @@
         imageHeight: 760,
         listingClass: 'standard',
         tags: ['Dauin', 'Apo Island', 'Plong&eacute;e muck'],
-        searchText: 'dauin apo island negros oriental plongee muck diving macro tortues recifs coraux derive photo sous marine seiches flamboyantes frogfish nudibranches',
-        intro: 'Si vous pr&eacute;parez un s&eacute;jour plong&eacute;e &agrave; Negros Oriental, vous entendrez souvent les m&ecirc;mes deux noms revenir : Dauin et Apo Island. Les deux sont remarquables, mais pas pour les m&ecirc;mes raisons. La vraie question n&rsquo;est pas de savoir lequel est meilleur. Il faut plut&ocirc;t se demander lequel correspond au type de plong&eacute;e que vous cherchez vraiment.',
+        searchText: 'dauin apo island negros oriental plongee muck diving macro recifs artificiels recifs naturels plongee du bord tortues coraux derive photo sous marine 400 tortues marines',
+        intro: 'Si vous pr&eacute;voyez de plonger &agrave; Negros Oriental, vous entendrez souvent deux noms : Dauin et Apo Island. Les deux sont incroyables &agrave; leur mani&egrave;re. Mais au lieu de demander lequel est meilleur, une meilleure question est : lequel vous offre le plus de diversit&eacute; ?',
         sections: [
           {
-            heading: 'Dauin : lent, &eacute;trange et addictif',
+            heading: 'Dauin : vari&eacute;t&eacute;, d&eacute;tail et d&eacute;couvertes sans fin',
             paragraphs: [
-              'A Dauin, on descend souvent sur des fonds sableux qui semblent assez calmes au premier regard. Il y a aussi des r&eacute;cifs naturels et artificiels, mais l&rsquo;exp&eacute;rience signature reste souvent cette premi&egrave;re minute au-dessus du sable noir, quand le site commence &agrave; se r&eacute;v&eacute;ler.',
-              'Puis les d&eacute;tails apparaissent : des seiches flamboyantes qui dansent, des frogfish d&eacute;guis&eacute;s en &eacute;ponges, des poulpes qui changent de forme et des nudibranches qui semblent vous regarder en retour. C&rsquo;est la plong&eacute;e muck, et elle devient vite tr&egrave;s addictive.',
-              '<strong>Id&eacute;al pour :</strong> les amateurs de macro, les photographes sous-marins et les plongeurs qui aiment prendre leur temps.',
-              '<strong>L&rsquo;ambiance :</strong> des plong&eacute;es du bord calmes, des briefings curieux et l&rsquo;impression que chaque zone de sable peut cacher quelque chose de rare.'
+              'Le long de la c&ocirc;te de Dauin, on trouve des r&eacute;cifs naturels, des r&eacute;cifs artificiels et de longues zones sableuses. On descend parfois sur un fond qui n&rsquo;a rien de spectaculaire au premier regard. Puis on attend une minute, et tout s&rsquo;anime.',
+              'De minuscules seiches flamboyantes qui dansent, des frogfish d&eacute;guis&eacute;s en &eacute;ponges, des poulpes qui changent de forme sous vos yeux. Nudibranches, crevettes, crabes : chacun ressemble &agrave; une petite œuvre naturelle.',
+              'C&rsquo;est la plong&eacute;e muck, mais ce n&rsquo;est qu&rsquo;une partie de l&rsquo;histoire.',
+              'Ce qui fait vraiment la force de Dauin, c&rsquo;est que cela ne s&rsquo;arr&ecirc;te pas l&agrave;. Sur la m&ecirc;me c&ocirc;te, on trouve aussi de beaux syst&egrave;mes de r&eacute;cifs, des structures artificielles pleines de vie et un acc&egrave;s du bord tr&egrave;s facile. Vous n&rsquo;&ecirc;tes pas limit&eacute; &agrave; un seul type de plong&eacute;e : vous avez &agrave; la fois la macro et le r&eacute;cif au m&ecirc;me endroit.',
+              '<strong>L&rsquo;ambiance :</strong> des plong&eacute;es du bord tranquilles, curieuses, un peu geek dans le bon sens du terme. Vous scrutez le sable comme un chasseur de tr&eacute;sors, avec des r&eacute;cifs &agrave; quelques coups de palmes.'
+            ],
+            bulletTitle: 'Id&eacute;al pour :',
+            bulletItems: [
+              'Les amateurs de macro et les photographes sous-marins',
+              'Observer des tortues dans le peu profond &mdash; plus de 400 tortues marines ont &eacute;t&eacute; recens&eacute;es &agrave; Dauin',
+              'Les plongeurs qui veulent de la vari&eacute;t&eacute; sur plusieurs plong&eacute;es',
+              'Les d&eacute;butants comme les plongeurs exp&eacute;riment&eacute;s'
             ],
             figures: [
               { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp', alt: 'Seiche flamboyante sur une plong&eacute;e muck &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-macro.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Seiche flamboyante sur le sable &agrave; Dauin.' },
@@ -302,35 +310,36 @@
             ]
           },
           {
-            heading: 'Apo Island : vaste et dynamique',
+            heading: 'Apo Island : orient&eacute;e r&eacute;cif et pleine d&rsquo;&eacute;nergie',
             paragraphs: [
-              'Apo Island offre presque la sensation inverse. Le r&eacute;cif y para&icirc;t plus ouvert, plus lumineux et constamment en mouvement, avec des jardins coralliens, du sable blanc et davantage d&rsquo;ampleur visuelle d&egrave;s la descente.',
-              'C&rsquo;est l&rsquo;endroit des tortues, des serpents de mer, des grandes sc&egrave;nes de r&eacute;cif et de l&rsquo;&eacute;nergie des plong&eacute;es d&eacute;rivantes, des tombants et des bancs de poissons dans le courant.',
-              '<strong>Id&eacute;al pour :</strong> la photo grand angle, les amateurs de r&eacute;cifs et les plongeurs qui veulent une vraie journ&eacute;e bateau.',
-              '<strong>L&rsquo;ambiance :</strong> plus de mouvement, plus de relief et une journ&eacute;e organis&eacute;e autour de l&rsquo;&icirc;le plut&ocirc;t qu&rsquo;autour d&rsquo;une mise &agrave; l&rsquo;eau locale.'
+              'Apo Island offre une exp&eacute;rience tr&egrave;s diff&eacute;rente. De grands r&eacute;cifs coralliens, un mouvement permanent et une biodiversit&eacute; impressionnante : plus de 600 esp&egrave;ces de coraux y cr&eacute;ent un paysage sous-marin tr&egrave;s vibrant.',
+              'Visuellement, c&rsquo;est spectaculaire et plein de vie, avec des tortues, des serpents de mer et des bancs de poissons qui circulent dans des syst&egrave;mes r&eacute;cifaux forts et en excellente sant&eacute;.',
+              '<strong>L&rsquo;ambiance :</strong> des sorties bateau dynamiques, une journ&eacute;e compl&egrave;te en mer pour profiter pleinement de l&rsquo;&eacute;nergie de l&rsquo;&icirc;le.'
+            ],
+            bulletTitle: 'Id&eacute;al pour :',
+            bulletItems: [
+              'Les coraux, les serpents de mer et les poissons de r&eacute;cif',
+              'La photographie grand angle',
+              'Les plongeurs qui aiment les plong&eacute;es d&eacute;rivantes et les tombants'
             ],
             figures: [
-              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp', alt: 'Plongeur au-dessus du r&eacute;cif &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-900.webp 900w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header.webp 1180w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1180, height: 666, caption: 'Grande sc&egrave;ne de r&eacute;cif &agrave; Apo Island.' },
-              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp', alt: 'Tortue de mer au-dessus du r&eacute;cif &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle.webp 1180w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1180, height: 665, caption: 'Tortue de mer sur le r&eacute;cif.' },
-              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver.webp', alt: 'Plongeur approchant une patate de corail &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 802, caption: 'Plongeur devant une patate de corail.' },
-              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp', alt: 'Jardin corallien &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Jardin corallien &agrave; Apo Island.' },
-              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group.webp', alt: 'Groupe de plongeurs sur le bateau pendant une journ&eacute;e &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group.webp 1024w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1024, height: 769, caption: 'L&rsquo;&eacute;quipe sur le bateau pour une journ&eacute;e &agrave; Apo Island.' }
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-v2.webp', alt: 'Plongeur au-dessus du r&eacute;cif &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-v2-900.webp 900w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-header-v2.webp 1180w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1180, height: 666, caption: 'Grande sc&egrave;ne de r&eacute;cif &agrave; Apo Island.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-v2.webp', alt: 'Tortue de mer au-dessus du r&eacute;cif &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-v2-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-turtle-v2.webp 1180w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1180, height: 665, caption: 'Tortue de mer sur le r&eacute;cif.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver-v2.webp', alt: 'Plongeur approchant une patate de corail &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver-v2-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-reef-diver-v2.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 802, caption: 'Plongeur devant une patate de corail.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-v2.webp', alt: 'Jardin corallien &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-v2-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-coral-v2.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Jardin corallien &agrave; Apo Island.' },
+              { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group-v2.webp', alt: 'Groupe de plongeurs sur le bateau pendant une journ&eacute;e &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group-v2-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-boat-group-v2.webp 1024w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1024, height: 769, caption: 'L&rsquo;&eacute;quipe sur le bateau pour une journ&eacute;e &agrave; Apo Island.' }
             ]
           },
           {
-            heading: 'Lequel choisir ?',
+            heading: 'Conclusion',
             paragraphs: [
-              'Si vous ne pouvez en faire qu&rsquo;un, choisissez Dauin si votre priorit&eacute; est la vie marine rare et les observations de pr&egrave;s. Choisissez Apo Island si vous venez surtout pour les r&eacute;cifs, les tortues et les grands paysages sous-marins.',
-              'Si vous pouvez faire les deux, c&rsquo;est la meilleure combinaison. Beaucoup de plongeurs commencent &agrave; Dauin puis partent &agrave; Apo Island, et le contraste rend les deux exp&eacute;riences encore plus marquantes.'
-            ]
-          },
-          {
-            heading: 'Notre recommandation : commencez par Dauin, puis ouvrez le cadre',
-            paragraphs: [
-              'Ensemble, Dauin et Apo Island donnent une vision beaucoup plus compl&egrave;te de la plong&eacute;e dans cette r&eacute;gion des Philippines. L&rsquo;un apprend &agrave; ralentir et &agrave; remarquer l&rsquo;inattendu. L&rsquo;autre rouvre le champ visuel et montre le r&eacute;cif dans tout son mouvement.',
-              'Nous recommandons g&eacute;n&eacute;ralement de passer d&rsquo;abord quelques jours &agrave; Dauin. Les mises &agrave; l&rsquo;eau du bord sont faciles, les conditions sont confortables, et c&rsquo;est l&rsquo;endroit parfait pour caler votre flottabilit&eacute;, votre consommation d&rsquo;air et vos rep&egrave;res dans l&rsquo;eau.',
-              'Une fois votre rythme trouv&eacute;, Apo Island devient encore plus agr&eacute;able. Vous montez sur le bateau avec tout bien en place et vous pouvez simplement profiter de la d&eacute;rive, du r&eacute;cif et des tortues sans vous sentir press&eacute;.',
-              'Ce n&rsquo;est pas vraiment un d&eacute;bat. C&rsquo;est un ordre logique. Commencez par Dauin, puis allez &agrave; Apo Island, et vous profiterez du meilleur des deux.'
+              'Entre Dauin et Apo Island, l&rsquo;une offre clairement plus de diversit&eacute;.',
+              'Apo Island est superbe pour l&rsquo;exploration de r&eacute;cifs.',
+              'Dauin vous donne les r&eacute;cifs et le muck, une vie marine rare et des conditions de plong&eacute;e faciles d&rsquo;acc&egrave;s.',
+              'Donc si vous n&rsquo;avez qu&rsquo;une seule journ&eacute;e pour plonger, vous avez plus de chances de voir davantage &agrave; Dauin. C&rsquo;est ce qui en fait une base si forte : ce n&rsquo;est pas une seule exp&eacute;rience, mais plusieurs mondes de plong&eacute;e sur une seule c&ocirc;te.',
+              'Notre recommandation ? Commencez et restez &agrave; Dauin, puis consacrez une journ&eacute;e &agrave; Apo Island pour vivre une exp&eacute;rience compl&egrave;te de Negros Oriental.',
+              'Apr&egrave;s avoir explor&eacute; la c&ocirc;te, o&ugrave; les mises &agrave; l&rsquo;eau du bord sont faciles et les conditions id&eacute;ales pour se mettre en confiance, vous d&eacute;velopperez votre œil pour la vie marine, affinerez vos comp&eacute;tences et d&eacute;couvrirez une plus grande vari&eacute;t&eacute; de styles de plong&eacute;e sans changer d&rsquo;endroit.',
+              'Si vous avez besoin d&rsquo;aide pour planifier votre prochain s&eacute;jour plong&eacute;e, contactez-nous pour un itin&eacute;raire sur mesure.'
             ]
           }
         ]
