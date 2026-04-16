@@ -291,6 +291,7 @@
       '    </aside>',
       '    <article class="article-content">',
       '      <p class="article-intro">' + post.intro + '</p>',
+      renderFigureGroup(post.figures),
       renderFigure(post.figureImage ? {
         src: post.figureImage,
         alt: post.figureAlt,
