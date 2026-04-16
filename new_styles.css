@@ -760,7 +760,7 @@ header.nav.nav-transparent .burger i::after {
   flex-direction: column;
   justify-content: center;
   align-self: center;
-  padding-bottom: 4px; /* space for the dropdown so hover stays active */
+  padding-bottom: 0;
 }
 .lang-current,
 .lang-option {
@@ -777,21 +777,38 @@ header.nav.nav-transparent .burger i::after {
   pointer-events: none;
 }
 .lang-option {
-  display: none;
+  display: inline-flex;
   position: absolute;
-  top: 18px;
-  left: 0;
-  padding-top: 6px;
+  top: calc(100% - 2px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  padding: 10px 8px 4px;
   z-index: 5;
   background: transparent;
   border: none;
   border-radius: 0;
-  padding: 4px 0;
   box-shadow: none;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease, visibility 0s linear .16s;
+}
+.lang-option::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 8px;
 }
 .nav-locale:hover .lang-option,
 .nav-locale:focus-within .lang-option {
-  display: inline-flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
 }
 header.nav.nav-transparent .nav-locale .lang-current,
 header.nav.nav-transparent .nav-locale .lang-option {
@@ -832,6 +849,13 @@ header.nav.nav-transparent .nav-locale .lang-option {
   border: none;
   box-shadow: none;
   padding: 0;
+  left: auto;
+  transform: none;
+  opacity: 0.9;
+  visibility: visible;
+  pointer-events: auto;
+  transition: none;
+  white-space: normal;
 }
 .mpanel .lang-current {
   font-weight: 800;
@@ -842,7 +866,9 @@ header.nav.nav-transparent .nav-locale .lang-option {
 }
 .mpanel .lang-option {
   font-weight: 700;
-  opacity: 0.9;
+}
+.mpanel .lang-option::before {
+  display: none;
 }
 .mpanel .lang-current,
 .mpanel .lang-option {
