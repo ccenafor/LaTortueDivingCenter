@@ -753,8 +753,8 @@ header.nav.nav-transparent .burger i::after {
 /* Language switch */
 .nav-locale {
   display: none;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 2px;
   margin-left: 8px;
   position: relative;
   flex-direction: column;
@@ -766,11 +766,13 @@ header.nav.nav-transparent .burger i::after {
 .lang-option {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-start;
+  gap: 4px;
   color: var(--color-primary);
   font-size: 13px;
   font-weight: 700;
   line-height: 1;
+  text-decoration: none;
   font-family: "Manrope", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 .lang-current {
@@ -779,10 +781,10 @@ header.nav.nav-transparent .burger i::after {
 .lang-option {
   display: inline-flex;
   position: absolute;
-  top: calc(100% - 3px);
-  left: 50%;
-  transform: translate(-50%, -2px);
-  padding: 3px 8px 0;
+  top: 100%;
+  left: 0;
+  transform: translateY(-1px);
+  padding: 2px 0 0;
   z-index: 5;
   background: transparent;
   border: none;
@@ -795,19 +797,15 @@ header.nav.nav-transparent .burger i::after {
   transition: opacity .16s ease, transform .16s ease, visibility 0s linear .16s;
 }
 .lang-option::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -7px;
-  height: 7px;
+  display: none;
 }
+.nav-locale.is-open .lang-option,
 .nav-locale:hover .lang-option,
 .nav-locale:focus-within .lang-option {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
   transition-delay: 0s;
 }
 header.nav.nav-transparent .nav-locale .lang-current,
