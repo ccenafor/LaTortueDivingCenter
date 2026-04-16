@@ -779,10 +779,10 @@ header.nav.nav-transparent .burger i::after {
 .lang-option {
   display: inline-flex;
   position: absolute;
-  top: calc(100% - 2px);
+  top: calc(100% - 3px);
   left: 50%;
-  transform: translate(-50%, -4px);
-  padding: 10px 8px 4px;
+  transform: translate(-50%, -2px);
+  padding: 3px 8px 0;
   z-index: 5;
   background: transparent;
   border: none;
@@ -799,8 +799,8 @@ header.nav.nav-transparent .burger i::after {
   position: absolute;
   left: 0;
   right: 0;
-  top: -8px;
-  height: 8px;
+  top: -7px;
+  height: 7px;
 }
 .nav-locale:hover .lang-option,
 .nav-locale:focus-within .lang-option {
