@@ -81,6 +81,33 @@
       }
     });
 
+    document.querySelectorAll('.nav-locale').forEach(locale => {
+      if (locale.closest('.mpanel')) return;
+
+      let closeTimer = null;
+      const openLocale = () => {
+        if (closeTimer) {
+          window.clearTimeout(closeTimer);
+          closeTimer = null;
+        }
+        locale.classList.add('is-open');
+      };
+      const closeLocale = () => {
+        if (closeTimer) window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(() => {
+          locale.classList.remove('is-open');
+        }, 180);
+      };
+
+      locale.addEventListener('mouseenter', openLocale);
+      locale.addEventListener('mouseleave', closeLocale);
+      locale.addEventListener('focusin', openLocale);
+      locale.addEventListener('focusout', event => {
+        if (locale.contains(event.relatedTarget)) return;
+        closeLocale();
+      });
+    });
+
     const header = document.querySelector('header.nav');
     if (header) {
       const updateNavState = () => header.classList.toggle('nav-transparent', window.scrollY <= 90);
