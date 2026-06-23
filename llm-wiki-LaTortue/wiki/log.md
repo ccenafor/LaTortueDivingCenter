@@ -24,4 +24,6 @@ Updated About page search keywords from the previous staff keyword to Charlie in
 
 Added the Apo Island snorkeler rate to the fun-dives pricing page and documented it in the fun-dives/Apo wiki page: PHP 2,500 including food, marine fees, and snorkel gear, with the snorkeling guide excluded (source: diving-fun-dives.html; source: fr/diving-fun-dives.html; source: llm-wiki-LaTortue/wiki/fun-dives-and-apo.md).
 
+Renamed the fun-dives pricing subsection from Apo Island snorkelers to Snorkeling in Apo Island on the English page and mirrored the label on the French page (source: diving-fun-dives.html; source: fr/diving-fun-dives.html).
+
 Updated the wiki table of contents timestamp and kept the existing page links unchanged because the affected knowledge pages already existed (source: llm-wiki-LaTortue/AGENT.md; source: llm-wiki-LaTortue/wiki/index.md).

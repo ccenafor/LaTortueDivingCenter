@@ -12,7 +12,7 @@ The fun-dives page targets certified divers with guided coastal dives, night div
 
 ## Published Certified-Diver Prices
 
-The current fun-dive price list publishes Fun Dive at PHP 1,900, Night Dive at PHP 2,200, Refresher Dive at PHP 2,700, Apo Island Trip at PHP 6,200, private dive master/instructor at +PHP 500, private Apo guide at +PHP 2,500, and Nitrox Tank / 15 L Air Tank at +PHP 200. Apo Island snorkelers are listed separately at PHP 2,500 including food, marine fees, and snorkel gear, with no snorkeling guide included (source: diving-fun-dives.html; source: fr/diving-fun-dives.html).
+The current fun-dive price list publishes Fun Dive at PHP 1,900, Night Dive at PHP 2,200, Refresher Dive at PHP 2,700, Apo Island Trip at PHP 6,200, private dive master/instructor at +PHP 500, private Apo guide at +PHP 2,500, and Nitrox Tank / 15 L Air Tank at +PHP 200. Snorkeling in Apo Island is listed separately at PHP 2,500 including food, marine fees, and snorkel gear, with no snorkeling guide included (source: diving-fun-dives.html; source: fr/diving-fun-dives.html).
 
 The fun-dive page states that prices include marine fees, gear, dive master/instructor, and transportation to the dive site (source: diving-fun-dives.html). The French version has equivalent pricing and inclusions for certified divers (source: fr/diving-fun-dives.html).
 
