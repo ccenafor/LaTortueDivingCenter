@@ -4,15 +4,15 @@
 
 **Sources**: cottages.html, fr/cottages.html, dining.html, fr/dining.html, index.html, fr/index.html, assets/js/rooms-gallery.js, assets/js/booking-com.js.
 
-**Last updated**: 2026-06-10.
+**Last updated**: 2026-06-23.
 
 ---
 
-The rooms page positions accommodation as bamboo rooms by the sea, with room filtering and galleries for each room type (source: cottages.html; source: fr/cottages.html). The homepage summarizes room offers as Dormitory from PHP 600 per bed/night, Seaview Cottages from PHP 1,700/night for two, and AC Room from PHP 2,700/night for two (source: index.html; source: fr/index.html).
+The rooms page positions accommodation as bamboo rooms by the sea, with room filtering and galleries for each room type (source: cottages.html; source: fr/cottages.html). The homepage summarizes room offers as Dormitory from PHP 650 per bed/night, Seaview Cottages from PHP 1,900/night for two, and AC Room from PHP 2,800/night for two (source: index.html; source: fr/index.html).
 
 ## Room Types And Starting Prices
 
-Current room cards list Seaview Cottage from PHP 1,700/night, Garden Cottage from PHP 1,350/night, Family Seaview Cottage from PHP 2,200/night, Bunk Bed in Shared Dormitory Cottage from PHP 600/bed/night, and Deluxe Room from PHP 2,700/night (source: cottages.html; source: fr/cottages.html).
+Current room cards list Seaview Cottage from PHP 1,900/night, Garden Cottage from PHP 1,450/night, Family Seaview Cottage from PHP 2,350/night, Bunk Bed in Shared Dormitory Cottage from PHP 650/bed/night, and Deluxe Room from PHP 2,800/night (source: cottages.html; source: fr/cottages.html).
 
 The dormitory can be booked from one night, while the contact and booking flow distinguishes room bookings from dive/table inquiries (source: cottages.html; source: contact.html). Room availability is routed through a Booking.com widget on the contact page rather than the Netlify inquiry form (source: contact.html; source: fr/contact.html; source: assets/js/booking-com.js).
 
@@ -32,4 +32,3 @@ The dining page includes a food/drink showcase gallery and a "2026 Menu" section
 - [[website-overview]]
 - [[technical-implementation]]
 - [[seo-and-localization]]
-

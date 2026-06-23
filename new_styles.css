@@ -1784,6 +1784,16 @@ a.btn[style*="background:#25D366"]:hover {
 .price-addons .price-value {
   color: var(--color-secondary);
 }
+.price-snorkelers {
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(21,32,64,0.12);
+}
+.price-snorkelers .price-line {
+  border-color: rgba(21,32,64,0.1);
+}
+.price-snorkelers .price-value {
+  color: var(--color-secondary);
+}
 .package-box {
   margin-top: 1.2rem;
   padding: 1.6rem 1.6rem 1.4rem;

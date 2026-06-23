@@ -4,15 +4,15 @@
 
 **Sources**: diving-fun-dives.html, fr/diving-fun-dives.html, diving-apo-trips.html, fr/diving-apo-trips.html, index.html, fr/index.html.
 
-**Last updated**: 2026-06-10.
+**Last updated**: 2026-06-23.
 
 ---
 
-The fun-dives page targets certified divers with guided coastal dives, night dives, and Apo Island trips (source: diving-fun-dives.html; source: fr/diving-fun-dives.html). The homepage summarizes fun dives as daily Dauin coastal diving and weekly Apo trips, with 3-4 shore-entry dives per day starting at PHP 1,800 and Apo Island boat day package at PHP 5,900 (source: index.html; source: fr/index.html).
+The fun-dives page targets certified divers with guided coastal dives, night dives, and Apo Island trips (source: diving-fun-dives.html; source: fr/diving-fun-dives.html). The homepage summarizes fun dives as daily Dauin coastal diving and weekly Apo trips, with 3-4 shore-entry dives per day starting at PHP 1,900 and Apo Island boat day package at PHP 6,200 (source: index.html; source: fr/index.html).
 
 ## Published Certified-Diver Prices
 
-The current fun-dive price list publishes Fun Dive at PHP 1,800, Night Dive at PHP 2,100, Refresher Dive at PHP 2,500, Apo Island Trip at PHP 5,900, private dive master/instructor at +PHP 500, private Apo guide at +PHP 2,500, and Nitrox Tank / 15 L Air Tank at +PHP 200 (source: diving-fun-dives.html; source: fr/diving-fun-dives.html).
+The current fun-dive price list publishes Fun Dive at PHP 1,900, Night Dive at PHP 2,200, Refresher Dive at PHP 2,700, Apo Island Trip at PHP 6,200, private dive master/instructor at +PHP 500, private Apo guide at +PHP 2,500, and Nitrox Tank / 15 L Air Tank at +PHP 200. Apo Island snorkelers are listed separately at PHP 2,500 including food, marine fees, and snorkel gear, with no snorkeling guide included (source: diving-fun-dives.html; source: fr/diving-fun-dives.html).
 
 The fun-dive page states that prices include marine fees, gear, dive master/instructor, and transportation to the dive site (source: diving-fun-dives.html). The French version has equivalent pricing and inclusions for certified divers (source: fr/diving-fun-dives.html).
 
@@ -32,4 +32,3 @@ Current Apo highlight sites are Rockpoint East/West, Chapel, Coconut Point, Kan-
 - [[dive-sites]]
 - [[rooms-and-dining]]
 - [[team-and-contact]]
-

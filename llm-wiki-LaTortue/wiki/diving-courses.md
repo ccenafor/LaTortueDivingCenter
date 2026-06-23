@@ -4,7 +4,7 @@
 
 **Sources**: diving.html, fr/diving.html, menu.html, fr/menu.html, assets/js/site-content-en.js, assets/js/site-content-fr.js.
 
-**Last updated**: 2026-06-10.
+**Last updated**: 2026-06-23.
 
 ---
 
@@ -14,7 +14,7 @@ The diving courses page positions La Tortue as offering SSI and FFESSM programs 
 
 Current SSI recreational course cards include Try Scuba, Open Water Diver, Advanced Open Water, Refresher Dive, Diver Stress & Rescue, Enriched Air Nitrox, Deep Diving, Perfect Buoyancy, Photo & Video, Night and Limited Visibility, Navigation, and Waves/Tides/Currents (source: diving.html; source: fr/diving.html).
 
-Key published prices are: Try Scuba PHP 3,000; Open Water Diver PHP 19,500; Advanced Open Water PHP 16,500; Refresher Dive PHP 2,500; React Right PHP 8,500; Diver Stress and Rescue PHP 19,500; Rescue Pack PHP 25,000; Enriched Air Nitrox PHP 8,500; Deep Diving PHP 14,000; Perfect Buoyancy PHP 9,800; Photo & Video PHP 12,000; Night and Limited Visibility PHP 10,500; Night Adventure Dive PHP 2,900; Navigation PHP 9,800; Waves/Tides/Currents PHP 9,800 (source: diving.html; source: fr/diving.html).
+Key published prices are: Try Scuba PHP 3,000; Open Water Diver PHP 21,000; Advanced Open Water PHP 17,000; Refresher Dive PHP 2,700; React Right PHP 8,500; Diver Stress and Rescue PHP 19,500; Rescue Pack PHP 25,000; Enriched Air Nitrox PHP 8,500; Deep Diving PHP 14,000; Perfect Buoyancy PHP 9,800; Photo & Video PHP 12,000; Night and Limited Visibility PHP 10,500; Night Adventure Dive PHP 2,900; Navigation PHP 9,800; Waves/Tides/Currents PHP 9,800 (source: diving.html; source: fr/diving.html).
 
 ## SSI Pro Training
 
@@ -24,7 +24,7 @@ The Instructor Training Course has a dedicated callout image and schedule asset 
 
 ## FFESSM Courses
 
-The FFESSM section includes Level 1, Level 2, PE40, Nitrox Diver, and Level 3 (source: diving.html; source: fr/diving.html). Current published prices are Level 1 PHP 19,500; Level 2 PHP 33,000; PE40 PHP 16,000; Nitrox Diver PHP 8,500; Level 3 PHP 46,500 (source: diving.html; source: fr/diving.html).
+The FFESSM section includes Level 1, Level 2, PE40, Nitrox Diver, and Level 3 (source: diving.html; source: fr/diving.html). Current published prices are Level 1 PHP 21,000; Level 2 PHP 33,000; PE40 PHP 16,000; Nitrox Diver PHP 8,500; Level 3 PHP 46,500 (source: diving.html; source: fr/diving.html).
 
 FFESSM Level 1 is described as similar to SSI Open Water Diver, but without a final exam and with fewer open-water exercises (source: diving.html; source: fr/diving.html). FFESSM course prerequisites mention a medical certificate of no contraindication to diving, with level prerequisites for higher certifications (source: diving.html; source: fr/diving.html).
 
@@ -38,4 +38,3 @@ The site-content search summaries describe the diving page as "SSI and FFESSM co
 - [[dive-sites]]
 - [[seo-and-localization]]
 - [[blog-and-search]]
-

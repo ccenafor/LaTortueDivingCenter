@@ -4,7 +4,7 @@
 
 **Sources**: llm-wiki-LaTortue/AGENT.md, tracked website files in the repository.
 
-**Last updated**: 2026-06-10.
+**Last updated**: 2026-06-23.
 
 ---
 
@@ -27,4 +27,3 @@
 
 - [[technical-implementation]] - Static-site architecture, scripts, Netlify behavior, JavaScript modules, analytics/cookie behavior, and asset conventions.
 - [[maintenance-rules]] - Repo workflow, update rules, bilingual change policy, generated files, encoding safety, and verification expectations.
-
