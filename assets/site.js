@@ -99,11 +99,16 @@
     const currentSuffix = `${window.location.search || ''}${window.location.hash || ''}`;
     const englishAlternate = document.querySelector('link[rel="alternate"][hreflang="en"]');
     const frenchAlternate = document.querySelector('link[rel="alternate"][hreflang="fr"]');
+    const localAlternatePath = alternate => {
+      if (!alternate) return '';
+      const target = new URL(alternate.href, window.location.origin);
+      return `${target.pathname}${target.search}${target.hash}`;
+    };
     const englishPath = isStaticBlogPost && englishAlternate
-      ? englishAlternate.href
+      ? localAlternatePath(englishAlternate)
       : `${isIndexPage ? '/' : currentPath}${currentSuffix}`;
     const frenchPath = isStaticBlogPost && frenchAlternate
-      ? frenchAlternate.href
+      ? localAlternatePath(frenchAlternate)
       : `${isIndexPage ? '/fr/' : `/fr${currentPath}`}${currentSuffix}`;
 
     langSwitches.forEach(langSwitch => {
@@ -1124,4 +1129,3 @@
     }
   });
 })();
-
