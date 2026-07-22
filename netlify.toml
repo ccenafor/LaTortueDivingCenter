@@ -1,3 +1,3 @@
 [build]
-  command = "node scripts/netlify-noindex-guard.js"
+  command = "node scripts/generate-blog-pages.js && node scripts/generate-search-index.js && node scripts/netlify-noindex-guard.js"
   publish = "."

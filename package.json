@@ -2,7 +2,10 @@
   "name": "la-tortue-diving-center",
   "private": true,
   "scripts": {
+    "generate-blog-pages": "node scripts/generate-blog-pages.js",
     "generate-search-index": "node scripts/generate-search-index.js",
+    "prepare-site": "node scripts/generate-blog-pages.js && node scripts/generate-search-index.js",
+    "verify-blog-seo": "node scripts/verify-blog-seo.js",
     "build": "node scripts/build.js",
     "update-domain": "node scripts/update-domain.js"
   },

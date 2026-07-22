@@ -150,7 +150,9 @@
       },
       {
         slug: 'instructor-training-experience-la-tortue',
-        url: '/blog-post.html?slug=instructor-training-experience-la-tortue',
+        url: '/blog/ssi-instructor-training-dauin',
+        alternateUrl: '/fr/blog/formation-instructeur-ssi-dauin',
+        seoTitle: 'SSI Instructor Training in Dauin, Philippines | La Tortue',
         title: 'Turning Passion into a Global Career: My Instructor Training Experience with La Tortue',
         excerpt: 'Antoine Bodier shares how training at La Tortue turned an FFESSM limitation into a practical SSI path toward working internationally.',
         author: 'Antoine Bodier',
@@ -177,7 +179,7 @@
           {
             heading: 'Why I Chose to Go Pro (Again)',
             paragraphs: [
-              'Switching to SSI was not just about getting one more certification. It was about making my skills practical and recognized worldwide.',
+              'Switching to <a href="/diving#ssi-pro-training">SSI professional training</a> was not just about getting one more certification. It was about making my skills practical and recognized worldwide.',
               'Compared with other systems, SSI offered something that made sense for me in terms of flexibility, cost, and the way the training is structured.'
             ]
           },
@@ -262,7 +264,9 @@
       },
       {
         slug: 'dauin-vs-apo-island-debate',
-        url: '/blog-post.html?slug=dauin-vs-apo-island-debate',
+        url: '/blog/dauin-vs-apo-island',
+        alternateUrl: '/fr/blog/dauin-vs-apo-island',
+        seoTitle: 'Dauin vs Apo Island: Which Is Best for Diving? | La Tortue',
         title: 'The Dauin vs. Apo Island Debate: What You Need to Know',
         excerpt: 'Dauin and Apo Island are both excellent, but Dauin gives divers the widest range across one coastline, from muck critters to healthy reef systems.',
         author: 'La Tortue Dive Team',
@@ -277,7 +281,7 @@
         listingClass: 'standard',
         tags: ['Dauin', 'Apo Island', 'Muck diving'],
         searchText: 'dauin apo island negros oriental muck diving macro diving artificial reef natural reef shore diving turtles coral reefs drift dives wide angle underwater photography flamboyant cuttlefish frogfish nudibranch 400 sea turtles',
-        intro: 'If you&rsquo;re planning to dive in Negros Oriental, you&rsquo;ll keep hearing two names: Dauin and Apo Island. Both are incredible in their own ways. But instead of asking which one is better, a better question is: Which one gives you more range?',
+        intro: 'If you&rsquo;re planning to dive in Negros Oriental, you&rsquo;ll keep hearing two names: <a href="/diving-sites">Dauin</a> and <a href="/diving-apo-trips">Apo Island</a>. Both are incredible in their own ways. But instead of asking which one is better, a better question is: Which one gives you more range?',
         figures: [
           { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-v2-b961.webp', alt: 'Coral reef panorama at Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-v2-b961-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-v2-b961.webp 1086w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1086, height: 724, caption: 'Coral reef panorama at Apo Island.' },
           { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish.webp', alt: 'Frogfish spotted at Masaplod in Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Frogfish spotted at Masaplod.' }
@@ -341,7 +345,7 @@
               'Apo Island is stunning for reef exploration.',
               'Dauin gives you reefs and muck, rare marine life and accessible diving conditions.',
               'So if you only had one day to dive, you have a better chance to see more in Dauin. That is what makes Dauin such a strong base: it is not just one experience, it is multiple diving worlds in one coastline.',
-              'Our recommendation? Start and stay in Dauin, then spend a day in Apo Island to have a holistic experience of Negros Oriental.',
+              'Our recommendation? Start with <a href="/diving-fun-dives">Dauin fun dives</a>, then spend a day diving at <a href="/diving-apo-trips">Apo Island</a> to have a holistic experience of Negros Oriental.',
               'After exploring the coast, where shore entries are easy and conditions are ideal for settling in, you will develop your eye for marine life, refine your skills, and experience a wider range of diving styles without needing to move locations.',
               'If you need help planning your next dive trip, reach out to us for a customized itinerary.'
             ]

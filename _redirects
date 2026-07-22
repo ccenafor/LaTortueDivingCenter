@@ -1,2 +1,24 @@
 /index.html / 301!
 /fr/index.html /fr/ 301!
+
+# Preserve the two published legacy article URLs while consolidating them onto clean paths.
+/blog-post.html slug=instructor-training-experience-la-tortue /blog/ssi-instructor-training-dauin 301!
+/blog-post slug=instructor-training-experience-la-tortue /blog/ssi-instructor-training-dauin 301!
+/blog-post.html slug=dauin-vs-apo-island-debate /blog/dauin-vs-apo-island 301!
+/blog-post slug=dauin-vs-apo-island-debate /blog/dauin-vs-apo-island 301!
+/fr/blog-post.html slug=instructor-training-experience-la-tortue /fr/blog/formation-instructeur-ssi-dauin 301!
+/fr/blog-post slug=instructor-training-experience-la-tortue /fr/blog/formation-instructeur-ssi-dauin 301!
+/fr/blog-post.html slug=dauin-vs-apo-island-debate /fr/blog/dauin-vs-apo-island 301!
+/fr/blog-post slug=dauin-vs-apo-island-debate /fr/blog/dauin-vs-apo-island 301!
+
+# Prevent duplicate .html article URLs.
+/blog/ssi-instructor-training-dauin.html /blog/ssi-instructor-training-dauin 301!
+/blog/dauin-vs-apo-island.html /blog/dauin-vs-apo-island 301!
+/fr/blog/formation-instructeur-ssi-dauin.html /fr/blog/formation-instructeur-ssi-dauin 301!
+/fr/blog/dauin-vs-apo-island.html /fr/blog/dauin-vs-apo-island 301!
+
+# The retired shared templates and unknown slugs must not return soft 404 responses.
+/blog-post.html /404.html 404!
+/blog-post /404.html 404!
+/fr/blog-post.html /fr/404.html 404!
+/fr/blog-post /fr/404.html 404!

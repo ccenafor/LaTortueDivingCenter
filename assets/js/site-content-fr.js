@@ -150,7 +150,9 @@
       },
       {
         slug: 'instructor-training-experience-la-tortue',
-        url: '/fr/blog-post.html?slug=instructor-training-experience-la-tortue',
+        url: '/fr/blog/formation-instructeur-ssi-dauin',
+        alternateUrl: '/blog/ssi-instructor-training-dauin',
+        seoTitle: 'Formation instructeur SSI &agrave; Dauin, Philippines | La Tortue',
         title: 'Transformer une passion en carri&egrave;re internationale : mon exp&eacute;rience de formation instructeur avec La Tortue',
         excerpt: 'Antoine Bodier raconte comment la formation Divemaster puis instructeur de La Tortue a transform&eacute; une limite FFESSM en voie SSI concr&egrave;te &agrave; l&rsquo;international.',
         author: 'Antoine Bodier',
@@ -177,7 +179,7 @@
           {
             heading: 'Pourquoi j&rsquo;ai choisi de repartir sur une voie pro',
             paragraphs: [
-              'Passer chez SSI n&rsquo;&eacute;tait pas seulement une mani&egrave;re d&rsquo;ajouter une certification de plus. Il s&rsquo;agissait de rendre mes comp&eacute;tences concr&egrave;tes et reconnues dans le monde entier.',
+              'Passer par une <a href="/fr/diving#ssi-pro-training">formation professionnelle SSI</a> n&rsquo;&eacute;tait pas seulement une mani&egrave;re d&rsquo;ajouter une certification de plus. Il s&rsquo;agissait de rendre mes comp&eacute;tences concr&egrave;tes et reconnues dans le monde entier.',
               'Compar&eacute; &agrave; d&rsquo;autres syst&egrave;mes, SSI me paraissait coh&eacute;rent en termes de flexibilit&eacute;, de co&ucirc;t et de structure de formation.'
             ]
           },
@@ -262,7 +264,10 @@
       },
       {
         slug: 'dauin-vs-apo-island-debate',
-        url: '/fr/blog-post.html?slug=dauin-vs-apo-island-debate',
+        url: '/fr/blog/dauin-vs-apo-island',
+        alternateUrl: '/blog/dauin-vs-apo-island',
+        seoTitle: 'Dauin ou Apo Island : o&ugrave; plonger ? | La Tortue',
+        seoDescription: 'Dauin ou Apo Island ? Comparez muck diving, r&eacute;cifs, tortues et conditions de plong&eacute;e pour choisir vos sites et organiser un s&eacute;jour complet &agrave; Negros Oriental.',
         title: 'Le d&eacute;bat Dauin vs Apo Island : ce qu&rsquo;il faut savoir',
         excerpt: 'Dauin et Apo Island sont tous deux excellents, mais Dauin offre la plus grande diversit&eacute; sur une seule portion de c&ocirc;te, entre muck, r&eacute;cifs et plong&eacute;es faciles d&rsquo;acc&egrave;s.',
         author: '&Eacute;quipe plong&eacute;e La Tortue',
@@ -277,7 +282,7 @@
         listingClass: 'standard',
         tags: ['Dauin', 'Apo Island', 'Plong&eacute;e muck'],
         searchText: 'dauin apo island negros oriental plongee muck diving macro recifs artificiels recifs naturels plongee du bord tortues coraux derive photo sous marine 400 tortues marines',
-        intro: 'Si vous pr&eacute;voyez de plonger &agrave; Negros Oriental, vous entendrez souvent deux noms : Dauin et Apo Island. Les deux sont incroyables &agrave; leur mani&egrave;re. Mais au lieu de demander lequel est meilleur, une meilleure question est : lequel vous offre le plus de possibilit&eacute;s ?',
+        intro: 'Si vous pr&eacute;voyez de plonger &agrave; Negros Oriental, vous entendrez souvent deux noms : <a href="/fr/diving-sites">Dauin</a> et <a href="/fr/diving-apo-trips">Apo Island</a>. Les deux sont incroyables &agrave; leur mani&egrave;re. Mais au lieu de demander lequel est meilleur, une meilleure question est : lequel vous offre le plus de possibilit&eacute;s ?',
         figures: [
           { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-v2-b961.webp', alt: 'Panorama de r&eacute;cif corallien &agrave; Apo Island', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-v2-b961-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-apo-v2-b961.webp 1086w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1086, height: 724, caption: 'Panorama corallien &agrave; Apo Island.' },
           { src: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish.webp', alt: 'Frogfish rep&eacute;r&eacute; &agrave; Masaplod &agrave; Dauin', srcSet: '/assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish-640.webp 640w, /assets/Pictures/Blog/Optimized/dauin-vs-apo-island-la-tortue-dauin-masaplod-frogfish.webp 1200w', sizes: '(max-width: 767px) 92vw, (max-width: 1200px) 44vw, 240px', width: 1200, height: 900, caption: 'Frogfish rep&eacute;r&eacute; &agrave; Masaplod.' }
@@ -341,7 +346,7 @@
               'Apo Island est superbe pour l&rsquo;exploration de r&eacute;cifs.',
               'Dauin vous donne les r&eacute;cifs et le muck, une vie marine rare et des conditions de plong&eacute;e faciles d&rsquo;acc&egrave;s.',
               'Donc si vous n&rsquo;avez qu&rsquo;une seule journ&eacute;e pour plonger, vous avez plus de chances de voir davantage &agrave; Dauin. C&rsquo;est ce qui en fait une base si forte : ce n&rsquo;est pas une seule exp&eacute;rience, mais plusieurs mondes de plong&eacute;e sur une seule c&ocirc;te.',
-              'Notre recommandation ? Commencez et restez &agrave; Dauin, puis consacrez une journ&eacute;e &agrave; Apo Island pour vivre une exp&eacute;rience compl&egrave;te de Negros Oriental.',
+              'Notre recommandation ? Commencez par des <a href="/fr/diving-fun-dives">fun dives &agrave; Dauin</a>, puis consacrez une journ&eacute;e de plong&eacute;e &agrave; <a href="/fr/diving-apo-trips">Apo Island</a> pour vivre une exp&eacute;rience compl&egrave;te de Negros Oriental.',
               'Apr&egrave;s avoir explor&eacute; la c&ocirc;te, o&ugrave; les mises &agrave; l&rsquo;eau du bord sont faciles et les conditions id&eacute;ales pour se mettre en confiance, vous d&eacute;velopperez votre &oelig;il pour la vie marine, affinerez vos comp&eacute;tences et d&eacute;couvrirez une plus grande vari&eacute;t&eacute; de styles de plong&eacute;e sans changer d&rsquo;endroit.',
               'Si vous avez besoin d&rsquo;aide pour planifier votre prochain s&eacute;jour plong&eacute;e, contactez-nous pour un itin&eacute;raire sur mesure.'
             ]

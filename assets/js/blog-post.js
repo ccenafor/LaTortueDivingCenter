@@ -185,6 +185,11 @@
     var articleRoot = document.getElementById('blog-post-root');
     if (!articleRoot) return;
 
+    if (post && post.url) {
+      window.location.replace(post.url);
+      return;
+    }
+
     if (!post) {
       articleRoot.innerHTML = [
         '<section class="sand"><div class="container article-missing">',
@@ -198,7 +203,7 @@
 
     var pageTitle = decodeHTML(post.title) + ' | La Tortue Blog';
     var pageDescription = decodeHTML(post.excerpt);
-    var pageUrl = window.location.origin + window.location.pathname + '?slug=' + encodeURIComponent(post.slug);
+    var pageUrl = window.location.origin + post.url;
 
     document.title = pageTitle;
     setMeta('meta[name="description"]', 'content', pageDescription);
@@ -214,9 +219,10 @@
     var hreflangEn = document.querySelector('link[hreflang="en"]');
     var hreflangFr = document.querySelector('link[hreflang="fr"]');
     var xDefault = document.querySelector('link[hreflang="x-default"]');
-    if (hreflangEn) hreflangEn.setAttribute('href', window.location.origin + '/blog-post.html?slug=' + encodeURIComponent(post.slug));
-    if (hreflangFr) hreflangFr.setAttribute('href', window.location.origin + '/fr/blog-post.html?slug=' + encodeURIComponent(post.slug));
-    if (xDefault) xDefault.setAttribute('href', window.location.origin + '/blog-post.html?slug=' + encodeURIComponent(post.slug));
+    var alternateUrl = post.alternateUrl || post.url;
+    if (hreflangEn) hreflangEn.setAttribute('href', window.location.origin + (isFrench ? alternateUrl : post.url));
+    if (hreflangFr) hreflangFr.setAttribute('href', window.location.origin + (isFrench ? post.url : alternateUrl));
+    if (xDefault) xDefault.setAttribute('href', window.location.origin + (isFrench ? alternateUrl : post.url));
 
     injectStructuredData(post, pageTitle, pageDescription, pageUrl);
 

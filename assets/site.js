@@ -17,6 +17,33 @@
   };
   const whatsappUrl = 'https://wa.me/639695291297';
 
+  const resolveFragmentUrls = (fragment, sourceUrl) => {
+    const baseUrl = new URL(sourceUrl, window.location.origin);
+    const shouldKeepValue = (value) => /^(?:#|mailto:|tel:|data:|javascript:)/i.test(value || '');
+
+    fragment.querySelectorAll('[href], [src]').forEach(element => {
+      ['href', 'src'].forEach(attribute => {
+        const value = element.getAttribute(attribute);
+        if (!value || shouldKeepValue(value)) return;
+        element.setAttribute(attribute, new URL(value, baseUrl).href);
+      });
+    });
+
+    fragment.querySelectorAll('[srcset]').forEach(element => {
+      const value = element.getAttribute('srcset');
+      if (!value) return;
+
+      const resolved = value.split(',').map(candidate => {
+        const parts = candidate.trim().split(/\s+/);
+        const candidateUrl = parts.shift();
+        if (!candidateUrl || shouldKeepValue(candidateUrl)) return candidate.trim();
+        return [new URL(candidateUrl, baseUrl).href, ...parts].join(' ');
+      }).join(', ');
+
+      element.setAttribute('srcset', resolved);
+    });
+  };
+
   const fetchHTML = async (url, placeholderId) => {
     try {
       const response = await fetch(url);
@@ -24,7 +51,10 @@
       const html = await response.text();
       const target = document.getElementById(placeholderId);
       if (target) {
-        target.innerHTML = html;
+        const template = document.createElement('template');
+        template.innerHTML = html;
+        resolveFragmentUrls(template.content, url);
+        target.replaceChildren(template.content.cloneNode(true));
       }
     } catch (error) {
       console.error(`Error loading content for ${placeholderId}:`, error);
@@ -46,7 +76,9 @@
     const normalizedCurrent = normalizePath(window.location.pathname);
     document.querySelectorAll('.nav-links a, .mpanel .links a').forEach(link => {
       const linkPath = normalizePath(new URL(link.href, window.location.origin).pathname);
-      const isBlogDetail = normalizedCurrent === '/blog-post.html' && linkPath === '/blog.html';
+      const isBlogDetail = (
+        normalizedCurrent === '/blog-post.html' || normalizedCurrent.startsWith('/blog/')
+      ) && linkPath === '/blog.html';
       link.classList.toggle('active', linkPath === normalizedCurrent || isBlogDetail);
     });
 
@@ -63,18 +95,25 @@
     const langSwitches = document.querySelectorAll('[data-lang-switch]');
     const currentPath = normalizePath(window.location.pathname);
     const isIndexPage = currentPath === '/';
+    const isStaticBlogPost = currentPath.startsWith('/blog/');
     const currentSuffix = `${window.location.search || ''}${window.location.hash || ''}`;
-    const englishPath = isIndexPage ? '/' : currentPath;
-    const frenchPath = isIndexPage ? '/fr/' : `/fr${currentPath}`;
+    const englishAlternate = document.querySelector('link[rel="alternate"][hreflang="en"]');
+    const frenchAlternate = document.querySelector('link[rel="alternate"][hreflang="fr"]');
+    const englishPath = isStaticBlogPost && englishAlternate
+      ? englishAlternate.href
+      : `${isIndexPage ? '/' : currentPath}${currentSuffix}`;
+    const frenchPath = isStaticBlogPost && frenchAlternate
+      ? frenchAlternate.href
+      : `${isIndexPage ? '/fr/' : `/fr${currentPath}`}${currentSuffix}`;
 
     langSwitches.forEach(langSwitch => {
       if (isFrench()) {
-        langSwitch.href = `${englishPath}${currentSuffix}`;
+        langSwitch.href = englishPath;
         langSwitch.setAttribute('hreflang', 'en');
         langSwitch.setAttribute('aria-label', 'English version');
         langSwitch.dataset.targetLang = 'en';
       } else {
-        langSwitch.href = `${frenchPath}${currentSuffix}`;
+        langSwitch.href = frenchPath;
         langSwitch.setAttribute('hreflang', 'fr');
         langSwitch.setAttribute('aria-label', 'Version française');
         langSwitch.dataset.targetLang = 'fr';
@@ -206,7 +245,7 @@
     const path = normalizePath(window.location.pathname);
     if (path === '/') return 'home';
     if (path === '/blog.html') return 'blog_listing';
-    if (path === '/blog-post.html') return 'blog_post';
+    if (path === '/blog-post.html' || path.startsWith('/blog/')) return 'blog_post';
     if (path === '/search.html') return 'search';
     if (path === '/contact.html') return 'contact';
     if (path === '/cottages.html') return 'rooms';
@@ -1085,6 +1124,4 @@
     }
   });
 })();
-
-
 
