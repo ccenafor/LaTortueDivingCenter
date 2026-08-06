@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const root = path.resolve(__dirname, '..');
+const projectRoot = path.resolve(__dirname, '..');
+const requestedRoot = process.argv[2] || '.';
+const root = path.resolve(projectRoot, requestedRoot);
 const skipDirs = new Set(['.git', 'node_modules', 'dist', 'scripts']);
 
 const noindexMetaTag = '<meta name="robots" content="noindex, nofollow, noarchive">';
@@ -100,12 +102,16 @@ const main = () => {
     return;
   }
 
+  if (!fs.existsSync(root) || !fs.statSync(root).isDirectory()) {
+    throw new Error(`Site root does not exist or is not a directory: ${root}`);
+  }
+
   writeNoindexRobots();
   const headersUpdated = writeNoindexHeaders();
   const htmlUpdated = injectNoindexMeta();
 
   console.log(
-    `Applied noindex guard (context="${context}", branch="${branch}"): robots.txt updated, ` +
+    `Applied noindex guard to "${root}" (context="${context}", branch="${branch}"): robots.txt updated, ` +
       `_headers ${headersUpdated ? 'updated' : 'already contained X-Robots-Tag'}, ` +
       `${htmlUpdated} HTML file(s) tagged.`
   );

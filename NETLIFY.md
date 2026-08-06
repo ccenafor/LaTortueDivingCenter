@@ -109,8 +109,9 @@ To add reCAPTCHA protection (optional):
 1. Push code to GitHub repository
 2. Connect repository to Netlify
 3. Set build settings:
-   - Build command: configured in `netlify.toml` (`node scripts/netlify-noindex-guard.js`)
-   - Publish directory: `.` (root directory)
+   - Build command: configured in `netlify.toml` (`node scripts/build.js && node scripts/netlify-noindex-guard.js dist`)
+   - Publish directory: `dist`
+   - The build uses an explicit public-file allowlist so internal folders such as `llm-wiki-LaTortue/`, `raw/`, `TEMP/`, `output/`, repository documentation, and development tooling are never published.
 4. Deploy site
 5. Configure form notifications in Netlify dashboard
 6. Test the contact form on the live site
@@ -119,7 +120,7 @@ To add reCAPTCHA protection (optional):
 
 To prevent `https://preprod.latortuediving.com/` from being indexed:
 
-- `scripts/netlify-noindex-guard.js` runs during Netlify builds.
+- `scripts/netlify-noindex-guard.js` runs against the generated `dist/` directory during Netlify builds.
 - In non-production contexts (including preprod), it applies:
   - `robots.txt` => `Disallow: /`
   - `_headers` => `X-Robots-Tag: noindex, nofollow, noarchive`
