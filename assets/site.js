@@ -15,8 +15,6 @@
     }
     return clean || '/';
   };
-  const whatsappUrl = 'https://wa.me/639695291297';
-
   const resolveFragmentUrls = (fragment, sourceUrl) => {
     const baseUrl = new URL(sourceUrl, window.location.origin);
     const shouldKeepValue = (value) => /^(?:#|mailto:|tel:|data:|javascript:)/i.test(value || '');
@@ -58,6 +56,70 @@
       }
     } catch (error) {
       console.error(`Error loading content for ${placeholderId}:`, error);
+    }
+  };
+
+  const loadStylesheet = (href, id) => {
+    if (document.getElementById(id)) return;
+
+    const stylesheet = document.createElement('link');
+    stylesheet.id = id;
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = href;
+    document.head.appendChild(stylesheet);
+  };
+
+  const loadScript = (src, id, globalName) => new Promise((resolve, reject) => {
+    if (globalName && window[globalName]) {
+      resolve();
+      return;
+    }
+
+    const existing = document.getElementById(id);
+    if (existing) {
+      if (existing.dataset.loaded === 'true') {
+        resolve();
+        return;
+      }
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = id;
+    script.src = src;
+    script.defer = true;
+    script.addEventListener('load', () => {
+      script.dataset.loaded = 'true';
+      resolve();
+    }, { once: true });
+    script.addEventListener('error', reject, { once: true });
+    document.body.appendChild(script);
+  });
+
+  const setupFaqAssistant = async () => {
+    try {
+      let placeholder = document.getElementById('faq-assistant-placeholder');
+      if (!placeholder) {
+        placeholder = document.createElement('div');
+        placeholder.id = 'faq-assistant-placeholder';
+        document.body.appendChild(placeholder);
+      }
+
+      loadStylesheet('/assets/css/faq-assistant.css?v=20260823a', 'faq-assistant-styles');
+
+      await Promise.all([
+        fetchHTML('/assets/partials/faq-assistant.html', 'faq-assistant-placeholder'),
+        loadScript('/assets/js/faq-assistant-content.js?v=20260823a', 'faq-assistant-content-script', 'ltFaqAssistantContent')
+      ]);
+      await loadScript('/assets/js/faq-assistant.js?v=20260823a', 'faq-assistant-script', 'ltFaqAssistant');
+
+      if (window.ltFaqAssistant && typeof window.ltFaqAssistant.init === 'function') {
+        window.ltFaqAssistant.init();
+      }
+    } catch (error) {
+      console.error('FAQ assistant initialization failed:', error);
     }
   };
 
@@ -158,27 +220,6 @@
       updateNavState();
       window.addEventListener('scroll', updateNavState, { passive: true });
     }
-  };
-
-  const setupFloatingWhatsApp = () => {
-    if (document.querySelector('.floating-whatsapp')) return;
-
-    const lang = (document.documentElement.lang || 'en').toLowerCase();
-    const ariaLabel = lang === 'fr' ? 'Contacter La Tortue Diving sur WhatsApp' : 'Contact La Tortue Diving on WhatsApp';
-    const button = document.createElement('a');
-    button.className = 'floating-whatsapp';
-    button.href = whatsappUrl;
-    button.target = '_blank';
-    button.rel = 'noopener noreferrer';
-    button.dataset.ctaName = 'whatsapp';
-    button.dataset.ctaLocation = 'floating_whatsapp';
-    button.setAttribute('aria-label', ariaLabel);
-    button.innerHTML = `
-      <span class="floating-whatsapp__icon" aria-hidden="true">
-        <img src="/assets/Pictures/Icons/Optimized/whatsapp-icon.webp" alt="" width="128" height="128" loading="eager" decoding="async">
-      </span>
-    `;
-    document.body.appendChild(button);
   };
 
   const gtmId = 'GTM-NKSBQWHS';
@@ -306,7 +347,6 @@
   const getCtaLocation = (control) => {
     if (control.dataset.ctaLocation) return control.dataset.ctaLocation;
     if (control.closest('.mobile-dive-bar')) return 'mobile_dive_bar';
-    if (control.closest('.floating-whatsapp')) return 'floating_whatsapp';
     if (control.closest('.nav-cta')) return 'nav_desktop';
     if (control.closest('.mpanel .actions')) return 'nav_mobile';
     if (control.closest('header.nav')) return 'nav';
@@ -331,7 +371,7 @@
 
   const getCtaName = (control, target, ctaText) => {
     if (control.dataset.ctaName) return control.dataset.ctaName;
-    if (control.matches('.floating-whatsapp') || /wa\.me|whatsapp/i.test(target.url)) return 'whatsapp';
+    if (/wa\.me|whatsapp/i.test(target.url)) return 'whatsapp';
     if (control.matches('.nav-search, .mpanel-search-button') || /\/search\.html/i.test(target.url)) return 'site_search';
     if (control.matches('[data-booking-submit], .bookingcom-action') || /booking\.com/i.test(target.url)) return 'booking_com_check_availability';
     if (control.matches('.search-result-card__jump')) return 'search_result_jump';
@@ -366,7 +406,7 @@
       control.hasAttribute('data-cookie-toggle')
     ) return false;
 
-    return control.matches('.btn, .floating-whatsapp, .text-link, .search-result-card__jump, .search-suggestion, [type="submit"]');
+    return control.matches('.btn, .text-link, .search-result-card__jump, .search-suggestion, [type="submit"]');
   };
 
   const pushTrackingEvent = (payload) => {
@@ -1093,11 +1133,11 @@
 
       await Promise.all([
         fetchHTML(menuPath, 'menu-placeholder'),
-        fetchHTML(footerPath, 'footer-placeholder')
+        fetchHTML(footerPath, 'footer-placeholder'),
+        setupFaqAssistant()
       ]);
 
       setupMenu();
-      setupFloatingWhatsApp();
       setupCourseToggles();
       setupMobileDiveBar();
       setupReviewSliders();

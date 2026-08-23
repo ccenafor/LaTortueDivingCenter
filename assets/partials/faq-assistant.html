@@ -1,0 +1,62 @@
+<aside class="faq-assistant" data-faq-assistant>
+  <section
+    class="faq-assistant__panel"
+    id="faq-assistant-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="faq-assistant-title"
+    hidden
+  >
+    <header class="faq-assistant__header">
+      <div>
+        <p class="faq-assistant__eyebrow" data-faq-eyebrow></p>
+        <h2 class="faq-assistant__title" id="faq-assistant-title" data-faq-title></h2>
+      </div>
+      <button class="faq-assistant__close" type="button" data-faq-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </header>
+
+    <div class="faq-assistant__body">
+      <p class="faq-assistant__intro" data-faq-intro></p>
+
+      <div class="faq-assistant__topic-group" role="group" aria-labelledby="faq-assistant-topics-label">
+        <p class="faq-assistant__section-label" id="faq-assistant-topics-label" data-faq-topics-label></p>
+        <div class="faq-assistant__topics" data-faq-topics></div>
+      </div>
+
+      <form class="faq-assistant__form" data-faq-form novalidate>
+        <label class="faq-assistant__label" for="faq-assistant-question" data-faq-question-label></label>
+        <div class="faq-assistant__question-row">
+          <input
+            class="faq-assistant__input"
+            id="faq-assistant-question"
+            name="faq-question"
+            type="search"
+            maxlength="160"
+            autocomplete="off"
+            aria-describedby="faq-assistant-privacy"
+            data-faq-input
+          >
+          <button class="faq-assistant__submit" type="submit" data-faq-submit></button>
+        </div>
+        <p class="faq-assistant__privacy" id="faq-assistant-privacy" data-faq-privacy></p>
+      </form>
+
+      <div class="faq-assistant__result" role="status" aria-live="polite" tabindex="-1" data-faq-result hidden></div>
+    </div>
+  </section>
+
+  <button
+    class="faq-assistant__trigger"
+    type="button"
+    aria-controls="faq-assistant-panel"
+    aria-expanded="false"
+    data-faq-trigger
+  >
+    <svg class="faq-assistant__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3a9 9 0 0 0-7.64 13.76L3 21l4.24-1.36A9 9 0 1 0 12 3Zm0 2a7 7 0 1 1-3.87 12.83l-.39-.26-1.64.53.53-1.64-.26-.39A7 7 0 0 1 12 5Zm0 2.25a3.25 3.25 0 0 0-3.25 3.25h2a1.25 1.25 0 1 1 1.7 1.17C11.53 12.05 11 12.8 11 14v.25h2V14c0-.42.12-.53.33-.62A3.25 3.25 0 0 0 12 7.25ZM11 16v2h2v-2h-2Z" fill="currentColor"/>
+    </svg>
+    <span data-faq-trigger-label></span>
+  </button>
+</aside>
