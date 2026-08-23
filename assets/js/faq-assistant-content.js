@@ -5,7 +5,7 @@
   // This MVP copy is provisional. Update or extend only the `locales` data below;
   // matching and rendering behavior lives in faq-assistant.js.
   global.ltFaqAssistantContent = {
-    version: 'provisional-2026-08-23b',
+    version: 'provisional-2026-08-24a',
     whatsappNumber: '639695291297',
     locales: {
       en: {
@@ -58,7 +58,7 @@
             id: 'rooms',
             title: 'Rooms and accommodation',
             answer: 'See the Rooms page for room types and the booking options currently shown on the site. Ask the team to confirm dates, occupancy, availability and the final quote.',
-            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'dortoir', 'lit', 'séjour', 'séjourner', 'logement'],
+            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'accommodations', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'hébergements', 'dortoir', 'lit', 'séjour', 'séjourner', 'logement'],
             links: [
               { id: 'rooms', label: 'View rooms', path: '/cottages.html' },
               { id: 'contact', label: 'Ask about a stay', path: '/contact.html' }
@@ -68,7 +68,7 @@
             id: 'restaurant',
             title: 'Restaurant and day visits',
             answer: 'Use the Restaurant page for the menu and visitor information published on the site. Confirm current service, group requests or special needs directly with the team.',
-            keywords: ['restaurant', 'menu', 'food', 'eat', 'dining', 'breakfast', 'lunch', 'dinner', 'drink', 'drinks', 'day pass', 'meal', 'repas', 'manger', 'petit déjeuner', 'déjeuner', 'dîner', 'boisson', 'boissons', 'pass journée'],
+            keywords: ['restaurant', 'restaurants', 'menu', 'food', 'eat', 'dining', 'breakfast', 'lunch', 'dinner', 'drink', 'drinks', 'day pass', 'meal', 'repas', 'manger', 'petit déjeuner', 'déjeuner', 'dîner', 'boisson', 'boissons', 'pass journée'],
             links: [
               { id: 'restaurant', label: 'View restaurant', path: '/dining.html' },
               { id: 'contact', label: 'Contact the team', path: '/contact.html' }
@@ -78,7 +78,7 @@
             id: 'arrival_contact',
             title: 'Contact, location and arrival',
             answer: 'The Contact page has the site’s contact options and location details. Confirm any pickup, transfer or time-sensitive travel plan directly with the team.',
-            keywords: ['contact', 'address', 'location', 'map', 'where are you located', 'airport', 'transfer', 'transport', 'getting there', 'arrival', 'arrive', 'dumaguete', 'ferry', 'adresse', 'où êtes-vous situés', 'aéroport', 'transfert', 'transport', 'venir', 'arrivée', 'bateau'],
+            keywords: ['contact', 'address', 'location', 'map', 'where are you located', 'airport', 'transfer', 'transport', 'get there', 'getting there', 'how do i get there', 'how to get there', 'when can i arrive', 'what time can i arrive', 'late arrival', 'arrival time', 'arrival', 'dumaguete', 'ferry', 'adresse', 'où êtes-vous situés', 'aéroport', 'transfert', 'transport', 'comment venir', 'comment arriver', 'comment se rendre', 'à quelle heure puis-je arriver', 'arrivée tardive', 'heure d’arrivée', 'arrivée', 'bateau'],
             links: [
               { id: 'contact', label: 'Open contact page', path: '/contact.html' }
             ]
@@ -97,7 +97,7 @@
             id: 'fun_dives',
             title: 'Guided fun dives',
             answer: 'The Fun Dives page explains the guided diving options and posted information for certified divers. Ask the team to confirm a plan that fits your dates, certification and experience.',
-            keywords: ['fun dive', 'fun dives', 'guided dive', 'guided dives', 'certified diver', 'shore dive', 'shore diving', 'nitrox', 'dive package', 'plongée loisir', 'plongées loisirs', 'plongée guidée', 'plongées guidées', 'plongeur certifié', 'plongée du bord', 'forfait plongée'],
+            keywords: ['fun dive', 'fun dives', 'guided dive', 'guided dives', 'guided shore dive', 'guided shore dives', 'certified diver', 'shore dive', 'shore dives', 'shore diving', 'nitrox', 'dive package', 'plongée loisir', 'plongées loisirs', 'plongée guidée', 'plongées guidées', 'plongeur certifié', 'plongée du bord', 'plongées du bord', 'plongée guidée du bord', 'plongées guidées du bord', 'forfait plongée'],
             links: [
               { id: 'fun_dives', label: 'See fun dives', path: '/diving-fun-dives.html' },
               { id: 'contact', label: 'Plan guided dives', path: '/contact.html' }
@@ -184,7 +184,7 @@
             id: 'rooms',
             title: 'Chambres et hébergement',
             answer: 'Consultez la page Chambres pour les types d’hébergement et les options de réservation affichées sur le site. Demandez à l’équipe de confirmer les dates, l’occupation, la disponibilité et le devis final.',
-            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'dortoir', 'lit', 'séjour', 'séjourner', 'logement'],
+            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'accommodations', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'hébergements', 'dortoir', 'lit', 'séjour', 'séjourner', 'logement'],
             links: [
               { id: 'rooms', label: 'Voir les chambres', path: '/cottages.html' },
               { id: 'contact', label: 'Demander un séjour', path: '/contact.html' }
@@ -194,7 +194,7 @@
             id: 'restaurant',
             title: 'Restaurant et visite à la journée',
             answer: 'Consultez la page Restaurant pour le menu et les informations visiteurs publiées sur le site. Confirmez le service actuel, les demandes de groupe ou les besoins particuliers auprès de l’équipe.',
-            keywords: ['restaurant', 'menu', 'food', 'eat', 'dining', 'breakfast', 'lunch', 'dinner', 'drink', 'drinks', 'day pass', 'meal', 'repas', 'manger', 'petit déjeuner', 'déjeuner', 'dîner', 'boisson', 'boissons', 'pass journée'],
+            keywords: ['restaurant', 'restaurants', 'menu', 'food', 'eat', 'dining', 'breakfast', 'lunch', 'dinner', 'drink', 'drinks', 'day pass', 'meal', 'repas', 'manger', 'petit déjeuner', 'déjeuner', 'dîner', 'boisson', 'boissons', 'pass journée'],
             links: [
               { id: 'restaurant', label: 'Voir le restaurant', path: '/dining.html' },
               { id: 'contact', label: 'Contacter l’équipe', path: '/contact.html' }
@@ -204,7 +204,7 @@
             id: 'arrival_contact',
             title: 'Contact, localisation et arrivée',
             answer: 'La page Contact regroupe les moyens de joindre l’équipe et les informations de localisation du site. Confirmez directement tout transfert, prise en charge ou trajet soumis à un horaire.',
-            keywords: ['contact', 'address', 'location', 'map', 'where are you located', 'airport', 'transfer', 'transport', 'getting there', 'arrival', 'arrive', 'dumaguete', 'ferry', 'adresse', 'où êtes-vous situés', 'aéroport', 'transfert', 'transport', 'venir', 'arrivée', 'bateau'],
+            keywords: ['contact', 'address', 'location', 'map', 'where are you located', 'airport', 'transfer', 'transport', 'get there', 'getting there', 'how do i get there', 'how to get there', 'when can i arrive', 'what time can i arrive', 'late arrival', 'arrival time', 'arrival', 'dumaguete', 'ferry', 'adresse', 'où êtes-vous situés', 'aéroport', 'transfert', 'transport', 'comment venir', 'comment arriver', 'comment se rendre', 'à quelle heure puis-je arriver', 'arrivée tardive', 'heure d’arrivée', 'arrivée', 'bateau'],
             links: [
               { id: 'contact', label: 'Ouvrir la page Contact', path: '/contact.html' }
             ]
@@ -223,7 +223,7 @@
             id: 'fun_dives',
             title: 'Plongées loisirs guidées',
             answer: 'La page Plongées loisirs présente les options guidées et les informations publiées pour les plongeurs certifiés. Demandez à l’équipe de confirmer un programme adapté à vos dates, votre certification et votre expérience.',
-            keywords: ['fun dive', 'fun dives', 'guided dive', 'guided dives', 'certified diver', 'shore dive', 'shore diving', 'nitrox', 'dive package', 'plongée loisir', 'plongées loisirs', 'plongée guidée', 'plongées guidées', 'plongeur certifié', 'plongée du bord', 'forfait plongée'],
+            keywords: ['fun dive', 'fun dives', 'guided dive', 'guided dives', 'guided shore dive', 'guided shore dives', 'certified diver', 'shore dive', 'shore dives', 'shore diving', 'nitrox', 'dive package', 'plongée loisir', 'plongées loisirs', 'plongée guidée', 'plongées guidées', 'plongeur certifié', 'plongée du bord', 'plongées du bord', 'plongée guidée du bord', 'plongées guidées du bord', 'forfait plongée'],
             links: [
               { id: 'fun_dives', label: 'Voir les plongées loisirs', path: '/diving-fun-dives.html' },
               { id: 'contact', label: 'Planifier des plongées', path: '/contact.html' }

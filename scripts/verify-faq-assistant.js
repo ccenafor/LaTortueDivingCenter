@@ -17,29 +17,54 @@ assert.match(content.version, /^provisional-/, 'MVP content must be marked provi
 const cases = {
   en: [
     ['Do you have a dorm?', 'rooms'],
+    ['Do you have accommodations?', 'rooms'],
     ['Can we see the restaurant menu?', 'restaurant'],
+    ['Are there restaurants nearby?', 'restaurant'],
     ['Where can I eat?', 'restaurant'],
     ['Where can I stay?', 'rooms'],
     ['Where are you located?', 'arrival_contact'],
+    ['How do I get there?', 'arrival_contact'],
+    ['How to get there?', 'arrival_contact'],
+    ['When can I arrive?', 'arrival_contact'],
+    ['What time can I arrive?', 'arrival_contact'],
+    ['I have a late arrival', 'arrival_contact'],
+    ['What is the arrival time?', 'arrival_contact'],
     ['How do I get there from Dumaguete airport?', 'arrival_contact'],
     ['I want an Open Water course', 'courses'],
     ['guided shore dives for a certified diver', 'fun_dives'],
+    ['I am certified and want guided shore dives', 'fun_dives'],
+    ['Do you offer shore dives?', 'fun_dives'],
     ['How much is an Apo Island trip?', 'apo_island'],
     ['Where can I see muck dive sites?', 'dive_sites'],
     ['Can I get a quote?', 'quote_booking']
   ],
   fr: [
     ['Avez-vous un dortoir ?', 'rooms'],
+    ['Proposez-vous des hébergements ?', 'rooms'],
     ['Je voudrais voir le menu du restaurant', 'restaurant'],
+    ['Y a-t-il des restaurants à proximité ?', 'restaurant'],
     ['Où puis-je séjourner ?', 'rooms'],
     ['Où êtes-vous situés ?', 'arrival_contact'],
+    ['Comment venir chez vous ?', 'arrival_contact'],
+    ['Comment arriver chez vous ?', 'arrival_contact'],
+    ['Comment se rendre chez vous ?', 'arrival_contact'],
+    ['À quelle heure puis-je arriver ?', 'arrival_contact'],
+    ['J’ai une arrivée tardive', 'arrival_contact'],
+    ['Quelle est l’heure d’arrivée ?', 'arrival_contact'],
     ['Proposez-vous un transfert depuis l’aéroport ?', 'arrival_contact'],
     ['Je cherche un cours Open Water', 'courses'],
     ['Je veux faire des plongées loisirs guidées', 'fun_dives'],
+    ['Je veux des plongées guidées du bord', 'fun_dives'],
+    ['Proposez-vous des plongées du bord ?', 'fun_dives'],
     ['Quel est le prix d’une sortie Apo Island ?', 'apo_island'],
     ['Quels sont les sites de plongée macro ?', 'dive_sites'],
     ['Je voudrais un devis', 'quote_booking']
   ]
+};
+
+const noMatchCases = {
+  en: ['Can I arrive with my dog?'],
+  fr: ['Puis-je venir avec mon chien ?']
 };
 
 Object.entries(cases).forEach(([locale, localeCases]) => {
@@ -49,6 +74,14 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
   localeCases.forEach(([question, expectedId]) => {
     const match = assistant.matchQuery(question, localeContent.entries);
     assert.equal(match && match.id, expectedId, `${locale} query should match ${expectedId}: ${question}`);
+  });
+
+  noMatchCases[locale].forEach(question => {
+    assert.equal(
+      assistant.matchQuery(question, localeContent.entries),
+      null,
+      `${locale} unsupported policy question must use the no-match fallback: ${question}`
+    );
   });
 
   assert.equal(
@@ -72,6 +105,17 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
       assert.ok(fs.existsSync(localFile), `Missing internal FAQ destination: ${link.path}`);
     });
   });
+});
+
+const enKeywordsById = Object.fromEntries(
+  content.locales.en.entries.map(entry => [entry.id, entry.keywords])
+);
+content.locales.fr.entries.forEach(entry => {
+  assert.deepEqual(
+    entry.keywords,
+    enKeywordsById[entry.id],
+    `Mirrored EN/FR keyword lists must stay aligned for ${entry.id}`
+  );
 });
 
 const partial = fs.readFileSync(path.join(root, 'assets/partials/faq-assistant.html'), 'utf8');
