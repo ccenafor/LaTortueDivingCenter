@@ -5,23 +5,17 @@
   // This MVP copy is provisional. Update or extend only the `locales` data below;
   // matching and rendering behavior lives in faq-assistant.js.
   global.ltFaqAssistantContent = {
-    version: 'provisional-2026-08-24a',
+    version: 'provisional-2026-08-24d',
     whatsappNumber: '639695291297',
     locales: {
       en: {
         ui: {
           triggerLabel: 'Need help?',
           closeLabel: 'Close the help guide',
-          eyebrow: 'Quick guide · Provisional content',
-          title: 'How can we point you in the right direction?',
-          intro: 'Choose a topic or type a short question. Details can change, so confirm availability, schedules and quotes with the team.',
+          title: 'LA TORTUE DIVING CENTER FAQ',
           topicsLabel: 'Popular topics',
           questionLabel: 'What can we help with?',
-          questionPlaceholder: 'Try “Apo Island”, “room” or “course”',
           submitLabel: 'Find answer',
-          privacy: 'Your typed question stays in this browser. It is not sent, saved or included in analytics.',
-          resultLabel: 'Suggested answer',
-          provisionalNote: 'This guide is provisional. The linked pages and La Tortue team can confirm current details.',
           emptyQuestion: 'Type a short question first.',
           noMatchTitle: 'Let’s ask the team',
           noMatchText: 'This guide does not have a reliable answer yet. Open WhatsApp and add your question there.',
@@ -138,16 +132,10 @@
         ui: {
           triggerLabel: 'Besoin d’aide ?',
           closeLabel: 'Fermer le guide d’aide',
-          eyebrow: 'Guide rapide · Contenu provisoire',
-          title: 'Comment pouvons-nous vous orienter ?',
-          intro: 'Choisissez un thème ou saisissez une courte question. Les détails peuvent changer : confirmez disponibilités, horaires et devis auprès de l’équipe.',
+          title: 'LA TORTUE DIVING CENTER FAQ',
           topicsLabel: 'Thèmes populaires',
           questionLabel: 'Comment pouvons-nous vous aider ?',
-          questionPlaceholder: 'Essayez « Apo Island », « chambre » ou « cours »',
           submitLabel: 'Trouver',
-          privacy: 'Votre question reste dans ce navigateur. Elle n’est ni envoyée, ni enregistrée, ni incluse dans les statistiques.',
-          resultLabel: 'Réponse suggérée',
-          provisionalNote: 'Ce guide est provisoire. Les pages liées et l’équipe de La Tortue peuvent confirmer les informations actuelles.',
           emptyQuestion: 'Saisissez d’abord une courte question.',
           noMatchTitle: 'Demandons à l’équipe',
           noMatchText: 'Ce guide n’a pas encore de réponse fiable. Ouvrez WhatsApp et ajoutez-y votre question.',

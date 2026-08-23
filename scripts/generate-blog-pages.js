@@ -401,7 +401,7 @@ function renderPostPage(post, posts, config, labels) {
 </main>
 
 <div id="footer-placeholder"></div>
-<script src="/assets/site.js?v=20260824a"></script>
+<script src="/assets/site.js?v=20260824d"></script>
 </body>
 </html>
 `.replace(/[ \t]+$/gm, '');

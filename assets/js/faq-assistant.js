@@ -104,15 +104,11 @@
     };
 
     setText('[data-faq-trigger-label]', ui.triggerLabel);
-    setText('[data-faq-eyebrow]', ui.eyebrow);
     setText('[data-faq-title]', ui.title);
-    setText('[data-faq-intro]', ui.intro);
     setText('[data-faq-topics-label]', ui.topicsLabel);
     setText('[data-faq-question-label]', ui.questionLabel);
     setText('[data-faq-submit]', ui.submitLabel);
-    setText('[data-faq-privacy]', ui.privacy);
     closeButton.setAttribute('aria-label', ui.closeLabel);
-    input.placeholder = ui.questionPlaceholder;
 
     const whatsappUrl = () => {
       const message = encodeURIComponent(ui.whatsappMessage);
@@ -149,25 +145,18 @@
     const renderResult = (entry, options) => {
       const settings = options || {};
       const fragment = document.createDocumentFragment();
-      const label = document.createElement('p');
       const title = document.createElement('h3');
       const answer = document.createElement('p');
-      const note = document.createElement('p');
 
-      label.className = 'faq-assistant__result-label';
-      label.textContent = ui.resultLabel;
       title.className = 'faq-assistant__result-title';
       title.textContent = entry.title;
       answer.className = 'faq-assistant__result-text';
       answer.textContent = entry.answer;
-      note.className = 'faq-assistant__result-note';
-      note.textContent = ui.provisionalNote;
 
-      fragment.append(label, title, answer);
+      fragment.append(title, answer);
       if (entry.links && entry.links.length) {
         fragment.appendChild(renderLinks(entry.links, entry.id));
       }
-      fragment.appendChild(note);
       result.replaceChildren(fragment);
       result.hidden = false;
 

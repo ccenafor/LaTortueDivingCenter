@@ -9,7 +9,6 @@
   >
     <header class="faq-assistant__header">
       <div>
-        <p class="faq-assistant__eyebrow" data-faq-eyebrow></p>
         <h2 class="faq-assistant__title" id="faq-assistant-title" data-faq-title></h2>
       </div>
       <button class="faq-assistant__close" type="button" data-faq-close>
@@ -18,8 +17,6 @@
     </header>
 
     <div class="faq-assistant__body">
-      <p class="faq-assistant__intro" data-faq-intro></p>
-
       <div class="faq-assistant__topic-group" role="group" aria-labelledby="faq-assistant-topics-label">
         <p class="faq-assistant__section-label" id="faq-assistant-topics-label" data-faq-topics-label></p>
         <div class="faq-assistant__topics" data-faq-topics></div>
@@ -35,12 +32,10 @@
             type="search"
             maxlength="160"
             autocomplete="off"
-            aria-describedby="faq-assistant-privacy"
             data-faq-input
           >
           <button class="faq-assistant__submit" type="submit" data-faq-submit></button>
         </div>
-        <p class="faq-assistant__privacy" id="faq-assistant-privacy" data-faq-privacy></p>
       </form>
 
       <div class="faq-assistant__result" role="status" aria-live="polite" tabindex="-1" data-faq-result hidden></div>
