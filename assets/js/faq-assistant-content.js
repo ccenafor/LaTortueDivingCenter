@@ -5,7 +5,7 @@
   // This MVP copy is provisional. Update or extend only the `locales` data below;
   // matching and rendering behavior lives in faq-assistant.js.
   global.ltFaqAssistantContent = {
-    version: 'provisional-2026-08-23',
+    version: 'provisional-2026-08-23b',
     whatsappNumber: '639695291297',
     locales: {
       en: {
@@ -58,7 +58,7 @@
             id: 'rooms',
             title: 'Rooms and accommodation',
             answer: 'See the Rooms page for room types and the booking options currently shown on the site. Ask the team to confirm dates, occupancy, availability and the final quote.',
-            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'dortoir', 'lit', 'séjour', 'logement'],
+            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'dortoir', 'lit', 'séjour', 'séjourner', 'logement'],
             links: [
               { id: 'rooms', label: 'View rooms', path: '/cottages.html' },
               { id: 'contact', label: 'Ask about a stay', path: '/contact.html' }
@@ -78,7 +78,7 @@
             id: 'arrival_contact',
             title: 'Contact, location and arrival',
             answer: 'The Contact page has the site’s contact options and location details. Confirm any pickup, transfer or time-sensitive travel plan directly with the team.',
-            keywords: ['contact', 'address', 'location', 'map', 'where', 'airport', 'transfer', 'transport', 'getting there', 'arrival', 'arrive', 'dumaguete', 'ferry', 'adresse', 'où', 'aéroport', 'transfert', 'transport', 'venir', 'arrivée', 'bateau'],
+            keywords: ['contact', 'address', 'location', 'map', 'where are you located', 'airport', 'transfer', 'transport', 'getting there', 'arrival', 'arrive', 'dumaguete', 'ferry', 'adresse', 'où êtes-vous situés', 'aéroport', 'transfert', 'transport', 'venir', 'arrivée', 'bateau'],
             links: [
               { id: 'contact', label: 'Open contact page', path: '/contact.html' }
             ]
@@ -184,7 +184,7 @@
             id: 'rooms',
             title: 'Chambres et hébergement',
             answer: 'Consultez la page Chambres pour les types d’hébergement et les options de réservation affichées sur le site. Demandez à l’équipe de confirmer les dates, l’occupation, la disponibilité et le devis final.',
-            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'dortoir', 'lit', 'séjour', 'logement'],
+            keywords: ['room', 'rooms', 'cottage', 'cottages', 'dorm', 'dormitory', 'accommodation', 'stay', 'bed', 'private room', 'chambre', 'chambres', 'hébergement', 'dortoir', 'lit', 'séjour', 'séjourner', 'logement'],
             links: [
               { id: 'rooms', label: 'Voir les chambres', path: '/cottages.html' },
               { id: 'contact', label: 'Demander un séjour', path: '/contact.html' }
@@ -204,7 +204,7 @@
             id: 'arrival_contact',
             title: 'Contact, localisation et arrivée',
             answer: 'La page Contact regroupe les moyens de joindre l’équipe et les informations de localisation du site. Confirmez directement tout transfert, prise en charge ou trajet soumis à un horaire.',
-            keywords: ['contact', 'address', 'location', 'map', 'where', 'airport', 'transfer', 'transport', 'getting there', 'arrival', 'arrive', 'dumaguete', 'ferry', 'adresse', 'où', 'aéroport', 'transfert', 'transport', 'venir', 'arrivée', 'bateau'],
+            keywords: ['contact', 'address', 'location', 'map', 'where are you located', 'airport', 'transfer', 'transport', 'getting there', 'arrival', 'arrive', 'dumaguete', 'ferry', 'adresse', 'où êtes-vous situés', 'aéroport', 'transfert', 'transport', 'venir', 'arrivée', 'bateau'],
             links: [
               { id: 'contact', label: 'Ouvrir la page Contact', path: '/contact.html' }
             ]

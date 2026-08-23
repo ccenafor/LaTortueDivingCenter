@@ -18,6 +18,9 @@ const cases = {
   en: [
     ['Do you have a dorm?', 'rooms'],
     ['Can we see the restaurant menu?', 'restaurant'],
+    ['Where can I eat?', 'restaurant'],
+    ['Where can I stay?', 'rooms'],
+    ['Where are you located?', 'arrival_contact'],
     ['How do I get there from Dumaguete airport?', 'arrival_contact'],
     ['I want an Open Water course', 'courses'],
     ['guided shore dives for a certified diver', 'fun_dives'],
@@ -28,6 +31,8 @@ const cases = {
   fr: [
     ['Avez-vous un dortoir ?', 'rooms'],
     ['Je voudrais voir le menu du restaurant', 'restaurant'],
+    ['Où puis-je séjourner ?', 'rooms'],
+    ['Où êtes-vous situés ?', 'arrival_contact'],
     ['Proposez-vous un transfert depuis l’aéroport ?', 'arrival_contact'],
     ['Je cherche un cours Open Water', 'courses'],
     ['Je veux faire des plongées loisirs guidées', 'fun_dives'],
