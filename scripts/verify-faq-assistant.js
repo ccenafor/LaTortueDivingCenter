@@ -73,7 +73,12 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
   ['eyebrow', 'intro', 'questionPlaceholder', 'privacy', 'resultLabel', 'provisionalNote'].forEach(key => {
     assert.equal(key in localeContent.ui, false, `${locale} removed UI copy must stay absent: ${key}`);
   });
-  assert.equal(localeContent.ui.title, 'LA TORTUE DIVING CENTER FAQ', `${locale} must use the compact FAQ header title`);
+  assert.equal(localeContent.ui.title, 'FAQ', `${locale} must use the compact FAQ header title`);
+  assert.equal(
+    localeContent.ui.questionLabel,
+    locale === 'fr' ? 'Posez votre question' : 'Ask anything',
+    `${locale} must use the concise question label`
+  );
 
   localeCases.forEach(([question, expectedId]) => {
     const match = assistant.matchQuery(question, localeContent.entries);
@@ -132,6 +137,7 @@ assert.match(partial, /aria-live="polite"/, 'FAQ result must be announced polite
 assert.doesNotMatch(partial, /data-faq-(?:eyebrow|intro|privacy)/, 'Removed helper copy must not remain in the FAQ markup');
 assert.match(styles, /prefers-reduced-motion/, 'FAQ styles must respect reduced motion');
 assert.match(styles, /\.faq-assistant__panel\s*\{[^}]*padding:\s*0;/s, 'FAQ panel must override global section padding');
+assert.match(styles, /\.faq-assistant__input,\s*\.faq-assistant__submit\s*\{[^}]*height:\s*2\.85rem;/s, 'FAQ input and submit button must share an explicit height');
 assert.doesNotMatch(behavior, /ui\.(?:intro|questionPlaceholder|privacy|resultLabel|provisionalNote)/, 'Removed helper copy must not be rendered');
 assert.doesNotMatch(behavior, /faq_(?:question|query|input|text)\s*:/, 'Tracking must not include typed text');
 assert.match(siteScript, /setupFaqAssistant\(\)/, 'Shared site initialization must load the FAQ');

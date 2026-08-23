@@ -5,16 +5,16 @@
   // This MVP copy is provisional. Update or extend only the `locales` data below;
   // matching and rendering behavior lives in faq-assistant.js.
   global.ltFaqAssistantContent = {
-    version: 'provisional-2026-08-24d',
+    version: 'provisional-2026-08-24e',
     whatsappNumber: '639695291297',
     locales: {
       en: {
         ui: {
           triggerLabel: 'Need help?',
           closeLabel: 'Close the help guide',
-          title: 'LA TORTUE DIVING CENTER FAQ',
+          title: 'FAQ',
           topicsLabel: 'Popular topics',
-          questionLabel: 'What can we help with?',
+          questionLabel: 'Ask anything',
           submitLabel: 'Find answer',
           emptyQuestion: 'Type a short question first.',
           noMatchTitle: 'Let’s ask the team',
@@ -132,9 +132,9 @@
         ui: {
           triggerLabel: 'Besoin d’aide ?',
           closeLabel: 'Fermer le guide d’aide',
-          title: 'LA TORTUE DIVING CENTER FAQ',
+          title: 'FAQ',
           topicsLabel: 'Thèmes populaires',
-          questionLabel: 'Comment pouvons-nous vous aider ?',
+          questionLabel: 'Posez votre question',
           submitLabel: 'Trouver',
           emptyQuestion: 'Saisissez d’abord une courte question.',
           noMatchTitle: 'Demandons à l’équipe',
