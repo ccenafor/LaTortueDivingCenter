@@ -5,7 +5,7 @@
   // This MVP copy is provisional. Update or extend only the `locales` data below;
   // matching and rendering behavior lives in faq-assistant.js.
   global.ltFaqAssistantContent = {
-    version: 'provisional-2026-08-24e',
+    version: 'provisional-2026-08-24h',
     whatsappNumber: '639695291297',
     locales: {
       en: {

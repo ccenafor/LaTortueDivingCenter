@@ -131,15 +131,23 @@ const partial = fs.readFileSync(path.join(root, 'assets/partials/faq-assistant.h
 const styles = fs.readFileSync(path.join(root, 'assets/css/faq-assistant.css'), 'utf8');
 const behavior = fs.readFileSync(path.join(root, 'assets/js/faq-assistant.js'), 'utf8');
 const siteScript = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
+const siteStyles = fs.readFileSync(path.join(root, 'new_styles.css'), 'utf8');
 
 assert.match(partial, /role="dialog"/, 'FAQ partial must expose a dialog landmark');
 assert.match(partial, /aria-live="polite"/, 'FAQ result must be announced politely');
+assert.doesNotMatch(partial, /data-faq-whatsapp/, 'The persistent WhatsApp action must stay outside the FAQ dialog');
 assert.doesNotMatch(partial, /data-faq-(?:eyebrow|intro|privacy)/, 'Removed helper copy must not remain in the FAQ markup');
 assert.match(styles, /prefers-reduced-motion/, 'FAQ styles must respect reduced motion');
 assert.match(styles, /\.faq-assistant__panel\s*\{[^}]*padding:\s*0;/s, 'FAQ panel must override global section padding');
 assert.match(styles, /\.faq-assistant__input,\s*\.faq-assistant__submit\s*\{[^}]*height:\s*2\.85rem;/s, 'FAQ input and submit button must share an explicit height');
 assert.doesNotMatch(behavior, /ui\.(?:intro|questionPlaceholder|privacy|resultLabel|provisionalNote)/, 'Removed helper copy must not be rendered');
+assert.match(behavior, /links:\s*\[\{ id: 'whatsapp', label: ui\.whatsappLabel \}\]/, 'FAQ no-match result must keep its contextual WhatsApp fallback');
 assert.doesNotMatch(behavior, /faq_(?:question|query|input|text)\s*:/, 'Tracking must not include typed text');
 assert.match(siteScript, /setupFaqAssistant\(\)/, 'Shared site initialization must load the FAQ');
+assert.match(siteScript, /setupFloatingWhatsApp\(\)/, 'Shared site initialization must restore the site-level WhatsApp action');
+assert.match(siteScript, /className = 'floating-whatsapp'/, 'Site-level WhatsApp action must use the expected hook');
+assert.match(siteScript, /className = 'floating-actions'/, 'Site-level actions must share a responsive layout container');
+assert.match(siteStyles, /\.floating-whatsapp\s*\{/, 'Site styles must include the floating WhatsApp action');
+assert.match(siteStyles, /\.floating-actions \.faq-assistant\s*\{/, 'The FAQ and WhatsApp actions must share the same responsive positioning context');
 
 console.log('FAQ assistant verification passed.');
