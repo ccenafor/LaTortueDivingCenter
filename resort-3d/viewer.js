@@ -178,7 +178,7 @@ function frame(now,dt){
   dirty=false;
   // Projection must use the current camera matrix, including in free navigation.
   camera.updateMatrixWorld();
-  pins.forEach((p,i)=>{const v=projected.copy(pinPositions[i]).project(camera);p.style.left=`${(v.x*.5+.5)*stageWidth}px`;p.style.top=`${(-v.y*.5+.5)*stageHeight}px`;p.hidden=navigation.active||!ready||v.z>1||v.z< -1||Math.abs(v.x)>.9||Math.abs(v.y)>.8||(cutOn&&i!==current)||(i===14&&i!==current);});
+  pins.forEach((p,i)=>{const v=projected.copy(pinPositions[i]).project(camera);p.style.left=`${(v.x*.5+.5)*stageWidth}px`;p.style.top=`${(-v.y*.5+.5)*stageHeight}px`;p.hidden=navigation.active||!ready||v.z>1||v.z< -1||Math.abs(v.x)>.9||Math.abs(v.y)>.8||(cutOn&&i!==current);});
   renderer.render(scene,camera);
  }
  return playing||!!transition||navigation.moving||animateReef;
