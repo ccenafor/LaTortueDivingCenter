@@ -24,15 +24,16 @@ reef.update(.05);assert.notDeepEqual(fish[0].instanceMatrix.array,before,'fish a
 // with a margin above the seabed (no swimming through a sandy bank).
 const matrix=new THREE.Matrix4(),position=new THREE.Vector3(),previousPosition=new THREE.Vector3(),forward=new THREE.Vector3(),travel=new THREE.Vector3();
 const colonies=reef.root.children.filter(o=>o.userData.coral);
-assert.ok(colonies.reduce((n,m)=>n+m.count,0)>=300,'dense interlocking coral carpet');
-assert.ok(inReef(13,-31.8)&&inReef(-13,-39),'strip spans the beachfront, including its sides');
+const colonyCount=colonies.reduce((n,m)=>n+m.count,0);
+assert.ok(colonyCount>=90&&colonyCount<=140,'intermediate density with sandy gaps');
+assert.ok(inReef(0,-36)&&!inReef(13,-36)&&!inReef(10,-32),'compact oval, without the wide rectangular corners');
 const occupied=new Set();
 for(const colony of colonies)for(let i=0;i<colony.count;i++){
  colony.getMatrixAt(i,matrix);position.setFromMatrixPosition(matrix);
  assert.ok(inReef(position.x,position.z));
  occupied.add(`${Math.floor((position.x+15)/3)},${Math.floor((-position.z-31)/2)}`);
 }
-assert.ok(occupied.size>=35,'coral covers the breadth and depth of the coastal strip');
+assert.ok(occupied.size>=25,'coral distributed across the compact reef window');
 for(let t=0;t<700;t++){
  const previous=fish.map(m=>m.instanceMatrix.array.slice());
  reef.update(.1);

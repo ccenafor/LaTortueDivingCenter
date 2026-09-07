@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
-import {reefFloor,fishTypes,reefBounds,reefEdge,inReef} from './reef-layout.js?v=19';
+import {reefFloor,fishTypes,reefBounds,reefEdge,inReef} from './reef-layout.js?v=20';
 
 // Shared, low-resolution geometry is baked into a handful of vertex-colour batches.
 // Fish of the same type use one instanced draw; no image textures or shadow passes.
@@ -47,8 +47,8 @@ export function createReef(){
   if(j<segments){const n=j*2;bankIndices.push(n,n+1,n+2,n+1,n+3,n+2);}
  }
  const bank=new THREE.BufferGeometry();bank.setAttribute('position',new THREE.Float32BufferAttribute(bankPoints,3));bank.setAttribute('color',new THREE.Float32BufferAttribute(bankColors,3));bank.setIndex(bankIndices);bank.computeVertexNormals();staticParts.push(bank);
- // Dense coastal coral carpet. Five shared colony meshes replace hundreds of
- // duplicated geometries; varied scale, rotation and colour break repetition.
+ // Spaced coastal colonies leave sandy gaps between the five shared coral shapes.
+ // Varied scale, rotation and colour break repetition without duplicating geometry.
  const coralSphere=new THREE.SphereGeometry(1,8,5);
  const coralBlob=(list,color,p,s)=>piece(list,coralSphere,color,p,s);
  const colonies=Array.from({length:5},()=>[]);
@@ -56,10 +56,8 @@ export function createReef(){
   const x=-14.3+col*1.18+(random()-.5)*.25,z=-31.55-row*1.16+(random()-.5)*.20;
   if(!inReef(x,z,-.35))continue;
   const type=(col+row*3)%5;
-  colonies[type].push({x,z,size:.82+random()*.30,angle:random()*6.28});
-  // Interlocking low colonies fill the spaces between taller branching heads.
-  const ux=x+.45,uz=z-.4;
-  if(inReef(ux,uz,-.35))colonies[row%2?2:3].push({x:ux,z:uz,size:.65+random()*.25,angle:random()*6.28});
+  colonies[type].push({x,z,size:.68+random()*.24,angle:random()*6.28});
+
  }
  const coralNames=['Corail ramifié doré','Corail ramifié mauve','Corail en plateaux','Corail massif','Corail en rosettes'];
  const coralColors=['#c5a675','#9c8d9d','#849e8d','#a3a074','#b5907c'];
@@ -209,8 +207,8 @@ export function openWaterWindow(model){
    shader.vertexShader='varying vec3 reefWorld;\n'+shader.vertexShader;
    shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nreefWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
    shader.fragmentShader='varying vec3 reefWorld;\n'+shader.fragmentShader;
-   shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif (dot(pow(abs((reefWorld.xz - vec2(0.0, -35.7)) / vec2(15.0, 4.6)), vec2(6.0)), vec2(1.0)) < 1.0) discard;');
+   shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif (length((reefWorld.xz - vec2(0.0, -36.0)) / vec2(11.0, 5.4)) < 1.0) discard;');
   };
-  mesh.material.customProgramCacheKey=()=> 'reef-water-window-2';mesh.material.needsUpdate=true;
+  mesh.material.customProgramCacheKey=()=> 'reef-water-window-3';mesh.material.needsUpdate=true;
  });
 }

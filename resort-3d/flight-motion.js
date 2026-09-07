@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import {inReef,reefFloor} from './reef-layout.js?v=19';
+import {inReef,reefFloor} from './reef-layout.js?v=20';
 
 // Horizontal movement follows heading, independently of where the user looks vertically.
 export function flightDelta(yaw, forward, side, vertical, seconds, speed=2.8){
