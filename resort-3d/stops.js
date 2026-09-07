@@ -484,17 +484,17 @@ export const stops=[
   "alt": "Bar Restaurant 3.jpeg",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [
-   -1,
-   4,
-   18
+   -4,
+   5,
+   19
   ],
   "target": [
-   6.4,
+   4.5,
    1.3,
    12.5
   ],
   "pin": [
-   6.5,
+   4.55,
    4.5,
    13
   ],
@@ -507,12 +507,12 @@ export const stops=[
    "outside": {
     "label": "Abri complet",
     "pos": [
-     -0.5,
-     4.3,
-     19
+     -3.8,
+     5.3,
+     20
     ],
     "target": [
-     6.6,
+     4.55,
      1.3,
      13
     ],
@@ -521,12 +521,12 @@ export const stops=[
    "inside": {
     "label": "Bar ouvert",
     "pos": [
-     1.4,
-     4.5,
-     17.3
+     -2.8,
+     5.0,
+     18.5
     ],
     "target": [
-     7.8,
+     5.8,
      1.25,
      12.7
     ],
@@ -535,12 +535,12 @@ export const stops=[
    "reverse": {
     "label": "Plan du bar",
     "pos": [
-     7.8,
-     13,
+     4.55,
+     17,
      12.05
     ],
     "target": [
-     7.85,
+     4.6,
      0,
      12.05
     ],
