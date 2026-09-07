@@ -5,6 +5,7 @@ const cssnano = require('cssnano');
 const terser = require('terser');
 const { generateBlogPages } = require('./generate-blog-pages');
 const { generateSearchIndex } = require('./generate-search-index');
+const { includeResort3d } = require('./resort-3d-context');
 
 const root = path.resolve(__dirname, '..');
 const dist = path.join(root, 'dist');
@@ -78,6 +79,11 @@ const copyPublicSite = async () => {
       throw new Error(`Required public file is missing: ${file}`);
     }
     await fs.promises.copyFile(source, path.join(dist, file));
+  }
+
+  if (includeResort3d()) {
+    await copyRecursive(path.join(root, 'resort-3d'), path.join(dist, 'resort-3d'));
+    console.log('Owner preview included: /resort-3d/ (preprod only).');
   }
 };
 

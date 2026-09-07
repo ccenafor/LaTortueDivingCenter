@@ -143,3 +143,11 @@ https://docs.netlify.com/forms/setup/
 
 For issues with this site's form:  
 Contact the development team
+
+## Resort 3D owner preview
+
+The standalone `/resort-3d/` page contains the approved V14 model and photo references. It is intentionally absent from navigation, the search index and sitemap. It has a permanent `noindex, nofollow, noarchive` meta tag; the existing preprod guard also adds the HTTP X-Robots-Tag header.
+
+The build copies this directory only when `BRANCH=preprod` and `CONTEXT` is not `production`. Production and other branches omit the entire page and its assets. Local preview: set `BRANCH=preprod`, run the build, and serve `dist`. No Blender sources or internal evidence files are published.
+
+Checks: `node scripts/resort-3d-context.test.js`, `node scripts/verify-blog-seo.js`, production build must omit `dist/resort-3d`, preprod build must include it. Target: https://preprod.latortuediving.com/resort-3d/. Rollback: restore the previous preprod deploy or revert only the Resort 3D change on preprod; do not promote it to main.
