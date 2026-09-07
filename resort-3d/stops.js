@@ -107,7 +107,7 @@ export const stops=[
  },
  {
   "name": "Cottage vue mer 1",
-  "short": "Cottage vue mer 1",
+  "short": "Cottage 1",
   "photos": [
    61,
    "/assets/Pictures/rooms/Optimized/seaview-cottage-1.webp",
@@ -170,7 +170,7 @@ export const stops=[
  },
  {
   "name": "Cottage Familial vue mer 2",
-  "short": "Cottage Familial vue mer 2",
+  "short": "Cottage 2",
   "photos": [
    "/assets/Pictures/rooms/Optimized/family-cottage-1.webp",
    "/assets/Pictures/rooms/Optimized/family-cottage-2.webp",
@@ -233,7 +233,7 @@ export const stops=[
  },
  {
   "name": "Cottage vue mer 3",
-  "short": "Cottage vue mer 3",
+  "short": "Cottage 3",
   "photos": [
    84,
    85,
@@ -337,7 +337,7 @@ export const stops=[
  },
  {
   "name": "Cottage Jardin",
-  "short": "Cottage Jardin",
+  "short": "Jardin",
   "photos": [
    "/assets/Pictures/rooms/Optimized/garden-cottage-3.webp",
    "/assets/Pictures/rooms/Optimized/garden-cottage-1.webp"
@@ -676,7 +676,7 @@ export const stops=[
  },
  {
   "name": "Chambre Deluxe",
-  "short": "Chambre Deluxe",
+  "short": "Deluxe",
   "photos": [
    "assets/references/aircon-entry.webp",
    "assets/site/deluxe-1.webp",
