@@ -1,18 +1,25 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
-import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=nav-2';
-import {stops} from './stops.js?v=room3-16';
+import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-18';
+import {stops} from './stops.js?v=reef-18';
 import {createRenderLoop} from './render-loop.js?v=1';
+import {shouldAnimateReef,inReef} from './reef-layout.js';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
 let model,ready=false,playing=false,elapsed=0,transition=null,completed=false;
 let navigation;
+let reef=null,reefLoading=null,reefFailed=false,reefMotion=true,reefTick=0,underwater=false;
+const reefFrustum=new THREE.Frustum(),reefProjection=new THREE.Matrix4();
+const reefSphere=new THREE.Sphere(new THREE.Vector3(0,-3,-36),12);
+const reefBox=new THREE.Box3(new THREE.Vector3(-11,-5,-41.4),new THREE.Vector3(11,-1.3,-30.6));
 const loop=createRenderLoop(frame);
 let dirty=true,stageVisible=true;
 function invalidate(){dirty=true;loop.invalidate();}
 function invalidateShadows(){renderer.shadowMap.needsUpdate=true;invalidate();}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+motionPreference.addEventListener('change',()=>{syncReefMotion();invalidate();});
 const scene=new THREE.Scene();scene.background=new THREE.Color('#e7edf5');scene.fog=new THREE.Fog('#e7edf5',75,150);
 const camera=new THREE.PerspectiveCamera(45,1,.05,180);
 let renderer;
@@ -66,13 +73,16 @@ function setCut(on){
 }
 function moveTo(pos,target,instant=false){
  invalidate();
- const p=vec(pos),t=vec(target);if($('stage').clientWidth<600)p.sub(t).multiplyScalar(currentView==='bath'?1.12:1.24).add(t);
+ const p=vec(pos),t=vec(target);if($('stage').clientWidth<600&&!stops[current].reef)p.sub(t).multiplyScalar(currentView==='bath'?1.12:1.24).add(t);
  if(instant||reduced){camera.position.copy(p);controls.target.copy(t);transition=null;}
  else transition={start:performance.now(),a:camera.position.clone(),b:controls.target.clone(),p,t};
 }
 function applyView(mode,instant=false){
  if(navigation?.active)navigation.setActive(false);
  const s=stops[current],v=s.views?.[mode];currentView=mode;planMode=false;$('planview').setAttribute('aria-pressed','false');
+ $('reefControls').hidden=!s.reef;controls.maxPolarAngle=s.reef?Math.PI*.85:Math.PI*.48;
+ if(s.reef){reefFailed=false;ensureReef();}
+ reef?.setUnderwater(!!s.reef&&mode==='inside');
  setCut(v?.cut??(v?mode!=='outside':s.cut));setCanopy(v?.hideCanopy?false:!cutOn);
  for(const name of ['outside','inside','reverse','bath']){$(name).hidden=!s.views?.[name];$(name).textContent=s.views?.[name]?.label||name;$(name).setAttribute('aria-pressed',String(mode===name));}
  $('spaceViews').hidden=!s.views;$('cut').hidden=!!s.views;
@@ -100,6 +110,23 @@ $('photoOpen').onclick=()=>{pause();$('largePhoto').src=$('photo').src;$('largeP
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 $('photoPrev').onclick=()=>{pause();photoIndex--;showPhoto();};$('photoNext').onclick=()=>{pause();photoIndex++;showPhoto();};
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syncVisibility();});
+function ensureReef(){
+ if(!ready||reef||reefLoading||reefFailed)return;
+ $('reefStatus').textContent='Chargement du récif…';
+ reefLoading=import('./reef.js?v=18-1').then(({createReef,openWaterWindow})=>{
+  reef=createReef();scene.add(reef.root);openWaterWindow(model);
+  reef.setUnderwater(!!stops[current].reef&&currentView==='inside');
+  $('reefStatus').textContent='';invalidateShadows();
+ }).catch(error=>{reefFailed=true;$('reefStatus').textContent='Le récif n’a pas pu être chargé. Sélectionner à nouveau Le récif pour réessayer.';console.error('Reef loading failed',error);}).finally(()=>{reefLoading=null;});
+}
+function syncReefMotion(){
+ const suppressed=motionPreference.matches;
+ $('reefMotion').disabled=suppressed;
+ $('reefMotion').setAttribute('aria-pressed',String(reefMotion&&!suppressed));
+ $('reefMotion').textContent=suppressed?'Mouvements réduits activés':reefMotion?'Mettre les animaux en pause':'Animer les animaux';
+}
+$('reefMotion').onclick=()=>{reefMotion=!reefMotion;syncReefMotion();invalidate();};
+syncReefMotion();
 navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),onChange:invalidate,onModeChange:updateStepSelection,
  onEnter(){const pending=transition;pause();if(pending&&current!==0){camera.position.copy(pending.p);camera.lookAt(pending.t);}planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
   if(current===0){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
@@ -121,6 +148,14 @@ function frame(now,dt){
  $('progress').value=elapsed;
  if(transition){dirty=true;let t=Math.min((now-transition.start)/1000,1);t=t*t*(3-2*t);camera.position.lerpVectors(transition.a,transition.p,t);controls.target.lerpVectors(transition.b,transition.t,t);if(t===1)transition=null;}
  if(navigation.active)navigation.update(dt);else controls.update();
+ camera.updateMatrixWorld();
+ const submerged=!!reef&&camera.position.y< -1.34&&inReef(camera.position.x,camera.position.z);
+ if(submerged!==underwater){underwater=submerged;scene.background.set(underwater?'#699fa4':'#e7edf5');scene.fog.color.copy(scene.background);scene.fog.near=underwater?6:75;scene.fog.far=underwater?38:150;reef?.setUnderwater(underwater);dirty=true;}
+ reefFrustum.setFromProjectionMatrix(reefProjection.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse));
+ const reefVisible=reefFrustum.intersectsBox(reefBox);
+ if(ready&&reefVisible)ensureReef();
+ const animateReef=!!reef&&shouldAnimateReef({visible:reefVisible,enabled:reefMotion,reduced:motionPreference.matches,close:(!!stops[current].reef||navigation.active)&&camera.position.distanceToSquared(reefSphere.center)<28*28,hidden:document.hidden||!stageVisible});
+ if(animateReef){reefTick+=dt;if(reefTick>=1/30){reef.update(reefTick);reefTick=0;dirty=true;}}else reefTick=0;
  if(dirty){
   dirty=false;
   // Projection must use the current camera matrix, including in free navigation.
@@ -128,5 +163,5 @@ function frame(now,dt){
   pins.forEach((p,i)=>{const v=projected.copy(pinPositions[i]).project(camera);p.style.left=`${(v.x*.5+.5)*stageWidth}px`;p.style.top=`${(-v.y*.5+.5)*stageHeight}px`;p.hidden=navigation.active||!ready||v.z>1||v.z< -1||Math.abs(v.x)>.9||Math.abs(v.y)>.8||(cutOn&&i!==current)||(i===14&&i!==current);});
   renderer.render(scene,camera);
  }
- return playing||!!transition||navigation.moving;
+ return playing||!!transition||navigation.moving||animateReef;
 }

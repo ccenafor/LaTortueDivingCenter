@@ -70,3 +70,8 @@
 
 /* Enter free navigation immediately, even while the canvas is offscreen. */
 .free-mode #pins { display:none; }
+
+#reefControls { margin:0 0 16px; }
+#reefControls button { width:100%; }
+#reefStatus:empty { display:none; }
+#reefStatus { font-size:12px; margin:8px 0; }

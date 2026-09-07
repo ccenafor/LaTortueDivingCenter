@@ -956,5 +956,79 @@ export const stops=[
   "cutZone": null,
   "cut": false,
   "note": "Positions relatives déduites des photos. Espèces des grands arbres non déterminées ; dimensions et contours des couronnes estimés."
+ },
+{
+ "name": "Le récif de La Tortue",
+ "short": "Le récif",
+ "reef": true,
+ "photos": [
+  "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp",
+  "/assets/Pictures/Dive pictures/Fun dives/HR Turtle hawksbill.webp",
+  "/assets/Pictures/Dive pictures/Fun dives/HR Clownfish.webp",
+  "/assets/Pictures/Dive pictures/Fun dives/HR cardinal fish.webp"
+ ],
+ "pin": [
+  0,
+  -0.5,
+  -35.3
+ ],
+ "pos": [
+  16,
+  12,
+  -48
+ ],
+ "target": [
+  0,
+  -1,
+  -29
+ ],
+ "cut": false,
+ "cutZone": null,
+ "defaultView": "outside",
+ "views": {
+  "outside": {
+   "label": "Plage & récif",
+   "pos": [
+    16,
+    12,
+    -48
+   ],
+   "target": [
+    0,
+    -1,
+    -29
+   ],
+   "cut": false
+  },
+  "inside": {
+   "label": "Sous l’eau",
+   "pos": [
+    5.4,
+    -2.2,
+    -39.0
+   ],
+   "target": [
+    -1.2,
+    -3.0,
+    -35.6
+   ],
+   "fov": 62,
+   "cut": false
+  },
+  "reverse": {
+   "label": "Vers le resort",
+   "pos": [
+    0,
+    0.4,
+    -40.7
+   ],
+   "target": [
+    0,
+    1,
+    -21
+   ],
+   "cut": false
+  }
  }
+}
 ];

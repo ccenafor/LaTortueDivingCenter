@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
-import {flightDelta,limitFlight} from './flight-motion.js';
+import {flightDelta,limitFlight} from './flight-motion.js?v=reef-18';
 
 // Overview gestures can translate the camera target instead of orbiting a fixed pin.
 export function createOrbitNavigation(camera,canvas){
