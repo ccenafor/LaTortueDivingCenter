@@ -1,15 +1,17 @@
+export const galleryWidths={"/resort-3d/assets/gallery/main-1-1.webp":[600,600],"/resort-3d/assets/gallery/main-1-2.webp":[516,516],"/resort-3d/assets/gallery/main-1-3.webp":[450,1200],"/resort-3d/assets/gallery/main-1-4.webp":[600,1440],"/resort-3d/assets/gallery/plage-1.webp":[450,1200],"/resort-3d/assets/gallery/plage-2.webp":[450,1200],"/resort-3d/assets/gallery/plage-3.webp":[600,1080],"/resort-3d/assets/gallery/plage-4.webp":[600,1440],"/resort-3d/assets/gallery/plage-5.webp":[600,1080],"/resort-3d/assets/gallery/plage-6.webp":[600,1346],"/resort-3d/assets/gallery/recif-1.webp":[480,1280],"/resort-3d/assets/gallery/recif-2.webp":[480,1281],"/resort-3d/assets/gallery/reunion-1.webp":[600,1440],"/resort-3d/assets/gallery/reunion-2.webp":[451,1202],"/resort-3d/assets/gallery/seaview-cottage-1.webp":[600,1080]};
 export const photoNames={"17": "Bar Restaurant 1.jpeg", "19": "Bar Restaurant 2.jpeg", "20": "Bar Restaurant 3.jpeg", "21": "Bar Restaurant 4.jpeg", "23": "Bar Restaurant 5.jpeg", "24": "Bar Restaurant 6.jpeg", "93": "Beach view from rooms 2, 3 and 4.jpeg", "7": "Diving area 1.jpeg", "8": "Diving area 2.jpeg", "9": "Diving area 3.jpeg", "12": "Diving equipment 1.jpeg", "14": "Diving equipment 3.jpeg", "16": "Diving equipment 4.jpeg", "18": "Diving equipment and aircon room 2.jpeg", "11": "Diving equipment and aircon room.jpeg", "2": "Entrance 1.jpeg", "3": "entrance 2.jpeg", "4": "Entrance 3.jpeg", "5": "Entrance 4.jpeg", "6": "Entrance 5.jpeg", "68": "Entrance from beach 2.jpeg", "65": "Entrance from beach.jpeg", "91": "Front area of rooms 2, 3 and 4 upstairs.jpeg", "95": "Main alley 2.jpeg", "99": "Main alley 3.jpeg", "29": "Main alley and toilets-showers.jpeg", "94": "Main alley.jpeg", "25": "Meeting zone 1.jpeg", "26": "Meeting zone 2.jpeg", "27": "Meeting zone 3.jpeg", "28": "Meeting zone 4.jpeg", "31": "Meeting zone 5.jpeg", "87": "oom 3 and 4.jpeg", "13": "Parking 2.jpeg", "15": "Parking 3.jpeg", "10": "Parking.jpeg", "57": "Pétanque and Resting area .jpeg", "54": "Pétanque area 2.jpeg", "52": "Pétanque area.jpeg", "55": "Resting area 1.jpeg", "56": "Resting area 2.jpeg", "47": "Room 1-1.jpeg", "98": "Room 1.jpeg", "82": "Room 2 and 3 - 2.jpeg", "61": "Room 2 and 3.jpeg", "67": "Room 2-1.jpeg", "69": "Room 2-2.jpeg", "70": "Room 2-3.jpeg", "71": "Room 2-4.jpeg", "72": "Room 3-1.jpeg", "73": "Room 3-2.jpeg", "74": "Room 3-3.jpeg", "75": "Room 3-4.jpeg", "76": "Room 3-5.jpeg", "77": "Room 3-6.jpeg", "78": "Room 3-7.jpeg", "79": "Room 3-8.jpeg", "83": "Room 3-9.jpeg", "90": "Room 4-.jpeg", "80": "Room 4-1.jpeg", "81": "Room 4-2.jpeg", "84": "Room 4-3.jpeg", "86": "Room 4-4.jpeg", "88": "Room 4-5.jpeg", "89": "Room 4-6.jpeg", "85": "Room 4-hammack.jpeg", "22": "Room dormitory and room 1.jpeg", "48": "Room1-2.jpeg", "49": "Room1-3.jpeg", "50": "Room1-4.jpeg", "51": "Room1-5.jpeg", "53": "Room1-6.jpeg", "92": "Rooms 2 and 3 - 3.jpeg", "58": "Rooms Facing sea.jpeg", "60": "Sea area upstairs 2.jpeg", "59": "Sea area upstairs.jpeg", "32": "Shower 1.jpeg", "33": "Shower 2.jpeg", "35": "Shower 3.jpeg", "34": "Toilet 1.jpeg", "42": "Toilet 2.jpeg", "43": "Toilet 3.jpeg", "46": "Toilet 4.jpeg", "97": "toilets showers area.jpeg", "30": "toilets-showers area 1.jpeg", "36": "toilets-showers area 2.jpeg", "37": "toilets-showers area 3.jpeg", "38": "toilets-showers area 4.jpeg", "39": "toilets-showers area 5.jpeg", "44": "toilets-showers area 6.jpeg", "45": "toilets-showers area 7.jpeg", "62": "View resort from beach .jpeg", "64": "view side beach 1.jpeg", "66": "view side beach 2.jpeg"};
 export const stops=[
  {
   "name": "Le resort",
   "short": "Ensemble",
   "photos": [
-   62,
-   94,
-   95,
-   99
+   5,
+   "/resort-3d/assets/gallery/main-1-1.webp",
+   "/resort-3d/assets/gallery/main-1-2.webp",
+   "/resort-3d/assets/gallery/main-1-3.webp",
+   "/resort-3d/assets/gallery/main-1-4.webp"
   ],
-  "photo": 62,
+  "photo": 5,
   "alt": "View resort from beach .jpeg",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [
@@ -33,33 +35,36 @@ export const stops=[
   "note": "Dimensions et positions fines estimées à partir des photos et du croquis."
  },
  {
-  "name": "La descente vers la plage",
-  "short": "Accès plage",
+  "name": "La plage",
+  "short": "Plage",
   "photos": [
-   62,
+   "/assets/Pictures/dining/dining pictures/optimized/sunset drinks.webp",
+   "/assets/Pictures/Blog/Optimized/antoine-bodier-itc-la-tortue-listing-cover.webp",
    65,
-   68,
-   60,
-   64,
-   66
+   "/resort-3d/assets/gallery/plage-1.webp",
+   "/resort-3d/assets/gallery/plage-2.webp",
+   "/resort-3d/assets/gallery/plage-3.webp",
+   "/resort-3d/assets/gallery/plage-4.webp",
+   "/resort-3d/assets/gallery/plage-5.webp",
+   "/resort-3d/assets/gallery/plage-6.webp"
   ],
-  "photo": 62,
+  "photo": "/assets/Pictures/dining/dining pictures/optimized/sunset drinks.webp",
   "alt": "View resort from beach .jpeg",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [
-   15.4,
-   5.8,
-   -33.3
+   17,
+   10,
+   -40
   ],
   "target": [
-   10.0,
-   0.4,
-   -25.0
+   0,
+   0,
+   -25.8
   ],
   "pin": [
-   10.4,
-   0.8,
-   -26.1
+   0,
+   -0.3,
+   -28
   ],
   "text": "La montée se décale légèrement avant le passage en haut des marches. Le muret blanc porte la douchette pour les pieds ; les panneaux d’information longent la clôture et l’enseigne La Tortue fait face à la plage.",
   "cutZone": null,
@@ -67,19 +72,19 @@ export const stops=[
   "note": "Position et détails recoupés avec les photos. Forme des marches, dimensions et dénivelé restent estimés.",
   "views": {
    "outside": {
-    "label": "Escalier",
+    "label": "Plage",
     "pos": [
-     15.4,
-     5.8,
-     -33.3
+     17,
+     10,
+     -40
     ],
     "target": [
-     10.0,
-     0.4,
-     -25.0
+     0,
+     0,
+     -25.8
     ],
     "cut": false,
-    "photo": 62
+    "photo": "/assets/Pictures/dining/dining pictures/optimized/sunset drinks.webp"
    },
    "inside": {
     "label": "Passage & douchette",
@@ -101,16 +106,14 @@ export const stops=[
   "defaultView": "outside"
  },
  {
-  "name": "Room 2",
-  "short": "Room 2",
+  "name": "Cottage vue mer 1",
+  "short": "Cottage vue mer 1",
   "photos": [
-   67,
-   69,
-   70,
-   71,
-   61
+   61,
+   "/assets/Pictures/rooms/Optimized/seaview-cottage-1.webp",
+   "/assets/Pictures/rooms/Optimized/seaview-cottage-2.webp"
   ],
-  "photo": 67,
+  "photo": 61,
   "alt": "Room 2-1.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -147,7 +150,7 @@ export const stops=[
      1.8,
      -20
     ],
-    "photo": 67
+    "photo": 61
    },
    "inside": {
     "label": "Intérieur",
@@ -161,25 +164,19 @@ export const stops=[
      1.45,
      -18.7
     ],
-    "photo": 69
+    "photo": "/assets/Pictures/rooms/Optimized/seaview-cottage-1.webp"
    }
   }
  },
  {
-  "name": "Room 3 · deux lits",
-  "short": "Room 3",
+  "name": "Cottage Familial vue mer 2",
+  "short": "Cottage Familial vue mer 2",
   "photos": [
-   73,
-   72,
-   74,
-   75,
-   76,
-   77,
-   78,
-   79,
-   83
+   "/assets/Pictures/rooms/Optimized/family-cottage-1.webp",
+   "/assets/Pictures/rooms/Optimized/family-cottage-2.webp",
+   "/assets/Pictures/rooms/Optimized/family-cottage-3.webp"
   ],
-  "photo": 73,
+  "photo": "/assets/Pictures/rooms/Optimized/family-cottage-1.webp",
   "alt": "Room 3-2.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -216,7 +213,7 @@ export const stops=[
      1.5,
      -18.3
     ],
-    "photo": 73
+    "photo": "/assets/Pictures/rooms/Optimized/family-cottage-1.webp"
    },
    "inside": {
     "label": "Intérieur",
@@ -230,13 +227,13 @@ export const stops=[
      1.45,
      -18.3
     ],
-    "photo": 77
+    "photo": "/assets/Pictures/rooms/Optimized/family-cottage-1.webp"
    }
   }
  },
  {
-  "name": "Room 4 et son hamac",
-  "short": "Room 4",
+  "name": "Cottage vue mer 3",
+  "short": "Cottage vue mer 3",
   "photos": [
    84,
    85,
@@ -246,7 +243,10 @@ export const stops=[
    90,
    80,
    81,
-   87
+   87,
+   "/assets/Pictures/rooms/Optimized/seaview-cottage-4.webp",
+   "/assets/Pictures/rooms/Optimized/seaview-cottage-3.webp",
+   "/resort-3d/assets/gallery/seaview-cottage-1.webp"
   ],
   "photo": 84,
   "alt": "Room 4-3.jpeg",
@@ -310,7 +310,6 @@ export const stops=[
    57,
    55,
    56,
-   52,
    54
   ],
   "photo": 57,
@@ -337,18 +336,13 @@ export const stops=[
   "note": "Dimensions et positions fines estimées à partir des photos et du croquis."
  },
  {
-  "name": "Room 1",
-  "short": "Room 1",
+  "name": "Cottage Jardin",
+  "short": "Cottage Jardin",
   "photos": [
-   98,
-   49,
-   47,
-   48,
-   50,
-   51,
-   53
+   "/assets/Pictures/rooms/Optimized/garden-cottage-3.webp",
+   "/assets/Pictures/rooms/Optimized/garden-cottage-1.webp"
   ],
-  "photo": 98,
+  "photo": "/assets/Pictures/rooms/Optimized/garden-cottage-3.webp",
   "alt": "Room 1.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -385,7 +379,7 @@ export const stops=[
      1.5,
      -3.5
     ],
-    "photo": 98
+    "photo": "/assets/Pictures/rooms/Optimized/garden-cottage-3.webp"
    },
    "inside": {
     "label": "Intérieur",
@@ -399,7 +393,7 @@ export const stops=[
      1.45,
      -3.5
     ],
-    "photo": 48
+    "photo": "/assets/Pictures/rooms/Optimized/garden-cottage-3.webp"
    }
   }
  },
@@ -407,9 +401,13 @@ export const stops=[
   "name": "Le dortoir",
   "short": "Dortoir",
   "photos": [
-   22
+   "assets/site/dormitory new.webp",
+   "assets/site/dormitory new(2).webp",
+   22,
+   "/assets/Pictures/rooms/Optimized/dormitory-1.webp",
+   "/assets/Pictures/rooms/Optimized/dormitory-2.webp"
   ],
-  "photo": 22,
+  "photo": "assets/site/dormitory new.webp",
   "alt": "Room dormitory and room 1.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -431,11 +429,6 @@ export const stops=[
   "cutZone": "Dormitory",
   "cut": true,
   "note": "Dimensions et positions fines estimées à partir des photos et du croquis.",
-  "extraPhotos": [
-   "assets/site/dormitory new.webp",
-   "assets/site/dormitory new(1).webp",
-   "assets/site/dormitory new(2).webp"
-  ],
   "room": true,
   "defaultView": "inside",
   "views": {
@@ -475,10 +468,7 @@ export const stops=[
   "photos": [
    20,
    17,
-   19,
-   21,
-   23,
-   24
+   23
   ],
   "photo": 20,
   "alt": "Bar Restaurant 3.jpeg",
@@ -558,9 +548,6 @@ export const stops=[
    3,
    4,
    5,
-   6,
-   10,
-   13,
    15
   ],
   "photo": 2,
@@ -624,16 +611,11 @@ export const stops=[
   "name": "Plongée et local matériel",
   "short": "Plongée",
   "photos": [
-   7,
-   8,
    9,
-   11,
-   18,
-   12,
-   14,
+   7,
    16
   ],
-  "photo": 7,
+  "photo": 9,
   "alt": "Diving area 1.jpeg",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [
@@ -688,18 +670,23 @@ export const stops=[
      1.05,
      12.0
     ],
-    "photo": 12
+    "photo": 16
    }
   }
  },
  {
-  "name": "La chambre climatisée",
-  "short": "Clim",
+  "name": "Chambre Deluxe",
+  "short": "Chambre Deluxe",
   "photos": [
-   11,
+   "assets/references/aircon-entry.webp",
+   "assets/site/deluxe-1.webp",
+   "assets/references/aircon-opposite.webp",
+   "assets/site/deluxe-2.webp",
+   "assets/site/deluxe-4.webp",
+   "assets/site/deluxe-bathroom.webp",
    18
   ],
-  "photo": 11,
+  "photo": "assets/references/aircon-entry.webp",
   "alt": "Diving equipment and aircon room.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -721,15 +708,6 @@ export const stops=[
   "cutZone": "Aircon",
   "cut": true,
   "note": "Agencement corrigé selon tes deux photos et tes précisions. Les dimensions restent estimées.",
-  "extraPhotos": [
-   "assets/references/aircon-entry.webp",
-   "assets/references/aircon-opposite.webp",
-   "assets/site/deluxe-1.webp",
-   "assets/site/deluxe-2.webp",
-   "assets/site/deluxe-3.webp",
-   "assets/site/deluxe-4.webp",
-   "assets/site/deluxe-bathroom.webp"
-  ],
   "room": true,
   "defaultView": "inside",
   "views": {
@@ -745,7 +723,7 @@ export const stops=[
      1.4,
      6.4
     ],
-    "photo": 11,
+    "photo": "assets/references/aircon-entry.webp",
     "cut": false
    },
    "inside": {
@@ -819,10 +797,8 @@ export const stops=[
   "short": "Réunion",
   "photos": [
    28,
-   25,
-   26,
-   27,
-   31
+   "/resort-3d/assets/gallery/reunion-1.webp",
+   "/resort-3d/assets/gallery/reunion-2.webp"
   ],
   "photo": 28,
   "alt": "Meeting zone 4.jpeg",
@@ -853,18 +829,12 @@ export const stops=[
   "photos": [
    30,
    36,
-   37,
    38,
    39,
    44,
    45,
    29,
-   97,
-   32,
    33,
-   35,
-   34,
-   42,
    43,
    46
   ],
@@ -904,7 +874,7 @@ export const stops=[
      1,
      -7
     ],
-    "photo": 97
+    "photo": 30
    },
    "inside": {
     "label": "Plan ouvert",
@@ -923,112 +893,83 @@ export const stops=[
   }
  },
  {
-  "name": "Les arbres du resort",
-  "short": "Arbres",
+  "name": "Le récif de La Tortue",
+  "short": "Le récif",
+  "reef": true,
   "photos": [
-   91,
-   92,
-   82,
-   93,
-   59,
-   58,
-   94
+   "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp",
+   "/assets/Pictures/Dive pictures/Fun dives/HR Turtle hawksbill.webp",
+   "/assets/Pictures/Dive pictures/Fun dives/HR Clownfish.webp",
+   "/assets/Pictures/Dive pictures/Fun dives/HR cardinal fish.webp",
+   "/resort-3d/assets/gallery/recif-1.webp",
+   "/resort-3d/assets/gallery/recif-2.webp"
   ],
-  "photo": 91,
-  "alt": "Front area of rooms 2, 3 and 4 upstairs.jpeg",
-  "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
+  "pin": [
+   0,
+   -0.5,
+   -35.3
+  ],
   "pos": [
-   14,
-   11,
-   -34
+   16,
+   12,
+   -48
   ],
   "target": [
    0,
-   3,
-   -22
+   -1,
+   -29
   ],
-  "pin": [
-   1.7,
-   7,
-   -24.4
-  ],
-  "text": "Neuf arbres principaux ont des repères propres : cocotiers de l’allée, du parking, près de la room 1, entre les rooms 2 et 3, derrière l’abri et dans le bar ; grands arbres à racines apparentes du front de mer.",
-  "cutZone": null,
   "cut": false,
-  "note": "Positions relatives déduites des photos. Espèces des grands arbres non déterminées ; dimensions et contours des couronnes estimés."
- },
-{
- "name": "Le récif de La Tortue",
- "short": "Le récif",
- "reef": true,
- "photos": [
-  "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp",
-  "/assets/Pictures/Dive pictures/Fun dives/HR Turtle hawksbill.webp",
-  "/assets/Pictures/Dive pictures/Fun dives/HR Clownfish.webp",
-  "/assets/Pictures/Dive pictures/Fun dives/HR cardinal fish.webp"
- ],
- "pin": [
-  0,
-  -0.5,
-  -35.3
- ],
- "pos": [
-  16,
-  12,
-  -48
- ],
- "target": [
-  0,
-  -1,
-  -29
- ],
- "cut": false,
- "cutZone": null,
- "defaultView": "outside",
- "views": {
-  "outside": {
-   "label": "Plage & récif",
-   "pos": [
-    16,
-    12,
-    -48
-   ],
-   "target": [
-    0,
-    -1,
-    -29
-   ],
-   "cut": false
+  "cutZone": null,
+  "defaultView": "outside",
+  "views": {
+   "outside": {
+    "label": "Plage & récif",
+    "pos": [
+     16,
+     12,
+     -48
+    ],
+    "target": [
+     0,
+     -1,
+     -29
+    ],
+    "cut": false,
+    "photo": "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp"
+   },
+   "inside": {
+    "label": "Sous l’eau",
+    "pos": [
+     5.4,
+     -2.2,
+     -39.0
+    ],
+    "target": [
+     -1.2,
+     -3.0,
+     -35.6
+    ],
+    "fov": 62,
+    "cut": false,
+    "photo": "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp"
+   },
+   "reverse": {
+    "label": "Vers le resort",
+    "pos": [
+     0,
+     0.4,
+     -40.7
+    ],
+    "target": [
+     0,
+     1,
+     -21
+    ],
+    "cut": false,
+    "photo": "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp"
+   }
   },
-  "inside": {
-   "label": "Sous l’eau",
-   "pos": [
-    5.4,
-    -2.2,
-    -39.0
-   ],
-   "target": [
-    -1.2,
-    -3.0,
-    -35.6
-   ],
-   "fov": 62,
-   "cut": false
-  },
-  "reverse": {
-   "label": "Vers le resort",
-   "pos": [
-    0,
-    0.4,
-    -40.7
-   ],
-   "target": [
-    0,
-    1,
-    -21
-   ],
-   "cut": false
-  }
+  "photo": "/assets/Pictures/Dive pictures/Fun dives/HR firecoral.webp"
  }
-}
 ];

@@ -2,10 +2,12 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-20';
-import {stops} from './stops.js?v=reef-18';
+import {stops,galleryWidths} from './stops.js?v=gallery-23';
 import {createRenderLoop} from './render-loop.js?v=1';
 import {shouldAnimateReef,inReef} from './reef-layout.js?v=20';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
+const TOUR_STEP_SECONDS=7;
+$('progress').max=TOUR_STEP_SECONDS;
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
 let model,ready=false,playing=false,elapsed=0,transition=null,completed=false;
 let navigation;
@@ -47,7 +49,7 @@ const pins=stops.map((s,i)=>{
  const p=document.createElement('button');p.className='pin';p.textContent=s.room&&/^Room/.test(s.short)?s.short.replace('Room ','R'):String(i+1);
  p.setAttribute('aria-label',`Aller à ${s.name}`);p.onclick=()=>{pause();go(i===current&&i!==0?0:i);};$('pins').append(p);
  const n=document.createElement('button');n.textContent=`${i+1}. ${s.short}`;n.onclick=p.onclick;$('stops').append(n);
- if(s.room){const option=document.createElement('option');option.value=i;option.textContent=s.short==='Clim'?'Chambre climatisée':s.name;$('roomSelect').append(option);}
+ if(s.room){const option=document.createElement('option');option.value=i;option.textContent=s.name;$('roomSelect').append(option);}
  return p;
 });
 function updateStepSelection(){
@@ -60,6 +62,9 @@ function photoList(){const s=stops[current];return [...(s.extraPhotos||[]),...s.
 function showPhoto(){
  const list=photoList();photoIndex=(photoIndex+list.length)%list.length;const p=list[photoIndex],fromSite=typeof p==='string';
  $('photo').src=fromSite?p:`assets/photos/photo-${String(p).padStart(3,'0')}.webp`;
+ const widths=fromSite&&galleryWidths[p];
+ $('photo').srcset=widths&&widths[0]<widths[1]?`${p.replace('.webp','-600.webp')} ${widths[0]}w, ${p} ${widths[1]}w`:'';
+ $('photo').sizes='(max-width: 800px) calc(100vw - 40px), 302px';
  $('photo').alt=`${stops[current].name} — photo ${photoIndex+1}`;
  $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
 }
@@ -77,7 +82,7 @@ function moveTo(pos,target,instant=false){
  if(instant||reduced){camera.position.copy(p);controls.target.copy(t);transition=null;}
  else transition={start:performance.now(),a:camera.position.clone(),b:controls.target.clone(),p,t};
 }
-function applyView(mode,instant=false){
+function applyView(mode,instant=false,selectPhoto=true){
  if(navigation?.active)navigation.setActive(false);
  const s=stops[current],v=s.views?.[mode];currentView=mode;planMode=false;$('planview').setAttribute('aria-pressed','false');
  $('reefControls').hidden=!s.reef;controls.maxPolarAngle=s.reef?Math.PI*.85:Math.PI*.48;
@@ -87,7 +92,7 @@ function applyView(mode,instant=false){
  for(const name of ['outside','inside','reverse','bath']){$(name).hidden=!s.views?.[name];$(name).textContent=s.views?.[name]?.label||name;$(name).setAttribute('aria-pressed',String(mode===name));}
  $('spaceViews').hidden=!s.views;$('cut').hidden=!!s.views;
  $('viewStatus').textContent=s.room?`${s.name} · ${v?.label||'Intérieur'}${cutOn?' · '+(v?.cutLabel||'toiture et façade retirées'):''}`:(v?`${v.label}${cutOn?' · vue ouverte':''}`:'');
- if(v?.photo!==undefined&&v.photo!==null){const n=photoList().indexOf(v.photo);if(n>=0)photoIndex=n;}
+ if(selectPhoto&&v?.photo!==undefined&&v.photo!==null){const n=photoList().indexOf(v.photo);if(n>=0)photoIndex=n;}
  showPhoto();camera.fov=v?.fov||45;camera.updateProjectionMatrix();moveTo(v?.pos||s.pos,v?.target||s.target,instant);
 }
 function go(i,instant=false){
@@ -95,7 +100,7 @@ function go(i,instant=false){
  current=(i+stops.length)%stops.length;elapsed=0;completed=false;photoIndex=0;const s=stops[current];
  document.body.classList.toggle('close-view',current!==0);$('title').textContent=s.name;
  updateStepSelection();
- applyView(s.defaultView||(s.cut?'inside':'outside'),instant);$('tourStatus').textContent=`${playing?'Parcours en cours':'Étape'} · ${current+1}/${stops.length} · ${s.name}`;
+ applyView(s.defaultView||(s.cut?'inside':'outside'),instant,false);$('tourStatus').textContent=`${playing?'Parcours en cours':'Étape'} · ${current+1}/${stops.length} · ${s.name}`;
 }
 function pause(){invalidate();playing=false;transition=null;$('play').textContent=completed?'Rejouer le parcours':'Reprendre le parcours';$('tourStatus').textContent=`En pause · ${stops[current].name}`;}
 $('roomSelect').onchange=()=>{if($('roomSelect').value!==''){pause();go(Number($('roomSelect').value));}};
@@ -144,7 +149,7 @@ new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=17-1',g=>{
 // Reuse pin vectors and viewport measurements; update overlays only when the view changes.
 const pinPositions=stops.map(s=>vec(s.pin)),projected=new THREE.Vector3();
 function frame(now,dt){
- if(playing){elapsed+=dt;if(elapsed>=9){if(current===stops.length-1){playing=false;completed=true;elapsed=9;$('play').textContent='Rejouer le parcours';$('tourStatus').textContent='Parcours terminé';}else go(current+1);}}
+ if(playing){elapsed+=dt;if(elapsed>=TOUR_STEP_SECONDS){if(current===stops.length-1){playing=false;completed=true;elapsed=TOUR_STEP_SECONDS;$('play').textContent='Rejouer le parcours';$('tourStatus').textContent='Parcours terminé';}else go(current+1);}}
  $('progress').value=elapsed;
  if(transition){dirty=true;let t=Math.min((now-transition.start)/1000,1);t=t*t*(3-2*t);camera.position.lerpVectors(transition.a,transition.p,t);controls.target.lerpVectors(transition.b,transition.t,t);if(t===1)transition=null;}
  if(navigation.active)navigation.update(dt);else controls.update();
