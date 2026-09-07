@@ -722,8 +722,8 @@ export const stops=[
   "cut": true,
   "note": "Agencement corrigé selon tes deux photos et tes précisions. Les dimensions restent estimées.",
   "extraPhotos": [
-   "assets/references/aircon-entry.png",
-   "assets/references/aircon-opposite.png",
+   "assets/references/aircon-entry.webp",
+   "assets/references/aircon-opposite.webp",
    "assets/site/deluxe-1.webp",
    "assets/site/deluxe-2.webp",
    "assets/site/deluxe-3.webp",
@@ -760,7 +760,7 @@ export const stops=[
      1.05,
      7.1
     ],
-    "photo": "assets/references/aircon-entry.png",
+    "photo": "assets/references/aircon-entry.webp",
     "cut": true,
     "cutParts": [
      "ROOF",
@@ -782,7 +782,7 @@ export const stops=[
      5.1
     ],
     "fov": 75,
-    "photo": "assets/references/aircon-opposite.png",
+    "photo": "assets/references/aircon-opposite.webp",
     "cut": true,
     "cutParts": [
      "ROOF",

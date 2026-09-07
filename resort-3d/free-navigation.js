@@ -1,14 +1,15 @@
 import * as THREE from './vendor/three.module.js';
 import {flightDelta,limitFlight} from './flight-motion.js';
 
-export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit,onEnter}){
+export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit,onEnter,onChange=()=>{}}){
  let active=false,yaw=0,pitch=0,drag=null;
  const keys=new Set(),held=new Map(),euler=new THREE.Euler(0,0,0,'YXZ');
  const originalLabel=canvas.getAttribute('aria-label');
  const keyActions={w:'forward',z:'forward',s:'back',a:'left',q:'left',d:'right',ArrowUp:'forward',ArrowDown:'back',ArrowLeft:'turnLeft',ArrowRight:'turnRight',r:'up',f:'down',i:'lookUp',k:'lookDown',Shift:'fast'};
  const isEditable=el=>el?.matches('input,select,textarea,[contenteditable="true"]');
  function clear(){keys.clear();held.clear();drag=null;panel.querySelectorAll('[data-flight]').forEach(b=>b.classList.remove('held'));}
- function orient(){pitch=THREE.MathUtils.clamp(pitch,-1.35,1.35);camera.quaternion.setFromEuler(euler.set(pitch,yaw,0,'YXZ'));controls.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(3));}
+ function orient(){pitch=THREE.MathUtils.clamp(pitch,-1.35,1.35);camera.quaternion.setFromEuler(euler.set(pitch,yaw,0,'YXZ'));controls.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(3));onChange();}
+ function moving(){return active&&([...keys].some(k=>keyActions[k]!=='fast')||held.size>0);}
  function step(dt,actions){
   const has=a=>actions.has(a)?1:0;
   yaw+=(has('turnLeft')-has('turnRight'))*dt*1.3;
@@ -57,5 +58,5 @@ export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit
   for(const event of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(event,e=>{held.delete(e.pointerId);button.classList.remove('held');});
   button.addEventListener('click',e=>{if(active&&e.detail===0)step(.05,new Set([button.dataset.flight]));});
  }
- return {get active(){return active;},setActive,clear,update(dt){if(active)step(dt,new Set([...keys].map(k=>keyActions[k]).concat([...held.values()])));}};
+ return {get active(){return active;},get moving(){return moving();},setActive,clear,update(dt){if(moving())step(dt,new Set([...keys].map(k=>keyActions[k]).concat([...held.values()])));}};
 }

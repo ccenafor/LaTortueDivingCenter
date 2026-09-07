@@ -2,12 +2,17 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
-import {createFreeNavigation} from './free-navigation.js?v=2';
-import {stops} from './stops.js?v=bar-15';
+import {createFreeNavigation} from './free-navigation.js?v=perf-1';
+import {stops} from './stops.js?v=perf-1';
+import {createRenderLoop} from './render-loop.js?v=1';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
 let model,ready=false,playing=false,elapsed=0,transition=null,completed=false;
 let navigation;
+const loop=createRenderLoop(frame);
+let dirty=true,stageVisible=true;
+function invalidate(){dirty=true;loop.invalidate();}
+function invalidateShadows(){renderer.shadowMap.needsUpdate=true;invalidate();}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const scene=new THREE.Scene();scene.background=new THREE.Color('#e7edf5');scene.fog=new THREE.Fog('#e7edf5',75,150);
 const camera=new THREE.PerspectiveCamera(45,1,.05,180);
@@ -15,7 +20,8 @@ let renderer;
 try{renderer=new THREE.WebGLRenderer({canvas:$('view'),antialias:true});}catch(e){$('loading').textContent='WebGL indisponible. Les photos et les rendus restent disponibles.';throw e;}
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
-renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled=true;renderer.shadowMap.autoUpdate=false;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+$('view').addEventListener('webglcontextrestored',invalidateShadows);
 // A neutral daylight environment gives metal cylinders, taps and mirrors readable reflections.
 const reflectionFaces=Array.from({length:6},(_,i)=>{const c=document.createElement('canvas');c.width=c.height=32;const ctx=c.getContext('2d');const g=ctx.createLinearGradient(0,0,0,32);g.addColorStop(0,i===3?'#929187':'#e9efed');g.addColorStop(1,'#8d9998');ctx.fillStyle=g;ctx.fillRect(0,0,32,32);return c;});
 const reflectionCube=new THREE.CubeTexture(reflectionFaces);reflectionCube.colorSpace=THREE.SRGBColorSpace;reflectionCube.needsUpdate=true;
@@ -26,7 +32,11 @@ Object.assign(sun.shadow.camera,{left:-32,right:32,top:32,bottom:-32,near:1,far:
 const controls=new OrbitControls(camera,$('view'));controls.enableDamping=true;controls.dampingFactor=.08;
 controls.minDistance=1.5;controls.maxDistance=120;controls.maxPolarAngle=Math.PI*.48;controls.enablePan=false;
 controls.addEventListener('start',()=>pause());
-function resize(){const w=$('stage').clientWidth,h=$('stage').clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+let stageWidth=1,stageHeight=1;
+controls.addEventListener('change',invalidate);
+function resize(){stageWidth=Math.max(1,$('stage').clientWidth);stageHeight=Math.max(1,$('stage').clientHeight);renderer.setSize(stageWidth,stageHeight,false);camera.aspect=stageWidth/stageHeight;camera.updateProjectionMatrix();invalidate();}
+function syncVisibility(){loop.setEnabled(!document.hidden&&stageVisible);}
+new IntersectionObserver(([entry])=>{stageVisible=entry.isIntersecting;syncVisibility();}).observe($('stage'));
 new ResizeObserver(resize).observe($('stage'));
 const pins=stops.map((s,i)=>{
  const p=document.createElement('button');p.className='pin';p.textContent=s.room&&/^Room/.test(s.short)?s.short.replace('Room ','R'):String(i+1);
@@ -42,14 +52,16 @@ function showPhoto(){
  $('photo').alt=`${stops[current].name} — photo ${photoIndex+1}`;
  $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
 }
-function setCanopy(on){canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=on?'Masquer les feuillages':'Afficher les feuillages';}
+function setCanopy(on){invalidateShadows();canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=on?'Masquer les feuillages':'Afficher les feuillages';}
 function setCut(on){
+ invalidateShadows();
  const s=stops[current],zones=s.cutZones||[s.cutZone];cutOn=!!on&&!!s.cutZone;
  const chosen=s.views?.[currentView]?.cutParts;
  if(model)model.traverse(o=>{const p=o.userData.part||'';const standard=/ROOF|FRONT|CEILING/.test(p);if(standard||p.startsWith('AIR_'))o.visible=!(cutOn&&zones.includes(o.userData.zone)&&(chosen?chosen.includes(p):standard));});
  $('cut').disabled=!s.cutZone;$('cut').setAttribute('aria-pressed',String(cutOn));$('cut').textContent=cutOn?'Fermer la coupe':'Ouvrir la coupe';
 }
 function moveTo(pos,target,instant=false){
+ invalidate();
  const p=vec(pos),t=vec(target);if($('stage').clientWidth<600)p.sub(t).multiplyScalar(currentView==='bath'?1.12:1.24).add(t);
  if(instant||reduced){camera.position.copy(p);controls.target.copy(t);transition=null;}
  else transition={start:performance.now(),a:camera.position.clone(),b:controls.target.clone(),p,t};
@@ -72,10 +84,10 @@ function go(i,instant=false){
  for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{p.setAttribute('aria-current',String(j===current));p.setAttribute('aria-pressed',String(j===current));});
  applyView(s.defaultView||(s.cut?'inside':'outside'),instant);$('tourStatus').textContent=`${playing?'Parcours en cours':'Étape'} · ${current+1}/${stops.length} · ${s.name}`;
 }
-function pause(){playing=false;transition=null;$('play').textContent=completed?'Rejouer le parcours':'Reprendre le parcours';$('tourStatus').textContent=`En pause · ${stops[current].name}`;}
+function pause(){invalidate();playing=false;transition=null;$('play').textContent=completed?'Rejouer le parcours':'Reprendre le parcours';$('tourStatus').textContent=`En pause · ${stops[current].name}`;}
 $('roomSelect').onchange=()=>{if($('roomSelect').value!==''){pause();go(Number($('roomSelect').value));}};
 for(const name of ['outside','inside','reverse','bath'])$(name).onclick=()=>{pause();applyView(name);};
-$('play').onclick=()=>{if(!ready)return;if(navigation.active)applyView(currentView);if(playing){pause();return;}if(completed)go(0);playing=true;$('play').textContent='Mettre en pause';$('tourStatus').textContent=`Parcours en cours · ${current+1}/${stops.length}`;};
+$('play').onclick=()=>{if(!ready)return;if(navigation.active)applyView(currentView);if(playing){pause();return;}if(completed)go(0);playing=true;loop.invalidate();$('play').textContent='Mettre en pause';$('tourStatus').textContent=`Parcours en cours · ${current+1}/${stops.length}`;};
 $('prev').onclick=()=>{pause();go(current-1);};$('next').onclick=()=>{pause();go(current+1);};$('home').onclick=()=>{pause();go(0);};
 $('cut').onclick=()=>{pause();setCut(!cutOn);setCanopy(!cutOn);};$('trees').onclick=()=>{pause();setCanopy(!canopyVisible);};
 for(const [id,factor]of [['closer',.8],['farther',1.25]])$(id).onclick=()=>{pause();const d=camera.position.clone().sub(controls.target);d.setLength(THREE.MathUtils.clamp(d.length()*factor,1.5,120));camera.position.copy(controls.target).add(d);};
@@ -84,25 +96,34 @@ $('planview').onclick=()=>{pause();if(planMode){go(0);return;}go(0,true);setCano
 $('photoOpen').onclick=()=>{pause();$('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;$('lightbox').showModal();};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 $('photoPrev').onclick=()=>{pause();photoIndex--;showPhoto();};$('photoNext').onclick=()=>{pause();photoIndex++;showPhoto();};
-document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
-navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syncVisibility();});
+navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),onChange:invalidate,
  onEnter(){const pending=transition;pause();if(pending&&current!==0){camera.position.copy(pending.p);camera.lookAt(pending.t);}planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
   if(current===0){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
   camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent='Exploration libre · Échap pour retrouver la vue guidée';
  },onExit(){navigation.setActive(false);applyView(currentView);$('freeWalk').focus({preventScroll:true});$('tourStatus').textContent='Vue guidée · '+stops[current].name;}});
 $('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else navigation.setActive(true);};
 go(0,true);resize();
-new GLTFLoader().setDRACOLoader(new DRACOLoader().setDecoderPath('./vendor/draco/')).load('assets/resort.glb?v=15-1',g=>{
- model=g.scene;model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
+const draco=new DRACOLoader().setDecoderPath('./vendor/draco/');
+new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=15-1',g=>{
+ draco.dispose();model=g.scene;model.traverse(o=>{o.updateMatrix();o.matrixAutoUpdate=false;if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
   if(o.userData.part==='LOGO FACE'){o.material.transparent=true;o.material.depthWrite=false;o.material.alphaTest=.02;o.castShadow=false;}
   if(o.userData.part==='net'){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=.13;o.material.depthWrite=false;o.castShadow=false;}
  }});scene.add(model);ready=true;setCut(cutOn);setCanopy(canopyVisible);$('loading').hidden=true;$('freeWalk').disabled=false;
-},undefined,()=>{$('loading').textContent='Le modèle ne peut pas être chargé. Les photos restent consultables. Réessayer en rechargeant la page.';});
-let last=performance.now();function frame(now){
- const dt=Math.min((now-last)/1000,.1);last=now;
+},undefined,error=>{console.error('Resort 3D: model loading failed',error);draco.dispose();$('loading').textContent='Le modèle ne peut pas être chargé. Les photos restent consultables. Réessayer en rechargeant la page.';});
+// Reuse pin vectors and viewport measurements; update overlays only when the view changes.
+const pinPositions=stops.map(s=>vec(s.pin)),projected=new THREE.Vector3();
+function frame(now,dt){
  if(playing){elapsed+=dt;if(elapsed>=9){if(current===stops.length-1){playing=false;completed=true;elapsed=9;$('play').textContent='Rejouer le parcours';$('tourStatus').textContent='Parcours terminé';}else go(current+1);}}
  $('progress').value=elapsed;
- if(transition){let t=Math.min((now-transition.start)/1000,1);t=t*t*(3-2*t);camera.position.lerpVectors(transition.a,transition.p,t);controls.target.lerpVectors(transition.b,transition.t,t);if(t===1)transition=null;}
- if(navigation.active)navigation.update(dt);else controls.update();pins.forEach((p,i)=>{const v=vec(stops[i].pin).project(camera);p.style.left=`${(v.x*.5+.5)*$('stage').clientWidth}px`;p.style.top=`${(-v.y*.5+.5)*$('stage').clientHeight}px`;p.hidden=navigation.active||!ready||v.z>1||v.z< -1||Math.abs(v.x)>.9||Math.abs(v.y)>.8||(cutOn&&i!==current)||(i===14&&i!==current);});
- renderer.render(scene,camera);requestAnimationFrame(frame);
-}requestAnimationFrame(frame);
+ if(transition){dirty=true;let t=Math.min((now-transition.start)/1000,1);t=t*t*(3-2*t);camera.position.lerpVectors(transition.a,transition.p,t);controls.target.lerpVectors(transition.b,transition.t,t);if(t===1)transition=null;}
+ if(navigation.active)navigation.update(dt);else controls.update();
+ if(dirty){
+  dirty=false;
+  // Projection must use the current camera matrix, including in free navigation.
+  camera.updateMatrixWorld();
+  pins.forEach((p,i)=>{const v=projected.copy(pinPositions[i]).project(camera);p.style.left=`${(v.x*.5+.5)*stageWidth}px`;p.style.top=`${(-v.y*.5+.5)*stageHeight}px`;p.hidden=navigation.active||!ready||v.z>1||v.z< -1||Math.abs(v.x)>.9||Math.abs(v.y)>.8||(cutOn&&i!==current)||(i===14&&i!==current);});
+  renderer.render(scene,camera);
+ }
+ return playing||!!transition||navigation.moving;
+}
