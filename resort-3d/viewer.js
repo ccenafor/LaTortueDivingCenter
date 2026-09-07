@@ -3,13 +3,13 @@ import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {createFreeNavigation} from './free-navigation.js?v=2';
-import {stops,photoNames} from './stops.js?v=6';
+import {stops} from './stops.js?v=site-1';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
 let model,ready=false,playing=false,elapsed=0,transition=null,completed=false;
 let navigation;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const scene=new THREE.Scene();scene.background=new THREE.Color('#ccd8d5');scene.fog=new THREE.Fog('#ccd8d5',75,150);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#e7edf5');scene.fog=new THREE.Fog('#e7edf5',75,150);
 const camera=new THREE.PerspectiveCamera(45,1,.05,180);
 let renderer;
 try{renderer=new THREE.WebGLRenderer({canvas:$('view'),antialias:true});}catch(e){$('loading').textContent='WebGL indisponible. Les photos et les rendus restent disponibles.';throw e;}
@@ -39,8 +39,8 @@ function photoList(){const s=stops[current];return [...(s.extraPhotos||[]),...s.
 function showPhoto(){
  const list=photoList();photoIndex=(photoIndex+list.length)%list.length;const p=list[photoIndex],fromSite=typeof p==='string';
  $('photo').src=fromSite?p:`assets/photos/photo-${String(p).padStart(3,'0')}.webp`;
- const label=fromSite?(p.includes('/references/')?(p.includes('opposite')?'Photo fournie · angle opposé':'Photo fournie · depuis l’entrée'):`Galerie du site · ${p.split('/').pop()}`):photoNames[p];$('photo').alt=label;
- $('caption').textContent=`${label} · ${photoIndex+1} / ${list.length}`;$('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
+ $('photo').alt=`${stops[current].name} — photo ${photoIndex+1}`;
+ $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
 }
 function setCanopy(on){canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=on?'Masquer les feuillages':'Afficher les feuillages';}
 function setCut(on){
@@ -67,7 +67,7 @@ function applyView(mode,instant=false){
 function go(i,instant=false){
  if(navigation?.active)navigation.setActive(false);
  current=(i+stops.length)%stops.length;elapsed=0;completed=false;photoIndex=0;const s=stops[current];
- document.body.classList.toggle('close-view',current!==0);$('title').textContent=s.name;$('type').textContent=s.type;$('description').textContent=s.text;$('uncertainty').textContent=s.note;
+ document.body.classList.toggle('close-view',current!==0);$('title').textContent=s.name;
  $('counter').textContent=`${String(current+1).padStart(2,'0')} / ${stops.length}`;$('roomSelect').value=s.room?String(current):'';
  for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{p.setAttribute('aria-current',String(j===current));p.setAttribute('aria-pressed',String(j===current));});
  applyView(s.defaultView||(s.cut?'inside':'outside'),instant);$('tourStatus').textContent=`${playing?'Parcours en cours':'Étape'} · ${current+1}/${stops.length} · ${s.name}`;
@@ -81,9 +81,7 @@ $('cut').onclick=()=>{pause();setCut(!cutOn);setCanopy(!cutOn);};$('trees').oncl
 for(const [id,factor]of [['closer',.8],['farther',1.25]])$(id).onclick=()=>{pause();const d=camera.position.clone().sub(controls.target);d.setLength(THREE.MathUtils.clamp(d.length()*factor,1.5,120));camera.position.copy(controls.target).add(d);};
 $('view').addEventListener('keydown',e=>{if(navigation.active)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();pause();go(current+(e.key==='ArrowRight'?1:-1));}if(e.key==='Escape')pause();});
 $('planview').onclick=()=>{pause();if(planMode){go(0);return;}go(0,true);setCanopy(false);planMode=true;$('planview').setAttribute('aria-pressed','true');document.body.classList.add('close-view');camera.position.set(0,$('stage').clientWidth<600?112:85,-1.99);controls.target.set(0,0,-2);$('tourStatus').textContent='Vue de dessus · entrée en bas, plage en haut';};
-$('about').onclick=()=>{pause();$('details').showModal();};
-$('photoOpen').onclick=()=>{pause();$('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;$('largeCaption').textContent=$('caption').textContent;$('lightbox').showModal();};
-$('sourceplan').onclick=()=>{pause();$('largePhoto').src='assets/user-plan.png';$('largePhoto').alt='Croquis du propriétaire';$('largeCaption').textContent='Croquis sans échelle, complété par les précisions du propriétaire.';$('lightbox').showModal();};
+$('photoOpen').onclick=()=>{pause();$('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;$('lightbox').showModal();};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 $('photoPrev').onclick=()=>{pause();photoIndex--;showPhoto();};$('photoNext').onclick=()=>{pause();photoIndex++;showPhoto();};
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
@@ -99,7 +97,7 @@ new GLTFLoader().setDRACOLoader(new DRACOLoader().setDecoderPath('./vendor/draco
   if(o.userData.part==='LOGO FACE'){o.material.transparent=true;o.material.depthWrite=false;o.material.alphaTest=.02;o.castShadow=false;}
   if(o.userData.part==='net'){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=.13;o.material.depthWrite=false;o.castShadow=false;}
  }});scene.add(model);ready=true;setCut(cutOn);setCanopy(canopyVisible);$('loading').hidden=true;$('freeWalk').disabled=false;
-},undefined,()=>{$('loading').textContent='Le modèle ne peut pas être chargé. Utiliser launch-v14.ps1 ; les photos restent consultables.';});
+},undefined,()=>{$('loading').textContent='Le modèle ne peut pas être chargé. Les photos restent consultables. Réessayer en rechargeant la page.';});
 let last=performance.now();function frame(now){
  const dt=Math.min((now-last)/1000,.1);last=now;
  if(playing){elapsed+=dt;if(elapsed>=9){if(current===stops.length-1){playing=false;completed=true;elapsed=9;$('play').textContent='Rejouer le parcours';$('tourStatus').textContent='Parcours terminé';}else go(current+1);}}
