@@ -1,10 +1,10 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
-import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-18';
+import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-19';
 import {stops} from './stops.js?v=reef-18';
 import {createRenderLoop} from './render-loop.js?v=1';
-import {shouldAnimateReef,inReef} from './reef-layout.js';
+import {shouldAnimateReef,inReef} from './reef-layout.js?v=19';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
 let model,ready=false,playing=false,elapsed=0,transition=null,completed=false;
@@ -12,7 +12,7 @@ let navigation;
 let reef=null,reefLoading=null,reefFailed=false,reefMotion=true,reefTick=0,underwater=false;
 const reefFrustum=new THREE.Frustum(),reefProjection=new THREE.Matrix4();
 const reefSphere=new THREE.Sphere(new THREE.Vector3(0,-3,-36),12);
-const reefBox=new THREE.Box3(new THREE.Vector3(-11,-5,-41.4),new THREE.Vector3(11,-1.3,-30.6));
+const reefBox=new THREE.Box3(new THREE.Vector3(-15,-5,-40.3),new THREE.Vector3(15,-1.3,-31.1));
 const loop=createRenderLoop(frame);
 let dirty=true,stageVisible=true;
 function invalidate(){dirty=true;loop.invalidate();}
@@ -113,7 +113,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syn
 function ensureReef(){
  if(!ready||reef||reefLoading||reefFailed)return;
  $('reefStatus').textContent='Chargement du récif…';
- reefLoading=import('./reef.js?v=18-1').then(({createReef,openWaterWindow})=>{
+ reefLoading=import('./reef.js?v=19-1').then(({createReef,openWaterWindow})=>{
   reef=createReef();scene.add(reef.root);openWaterWindow(model);
   reef.setUnderwater(!!stops[current].reef&&currentView==='inside');
   $('reefStatus').textContent='';invalidateShadows();

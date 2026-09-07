@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
-import {reefFloor,fishTypes} from './reef-layout.js';
+import {reefFloor,fishTypes,reefBounds,reefEdge,inReef} from './reef-layout.js?v=19';
 
 // Shared, low-resolution geometry is baked into a handful of vertex-colour batches.
 // Fish of the same type use one instanced draw; no image textures or shadow passes.
@@ -19,9 +19,9 @@ export function createReef(){
   g.setAttribute('color',new THREE.BufferAttribute(colors,3));list.push(g);
  }
  const blob=(list,color,p,s)=>piece(list,sphere,color,p,s);
- function rod(list,color,a,b,r1,r2=r1){
+ function rod(list,color,a,b,r1,r2=r1,segments=7){
   const av=new THREE.Vector3(...a),bv=new THREE.Vector3(...b),d=bv.clone().sub(av);
-  const g=new THREE.CylinderGeometry(r2,r1,d.length(),7);rotation.setFromUnitVectors(up,d.normalize());
+  const g=new THREE.CylinderGeometry(r2,r1,d.length(),segments);rotation.setFromUnitVectors(up,d.normalize());
   piece(list,g,color,av.add(bv).multiplyScalar(.5).toArray(),[1,1,1],rotation);g.dispose();
  }
  function finish(list,name,instanced=0){
@@ -30,10 +30,10 @@ export function createReef(){
   const mesh=instanced?new THREE.InstancedMesh(geometry,material,instanced):new THREE.Mesh(geometry,material);
   mesh.name=name;mesh.castShadow=false;mesh.receiveShadow=false;root.add(mesh);return mesh;
  }
- // Elliptical sandy slope. Colours and ripples are geometry, avoiding texture downloads.
+ // Broad near-shore slope. Colours and ripples are geometry, avoiding texture downloads.
  const points=[],colors=[],indices=[],rings=20,segments=96;
  for(let r=0;r<=rings;r++)for(let j=0;j<=segments;j++){
-  const a=j/segments*Math.PI*2,k=r/rings,x=Math.cos(a)*11*k,z=-36+Math.sin(a)*5.4*k;
+  const a=j/segments*Math.PI*2,k=r/rings,[x,z]=reefEdge(a,k);
   points.push(x,reefFloor(x,z),z);const c=new THREE.Color('#a8ad94');c.multiplyScalar(.9+.1*Math.sin(x*4+z*9)**2);colors.push(c.r,c.g,c.b);
   if(r<rings&&j<segments){const n=r*(segments+1)+j;indices.push(n,n+1,n+segments+1,n+1,n+segments+2,n+segments+1);}
  }
@@ -41,33 +41,63 @@ export function createReef(){
  // Join the submerged slope to the waterline: no open gap beneath the shoreline.
  const bankPoints=[],bankColors=[],bankIndices=[];
  for(let j=0;j<=segments;j++){
-  const a=j/segments*Math.PI*2,x=Math.cos(a)*11,z=-36+Math.sin(a)*5.4;
+  const a=j/segments*Math.PI*2,[x,z]=reefEdge(a);
   bankPoints.push(x,-1.335,z,x,reefFloor(x,z)-.015,z);
   for(const color of ['#67a6a5','#939f88']){const c=new THREE.Color(color);bankColors.push(c.r,c.g,c.b);}
   if(j<segments){const n=j*2;bankIndices.push(n,n+1,n+2,n+1,n+3,n+2);}
  }
  const bank=new THREE.BufferGeometry();bank.setAttribute('position',new THREE.Float32BufferAttribute(bankPoints,3));bank.setAttribute('color',new THREE.Float32BufferAttribute(bankColors,3));bank.setIndex(bankIndices);bank.computeVertexNormals();staticParts.push(bank);
- // Several separated coral heads, with sandy channels between them.
- const patches=[[-7,-35,1.1],[-4.2,-37,1.3],[.4,-35.4,1.2],[4.5,-36.7,1.2],[7.7,-34.7,.7],[-.8,-39.5,.8],[5.2,-39,.8],[-7,-38,.75]];
- patches.forEach(([x,z,size],index)=>{
-  const y=reefFloor(x,z);blob(staticParts,'#788777',[x,y+.1,z],[size,.34*size,size*.72]);
-  // Branching fire/staghorn-like colonies with lighter growing tips.
-  for(let j=0;j<18;j++){
-   const a=random()*6.28,r=Math.sqrt(random())*size*.85,bx=x+Math.cos(a)*r,bz=z+Math.sin(a)*r,h=(.3+random()*.55)*size;
-   const color=index%2?'#bd9561':'#c4b66e',tip=[bx+(random()-.5)*.15,y+h,bz+(random()-.5)*.15];
-   rod(staticParts,color,[bx,y+.15,bz],tip,.055*size,.025*size);
-   for(let k=0;k<3;k++){const angle=k*2.1+a,end=[tip[0]+Math.cos(angle)*.18*size,tip[1]+.15*size,tip[2]+Math.sin(angle)*.18*size];rod(staticParts,color,[bx,y+h*.65,bz],end,.033*size,.013*size);blob(staticParts,'#e7dcb2',end,[.026,.037,.026]);}
+ // Dense coastal coral carpet. Five shared colony meshes replace hundreds of
+ // duplicated geometries; varied scale, rotation and colour break repetition.
+ const coralSphere=new THREE.SphereGeometry(1,8,5);
+ const coralBlob=(list,color,p,s)=>piece(list,coralSphere,color,p,s);
+ const colonies=Array.from({length:5},()=>[]);
+ for(let row=0;row<8;row++)for(let col=0;col<25;col++){
+  const x=-14.3+col*1.18+(random()-.5)*.25,z=-31.55-row*1.16+(random()-.5)*.20;
+  if(!inReef(x,z,-.35))continue;
+  const type=(col+row*3)%5;
+  colonies[type].push({x,z,size:.82+random()*.30,angle:random()*6.28});
+  // Interlocking low colonies fill the spaces between taller branching heads.
+  const ux=x+.45,uz=z-.4;
+  if(inReef(ux,uz,-.35))colonies[row%2?2:3].push({x:ux,z:uz,size:.65+random()*.25,angle:random()*6.28});
+ }
+ const coralNames=['Corail ramifié doré','Corail ramifié mauve','Corail en plateaux','Corail massif','Corail en rosettes'];
+ const coralColors=['#c5a675','#9c8d9d','#849e8d','#a3a074','#b5907c'];
+ colonies.forEach((instances,type)=>{
+  const parts=[],color=coralColors[type];
+  coralBlob(parts,'#798873',[0,.10,0],[.76,.19,.65]);
+  if(type<2){
+   for(let j=0;j<11;j++){
+    const a=j*2.4,r=Math.sqrt((j+.5)/11)*.57,x=Math.cos(a)*r,z=Math.sin(a)*r,h=.45+random()*.35;
+    rod(parts,color,[x,.10,z],[x,h,z],.055,.027,5);
+    for(const side of [-1,1]){
+     const tip=[x+Math.cos(a+side)*.21,h+.16,z+Math.sin(a+side)*.21];
+     rod(parts,color,[x,h*.60,z],tip,.035,.012,5);
+     coralBlob(parts,type?'#c7b9c6':'#e6d7aa',tip,[.024,.033,.024]);
+    }
+   }
+  }else if(type===2){
+   for(let j=0;j<5;j++)coralBlob(parts,j%2?'#a3b09a':color,[(j%2-.5)*.32,.18+j*.12,(j%3-1)*.16],[.70-j*.075,.055,.54-j*.045]);
+  }else if(type===3){
+   coralBlob(parts,color,[0,.30,0],[.71,.38,.63]);
+   for(let j=0;j<12;j++){
+    const a=j*2.4,r=Math.sqrt((j+.5)/12)*.63;
+    coralBlob(parts,j%2?'#bdb286':'#8c976c',[Math.cos(a)*r,.35+.31*Math.sqrt(1-r*r/.5),Math.sin(a)*r*.88],[.095,.045,.09]);
+   }
+  }else{
+   for(let j=0;j<13;j++){
+    const a=j*2.4,r=Math.sqrt((j+.5)/13)*.5;
+    rotation.setFromAxisAngle(new THREE.Vector3(Math.cos(a),0,Math.sin(a)),.45);
+    piece(parts,coralSphere,j%2?'#c2a18e':color,[Math.cos(a)*r,.22+j*.027,Math.sin(a)*r],[.32,.065,.30],rotation);
+   }
   }
-  // Tiered plate corals, rose/ochre lobes, and small brain-coral mounds.
-  for(let j=0;j<3;j++){
-   blob(staticParts,index%2?'#bd8b73':'#809f9a',[x+size*.7,y+.18+j*.16,z+.35],[size*(.6-j*.1),.075,size*(.42-j*.06)]);
-  }
-  const cx=x-size*.65,cz=z-.35;
-  blob(staticParts,'#929d63',[cx,y+.27,cz],[size*.45,.34,size*.38]);
-  for(let j=0;j<14;j++){
-   const a=j*.65;blob(staticParts,'#c1ba7f',[cx+Math.cos(a)*size*.31,y+.28+Math.sin(j*.8)*.1,cz+Math.sin(a)*size*.27],[.10,.15,.08]);
-  }
+  const mesh=finish(parts,coralNames[type],instances.length);mesh.userData.coral=true;
+  instances.forEach(({x,z,size,angle},i)=>{
+   const y=reefFloor(x,z),height=Math.min(size,(-1.55-y)/1.08);
+   pose.position.set(x,y,z);pose.rotation.set(0,angle,0);pose.scale.set(size,height,size);pose.updateMatrix();mesh.setMatrixAt(i,pose.matrix);
+  });mesh.instanceMatrix.needsUpdate=true;mesh.computeBoundingSphere();
  });
+ coralSphere.dispose();
  // Sea fans: repeated fine branches rather than solid coloured cards.
  for(const [x,z]of [[-5.6,-36.4],[3.4,-38.1],[6.1,-34.9]]){
   const y=reefFloor(x,z),color='#aa7581';rod(staticParts,color,[x,y,z],[x,y+1,z],.05,.025);
@@ -145,31 +175,32 @@ export function createReef(){
   for(let i=0;i<7;i++)blob(parts,'#535e43',[-.3+(i%3)*.14,-.041,side*(.2+Math.floor(i/3)*.12)],[.045,.012,.045]);
   const flipper=finish(parts,'Nageoire de tortue');flippers.push({mesh:flipper,side});
  }
- const tint=new THREE.Mesh(new THREE.CircleGeometry(1,96),new THREE.MeshBasicMaterial({color:'#72c3c0',transparent:true,opacity:.10,depthWrite:false,side:THREE.DoubleSide}));
- tint.rotation.x=-Math.PI/2;tint.scale.set(11,5.4,1);tint.position.set(0,-1.325,-36);tint.name='Fenêtre sur le récif';root.add(tint);
+ const surface=new THREE.Shape();for(let j=0;j<=segments;j++){const [x,z]=reefEdge(j/segments*Math.PI*2);if(j===0)surface.moveTo(x,-z);else surface.lineTo(x,-z);}
+ const tint=new THREE.Mesh(new THREE.ShapeGeometry(surface),new THREE.MeshBasicMaterial({color:'#72c3c0',transparent:true,opacity:.10,depthWrite:false,side:THREE.DoubleSide}));
+ tint.rotation.x=-Math.PI/2;tint.position.y=-1.325;tint.name='Fenêtre sur le récif';root.add(tint);
  function update(dt=0){
   time+=Math.min(dt,.1);
   for(const {mesh,fish,swimTime}of schools){
    swimTime.value=time;
    fish.forEach((f,i)=>{
     const a=f.phase+time*(.13+f.school*.012),school=f.school;
-    let x,z,y;
-    if(school===0){x=-.7+Math.cos(a)*.65;z=-34.8+Math.sin(a)*.42;y=reefFloor(x,z)+.55+Math.sin(a*2)*.1;}
-    else if(school===4){x=-4.6+Math.cos(a)*1.3;z=-36.8+Math.sin(a)*.7;y=-2.5+Math.sin(a*2)*.15;}
-    else if(school===5){x=Math.cos(time*.1)*4+(i%4)*.35-1;z=-37.7+Math.sin(time*.1)*.65+Math.floor(i/4)*.25;y=-2.2+Math.sin(i)*.12;}
-    else {x=Math.cos(a)*(4+school*.9);z=-36.7+Math.sin(a)*(1.6+school*.12);y=-2.2-school*.18+Math.sin(a*2)*.12;}
-    y=Math.max(y,reefFloor(x,z)+.45);
-    pose.position.set(x,y,z);pose.rotation.set(0,school===5?Math.PI/2:Math.atan2(-Math.cos(a)*2,-Math.sin(a)*5),0);pose.scale.setScalar(f.size);pose.updateMatrix();mesh.setMatrixAt(i,pose.matrix);
+    let x,z,y,dx,dz;
+    if(school===0){dx=-Math.sin(a)*.65;dz=Math.cos(a)*.42;x=-.7+Math.cos(a)*.65;z=-34.8+Math.sin(a)*.42;y=reefFloor(x,z)+.55+Math.sin(a*2)*.1;}
+    else if(school===4){dx=-Math.sin(a)*1.3;dz=Math.cos(a)*.7;x=-4.6+Math.cos(a)*1.3;z=-36.8+Math.sin(a)*.7;y=-2.5+Math.sin(a*2)*.15;}
+    else if(school===5){dx=-Math.sin(time*.1)*4;dz=Math.cos(time*.1)*.65;x=Math.cos(time*.1)*4+(i%4)*.35-1;z=-37.7+Math.sin(time*.1)*.65+Math.floor(i/4)*.25;y=-2.2+Math.sin(i)*.12;}
+    else {dx=-Math.sin(a)*(4+school*.9);dz=Math.cos(a)*(1.6+school*.12);x=Math.cos(a)*(4+school*.9);z=-36.7+Math.sin(a)*(1.6+school*.12);y=-2.2-school*.18+Math.sin(a*2)*.12;}
+    y=Math.max(y,reefFloor(x,z)+1.1);
+    pose.position.set(x,y,z);pose.rotation.set(0,Math.atan2(-dz,dx),0);pose.scale.setScalar(f.size);pose.updateMatrix();mesh.setMatrixAt(i,pose.matrix);
    });mesh.instanceMatrix.needsUpdate=true;
   }
   const a=time*.075+.7;turtle.position.set(Math.cos(a)*3,-2.05+Math.sin(a*2)*.12,-37.6+Math.sin(a)*1.1);turtle.rotation.y=Math.atan2(-Math.cos(a)*1.1,-Math.sin(a)*3);
   flippers.forEach(({mesh,side})=>{mesh.position.copy(turtle.position);mesh.quaternion.copy(turtle.quaternion);mesh.translateX(.25);mesh.translateZ(side*.34);mesh.rotateX(Math.sin(time*1.7)*.28*side);});
  }
  update();sphere.dispose();
- return {root,update,setUnderwater(value){tint.visible=!value;},bounds:new THREE.Sphere(new THREE.Vector3(0,-3,-36),12)};
+ return {root,update,setUnderwater(value){tint.visible=!value;},bounds:new THREE.Sphere(new THREE.Vector3(0,-3,reefBounds.z),16)};
 }
 
-// Cut just this small oval out of the existing opaque water. The coast is unchanged.
+// Reveal the near-shore coral strip through the existing opaque water.
 export function openWaterWindow(model){
  model.traverse(mesh=>{
   if(!mesh.isMesh||!/(^| )water$/.test(mesh.material?.name||''))return;
@@ -178,8 +209,8 @@ export function openWaterWindow(model){
    shader.vertexShader='varying vec3 reefWorld;\n'+shader.vertexShader;
    shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nreefWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
    shader.fragmentShader='varying vec3 reefWorld;\n'+shader.fragmentShader;
-   shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif (length((reefWorld.xz - vec2(0.0, -36.0)) / vec2(11.0, 5.4)) < 1.0) discard;');
+   shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif (dot(pow(abs((reefWorld.xz - vec2(0.0, -35.7)) / vec2(15.0, 4.6)), vec2(6.0)), vec2(1.0)) < 1.0) discard;');
   };
-  mesh.material.customProgramCacheKey=()=> 'reef-water-window-1';mesh.material.needsUpdate=true;
+  mesh.material.customProgramCacheKey=()=> 'reef-water-window-2';mesh.material.needsUpdate=true;
  });
 }

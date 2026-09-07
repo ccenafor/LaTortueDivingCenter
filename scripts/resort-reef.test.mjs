@@ -8,7 +8,7 @@ import {stops} from '../resort-3d/stops.js';
 
 const started=performance.now(),reef=createReef();
 assert.equal(fishTypes.length,6);assert.equal(fishTypes.reduce((n,s)=>n+s.count,0),41);
-assert.equal(reef.root.children.length,11,'bounded extra draw calls');
+assert.equal(reef.root.children.length,16,'bounded extra draw calls');
 let vertices=0,triangles=0;
 reef.root.traverse(mesh=>{
  if(!mesh.isMesh)return;
@@ -17,16 +17,31 @@ reef.root.traverse(mesh=>{
  assert.equal(mesh.castShadow,false,'no extra shadow rendering');
  for(const n of mesh.geometry.attributes.position.array)assert.ok(Number.isFinite(n));
 });
-assert.ok(vertices<150000);assert.ok(triangles<220000);
-const fish=reef.root.children.filter(o=>o.isInstancedMesh),before=fish[0].instanceMatrix.array.slice();
+assert.ok(vertices<50000);assert.ok(triangles<500000);
+const fish=reef.root.children.filter(o=>o.isInstancedMesh&&!o.userData.coral),before=fish[0].instanceMatrix.array.slice();
 reef.update(.05);assert.notDeepEqual(fish[0].instanceMatrix.array,before,'fish actually move');
 // Simulate a complete swim cycle: animals remain submerged within the visible reef,
 // with a margin above the seabed (no swimming through a sandy bank).
-const matrix=new THREE.Matrix4(),position=new THREE.Vector3();
+const matrix=new THREE.Matrix4(),position=new THREE.Vector3(),previousPosition=new THREE.Vector3(),forward=new THREE.Vector3(),travel=new THREE.Vector3();
+const colonies=reef.root.children.filter(o=>o.userData.coral);
+assert.ok(colonies.reduce((n,m)=>n+m.count,0)>=300,'dense interlocking coral carpet');
+assert.ok(inReef(13,-31.8)&&inReef(-13,-39),'strip spans the beachfront, including its sides');
+const occupied=new Set();
+for(const colony of colonies)for(let i=0;i<colony.count;i++){
+ colony.getMatrixAt(i,matrix);position.setFromMatrixPosition(matrix);
+ assert.ok(inReef(position.x,position.z));
+ occupied.add(`${Math.floor((position.x+15)/3)},${Math.floor((-position.z-31)/2)}`);
+}
+assert.ok(occupied.size>=35,'coral covers the breadth and depth of the coastal strip');
 for(let t=0;t<700;t++){
+ const previous=fish.map(m=>m.instanceMatrix.array.slice());
  reef.update(.1);
  for(const school of fish)for(let i=0;i<school.count;i++){
   school.getMatrixAt(i,matrix);position.setFromMatrixPosition(matrix);
+  forward.setFromMatrixColumn(matrix,0).setY(0).normalize();
+  previousPosition.setFromMatrixPosition(matrix.fromArray(previous[fish.indexOf(school)],i*16));
+  travel.copy(position).sub(previousPosition).setY(0).normalize();
+  assert.ok(forward.dot(travel)>.995,`${school.name} faces its direction of travel, including turns`);
   assert.ok(inReef(position.x,position.z));
   assert.ok(position.y<reefBounds.waterY-.15);
   assert.ok(position.y>reefFloor(position.x,position.z)+.2);

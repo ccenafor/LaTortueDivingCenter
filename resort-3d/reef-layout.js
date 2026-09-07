@@ -1,7 +1,7 @@
 // Illustrative house-reef vignette, not surveyed sanctuary boundaries or bathymetry.
-export const reefBounds = {x:0, z:-36, radiusX:11, radiusZ:5.4, waterY:-1.33};
+export const reefBounds = {x:0, z:-35.7, radiusX:15, radiusZ:4.6, waterY:-1.33};
 export function inReef(x,z,margin=0){
- return (x/(reefBounds.radiusX+margin))**2+((z-reefBounds.z)/(reefBounds.radiusZ+margin))**2<1;
+ return (Math.abs(x)/(reefBounds.radiusX+margin))**6+(Math.abs(z-reefBounds.z)/(reefBounds.radiusZ+margin))**6<1;
 }
 export function reefFloor(x,z){
  const slope=Math.max(0,Math.min(1,(-z-30.6)/10.8));
@@ -17,4 +17,10 @@ export const fishTypes = [
 ];
 export function shouldAnimateReef({visible,enabled,reduced,close,hidden}){
  return visible&&enabled&&!reduced&&close&&!hidden;
+}
+
+// Rounded rectangular coastal strip: roughly 30 m alongshore and 9 m offshore.
+export function reefEdge(angle,scale=1){
+ const c=Math.cos(angle),s=Math.sin(angle);
+ return [Math.sign(c)*Math.abs(c)**(1/3)*reefBounds.radiusX*scale,reefBounds.z+Math.sign(s)*Math.abs(s)**(1/3)*reefBounds.radiusZ*scale];
 }
