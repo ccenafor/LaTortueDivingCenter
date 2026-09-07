@@ -33,7 +33,7 @@ for(const colony of colonies)for(let i=0;i<colony.count;i++){
  assert.ok(inReef(position.x,position.z));
  occupied.add(`${Math.floor((position.x+15)/3)},${Math.floor((-position.z-31)/2)}`);
 }
-assert.ok(occupied.size>=25,'coral distributed across the compact reef window');
+assert.ok(occupied.size>=18,'irregular coral heads distributed across the compact reef window');
 for(let t=0;t<700;t++){
  const previous=fish.map(m=>m.instanceMatrix.array.slice());
  reef.update(.1);

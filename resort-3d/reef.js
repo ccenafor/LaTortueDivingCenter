@@ -52,22 +52,37 @@ export function createReef(){
  const coralSphere=new THREE.SphereGeometry(1,8,5);
  const coralBlob=(list,color,p,s)=>piece(list,coralSphere,color,p,s);
  const colonies=Array.from({length:5},()=>[]);
- for(let row=0;row<8;row++)for(let col=0;col<25;col++){
-  const x=-14.3+col*1.18+(random()-.5)*.25,z=-31.55-row*1.16+(random()-.5)*.20;
-  if(!inReef(x,z,-.35))continue;
-  const type=(col+row*3)%5;
-  colonies[type].push({x,z,size:.68+random()*.24,angle:random()*6.28});
-
+ // Uneven colonies grow around irregular reef heads, separated by a winding
+ // sandy channel. Rejection sampling avoids both rows and evenly spaced points.
+ const heads=[[-7.4,-34.8,1.4,.85,0],[-5.8,-38.3,1.5,1.1,2],[-2.7,-35.9,1.2,1.4,1],[-2.5,-32.7,1.3,.65,3],[3.1,-33.3,1.5,.65,4],[5.6,-35.6,1.5,1.15,0],[6.3,-38.4,1.3,.95,2],[2.3,-39.7,1.4,.65,3],[-1.8,-39.6,1.1,.7,4]];
+ const placed=[];
+ for(let attempt=0;attempt<6000&&placed.length<120;attempt++){
+  const [cx,cz,rx,rz,family]=heads[Math.floor(random()*heads.length)];
+  const a=random()*Math.PI*2,r=Math.sqrt(random()),scattered=random()<.24;
+  const x=scattered?Math.cos(a)*r*10.3:cx+Math.cos(a)*r*rx*1.45,z=scattered?-36+Math.sin(a)*r*4.8:cz+Math.sin(a)*r*rz*1.4;
+  const size=.52+Math.pow(random(),.8)*.63;
+  const channel=.55+1.25*Math.sin((z+37)*.8);
+  if(!inReef(x,z,-.45)||Math.abs(x-channel)<.45)continue;
+  if(placed.some(p=>Math.hypot(x-p.x,z-p.z)<.55*(size+p.size)))continue;
+  const type=random()<.62?family:Math.floor(random()*5);
+  const colony={x,z,size,angle:random()*6.28,stretchX:.75+random()*.5,stretchZ:.75+random()*.5,leanX:(random()-.5)*.18,leanZ:(random()-.5)*.18,shade:.83+random()*.26};
+  placed.push(colony);colonies[type].push(colony);
+ }
+ // Low, irregular shared substrate connects the heads instead of giving every
+ // coral its own identical circular plinth.
+ for(const [x,z,rx,rz]of heads)for(let j=0;j<3;j++){
+  const px=x+(random()-.5)*rx,pz=z+(random()-.5)*rz;
+  blob(staticParts,j%2?'#8b9680':'#879386',[px,reefFloor(px,pz)-.03,pz],[.5+random()*.5,.10+random()*.12,.35+random()*.45]);
  }
  const coralNames=['Corail ramifié doré','Corail ramifié mauve','Corail en plateaux','Corail massif','Corail en rosettes'];
  const coralColors=['#c5a675','#9c8d9d','#849e8d','#a3a074','#b5907c'];
  colonies.forEach((instances,type)=>{
   const parts=[],color=coralColors[type];
-  coralBlob(parts,'#798873',[0,.10,0],[.76,.19,.65]);
+  coralBlob(parts,'#798873',[.04,.035,-.03],[.31,.12,.26]);
   if(type<2){
    for(let j=0;j<11;j++){
     const a=j*2.4,r=Math.sqrt((j+.5)/11)*.57,x=Math.cos(a)*r,z=Math.sin(a)*r,h=.45+random()*.35;
-    rod(parts,color,[x,.10,z],[x,h,z],.055,.027,5);
+    rod(parts,color,[x,-.04,z],[x,h,z],.055,.027,5);
     for(const side of [-1,1]){
      const tip=[x+Math.cos(a+side)*.21,h+.16,z+Math.sin(a+side)*.21];
      rod(parts,color,[x,h*.60,z],tip,.035,.012,5);
@@ -90,9 +105,10 @@ export function createReef(){
    }
   }
   const mesh=finish(parts,coralNames[type],instances.length);mesh.userData.coral=true;
-  instances.forEach(({x,z,size,angle},i)=>{
+  instances.forEach(({x,z,size,angle,stretchX,stretchZ,leanX,leanZ,shade},i)=>{
    const y=reefFloor(x,z),height=Math.min(size,(-1.55-y)/1.08);
-   pose.position.set(x,y,z);pose.rotation.set(0,angle,0);pose.scale.set(size,height,size);pose.updateMatrix();mesh.setMatrixAt(i,pose.matrix);
+   pose.position.set(x,y,z);pose.rotation.set(leanX,angle,leanZ);pose.scale.set(size*stretchX,height,size*stretchZ);pose.updateMatrix();mesh.setMatrixAt(i,pose.matrix);
+   mesh.setColorAt(i,new THREE.Color(shade,shade,.98*shade));
   });mesh.instanceMatrix.needsUpdate=true;mesh.computeBoundingSphere();
  });
  coralSphere.dispose();
