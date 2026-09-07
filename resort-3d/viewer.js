@@ -1,8 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
-import {OrbitControls} from './vendor/OrbitControls.js';
-import {createFreeNavigation} from './free-navigation.js?v=perf-1';
+import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=nav-2';
 import {stops} from './stops.js?v=room3-16';
 import {createRenderLoop} from './render-loop.js?v=1';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
@@ -29,8 +28,7 @@ const environmentGenerator=new THREE.PMREMGenerator(renderer);const environmentM
 scene.add(new THREE.HemisphereLight(0xe4efff,0x564a32,1.8));
 const sun=new THREE.DirectionalLight(0xffefd2,2.8);sun.position.set(-12,25,-16);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-32,right:32,top:32,bottom:-32,near:1,far:80});sun.shadow.bias=-.0006;scene.add(sun);
-const controls=new OrbitControls(camera,$('view'));controls.enableDamping=true;controls.dampingFactor=.08;
-controls.minDistance=1.5;controls.maxDistance=120;controls.maxPolarAngle=Math.PI*.48;controls.enablePan=false;
+const controls=createOrbitNavigation(camera,$('view'));
 controls.addEventListener('start',()=>pause());
 let stageWidth=1,stageHeight=1;
 controls.addEventListener('change',invalidate);
@@ -45,6 +43,12 @@ const pins=stops.map((s,i)=>{
  if(s.room){const option=document.createElement('option');option.value=i;option.textContent=s.short==='Clim'?'Chambre climatisée':s.name;$('roomSelect').append(option);}
  return p;
 });
+function updateStepSelection(){
+ const free=!!navigation?.active,s=stops[current];
+ $('counter').textContent=free?'LIBRE':`${String(current+1).padStart(2,'0')} / ${stops.length}`;
+ $('roomSelect').value=!free&&s.room?String(current):'';
+ for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{const selected=!free&&j===current;p.setAttribute('aria-current',String(selected));p.setAttribute('aria-pressed',String(selected));});
+}
 function photoList(){const s=stops[current];return [...(s.extraPhotos||[]),...s.photos];}
 function showPhoto(){
  const list=photoList();photoIndex=(photoIndex+list.length)%list.length;const p=list[photoIndex],fromSite=typeof p==='string';
@@ -80,8 +84,7 @@ function go(i,instant=false){
  if(navigation?.active)navigation.setActive(false);
  current=(i+stops.length)%stops.length;elapsed=0;completed=false;photoIndex=0;const s=stops[current];
  document.body.classList.toggle('close-view',current!==0);$('title').textContent=s.name;
- $('counter').textContent=`${String(current+1).padStart(2,'0')} / ${stops.length}`;$('roomSelect').value=s.room?String(current):'';
- for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{p.setAttribute('aria-current',String(j===current));p.setAttribute('aria-pressed',String(j===current));});
+ updateStepSelection();
  applyView(s.defaultView||(s.cut?'inside':'outside'),instant);$('tourStatus').textContent=`${playing?'Parcours en cours':'Étape'} · ${current+1}/${stops.length} · ${s.name}`;
 }
 function pause(){invalidate();playing=false;transition=null;$('play').textContent=completed?'Rejouer le parcours':'Reprendre le parcours';$('tourStatus').textContent=`En pause · ${stops[current].name}`;}
@@ -97,7 +100,7 @@ $('photoOpen').onclick=()=>{pause();$('largePhoto').src=$('photo').src;$('largeP
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 $('photoPrev').onclick=()=>{pause();photoIndex--;showPhoto();};$('photoNext').onclick=()=>{pause();photoIndex++;showPhoto();};
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syncVisibility();});
-navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),onChange:invalidate,
+navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),onChange:invalidate,onModeChange:updateStepSelection,
  onEnter(){const pending=transition;pause();if(pending&&current!==0){camera.position.copy(pending.p);camera.lookAt(pending.t);}planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
   if(current===0){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
   camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent='Exploration libre · Échap pour retrouver la vue guidée';

@@ -26,7 +26,7 @@
 .photo-nav button { min-width:44px; }
 .space-views { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 16px; }
 .space-views button { flex:1 1 105px; font-size:12px!important; }
-.view-tools { position:absolute; left:12px; right:12px; bottom:40px; display:flex; justify-content:center; flex-wrap:wrap; gap:5px; }
+.view-tools { position:absolute; left:12px; right:12px; bottom:52px; display:flex; justify-content:center; flex-wrap:wrap; gap:5px; }
 .view-tools button { min-width:44px; font-size:11px!important; box-shadow:var(--shadow-md); }
 #stage .gesture { position:absolute; bottom:9px; left:0; width:100%; max-width:none; margin:0; text-align:center; font-size:11px; color:var(--color-primary); }
 #resort-viewer .pin { position:absolute; transform:translate(-50%,-50%); width:40px; height:40px; min-height:40px; padding:0; border:2px solid white; border-radius:50%; background:var(--color-primary); color:white; box-shadow:var(--shadow-md); font-size:11px; }
@@ -67,3 +67,6 @@
   .flight-pad, .flight-height { bottom:125px; }
 }
 @media(prefers-reduced-motion:reduce) { #resort-viewer *, #menu-placeholder * { transition:none!important; } }
+
+/* Enter free navigation immediately, even while the canvas is offscreen. */
+.free-mode #pins { display:none; }

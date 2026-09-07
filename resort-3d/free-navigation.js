@@ -1,7 +1,17 @@
 import * as THREE from './vendor/three.module.js';
+import {OrbitControls} from './vendor/OrbitControls.js';
 import {flightDelta,limitFlight} from './flight-motion.js';
 
-export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit,onEnter,onChange=()=>{}}){
+// Overview gestures can translate the camera target instead of orbiting a fixed pin.
+export function createOrbitNavigation(camera,canvas){
+ const controls=new OrbitControls(camera,canvas);
+ controls.enableDamping=true;controls.dampingFactor=.08;
+ controls.minDistance=1.5;controls.maxDistance=120;controls.maxPolarAngle=Math.PI*.48;
+ controls.enablePan=true;controls.screenSpacePanning=true;
+ return controls;
+}
+
+export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit,onEnter,onChange=()=>{},onModeChange=()=>{}}){
  let active=false,yaw=0,pitch=0,drag=null;
  const keys=new Set(),held=new Map(),euler=new THREE.Euler(0,0,0,'YXZ');
  const originalLabel=canvas.getAttribute('aria-label');
@@ -20,7 +30,7 @@ export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit
  function setActive(value){
   clear();active=value;controls.enabled=!value;panel.hidden=!value;toggle.setAttribute('aria-pressed',String(value));
   toggle.textContent=value?'Quitter le mode libre':'Explorer librement';
-  document.body.classList.toggle('free-mode',value);
+  document.body.classList.toggle('free-mode',value);onModeChange(value);
   if(value){canvas.setAttribute('aria-label','Exploration libre du resort. Glisser pour regarder, WASD ou ZQSD pour se déplacer.');canvas.setAttribute('aria-describedby','flightHelp');}
   else{canvas.setAttribute('aria-label',originalLabel);canvas.removeAttribute('aria-describedby');}
   if(value){
