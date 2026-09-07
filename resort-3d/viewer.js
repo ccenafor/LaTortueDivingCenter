@@ -3,7 +3,7 @@ import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {createFreeNavigation} from './free-navigation.js?v=perf-1';
-import {stops} from './stops.js?v=perf-1';
+import {stops} from './stops.js?v=room3-16';
 import {createRenderLoop} from './render-loop.js?v=1';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
@@ -105,7 +105,7 @@ navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('fligh
 $('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else navigation.setActive(true);};
 go(0,true);resize();
 const draco=new DRACOLoader().setDecoderPath('./vendor/draco/');
-new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=15-1',g=>{
+new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=16-1',g=>{
  draco.dispose();model=g.scene;model.traverse(o=>{o.updateMatrix();o.matrixAutoUpdate=false;if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
   if(o.userData.part==='LOGO FACE'){o.material.transparent=true;o.material.depthWrite=false;o.material.alphaTest=.02;o.castShadow=false;}
   if(o.userData.part==='net'){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=.13;o.material.depthWrite=false;o.castShadow=false;}

@@ -184,8 +184,8 @@ export const stops=[
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
    -0.8,
-   4.2,
-   -25.8
+   4.8,
+   -27.2
   ],
   "target": [
    -0.8,
@@ -208,8 +208,8 @@ export const stops=[
     "label": "Extérieur",
     "pos": [
      -0.8,
-     4.2,
-     -25.8
+     4.8,
+     -27.2
     ],
     "target": [
      -0.8,
@@ -222,8 +222,8 @@ export const stops=[
     "label": "Intérieur",
     "pos": [
      -0.8,
-     3.4,
-     -25
+     4.3,
+     -25.4
     ],
     "target": [
      -0.8,
