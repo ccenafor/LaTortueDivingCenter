@@ -8,7 +8,8 @@ import {stops} from '../resort-3d/stops.js';
 
 const started=performance.now(),reef=createReef();
 assert.equal(fishTypes.length,6);assert.equal(fishTypes.reduce((n,s)=>n+s.count,0),41);
-assert.equal(reef.root.children.length,16,'bounded extra draw calls');
+let meshCount=0;reef.root.traverse(m=>{if(m.isMesh)meshCount++;});
+assert.equal(meshCount,16,'bounded extra draw calls');
 let vertices=0,triangles=0;
 reef.root.traverse(mesh=>{
  if(!mesh.isMesh)return;
@@ -61,4 +62,4 @@ assert.match(shader.fragmentShader,/discard/);assert.equal(ground.material,origi
 const stop=stops.find(s=>s.reef);assert.ok(stop.views.inside.pos[1]<reefBounds.waterY);
 for(const photo of stop.photos)assert.ok(fs.existsSync(new URL('..'+photo,import.meta.url)),'reference photo exists');
 console.log('PASS reef geometry, 41 fish / 6 varieties, water cutaway, full swim cycle, pause/reduced-motion/offscreen gates, free swim, photos.');
-console.log(JSON.stringify({drawCalls:reef.root.children.length,vertices,triangles,constructionAndTestsMs:Math.round(performance.now()-started)}));
+console.log(JSON.stringify({drawCalls:meshCount,vertices,triangles,constructionAndTestsMs:Math.round(performance.now()-started)}));

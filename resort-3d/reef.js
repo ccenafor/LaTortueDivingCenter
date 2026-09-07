@@ -1,12 +1,13 @@
 import * as THREE from './vendor/three.module.js';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
+import {createTurtle} from './turtle.js?v=22-1';
 import {reefFloor,fishTypes,reefBounds,reefEdge,inReef} from './reef-layout.js?v=20';
 
 // Shared, low-resolution geometry is baked into a handful of vertex-colour batches.
 // Fish of the same type use one instanced draw; no image textures or shadow passes.
 export function createReef(){
  const root=new THREE.Group();root.name='Le récif de La Tortue';
- const staticParts=[],animalParts=[],schools=[];
+ const staticParts=[],schools=[];
  const sphere=new THREE.SphereGeometry(1,12,8);
  const matrix=new THREE.Matrix4(),rotation=new THREE.Quaternion(),up=new THREE.Vector3(0,1,0);
  const white=new THREE.Color(),pose=new THREE.Object3D();
@@ -175,20 +176,7 @@ export function createReef(){
   const fish=Array.from({length:type.count},(_,i)=>({phase:random()*6.28,size:.82+random()*.35,offset:i,school:s}));
   schools.push({mesh,fish,swimTime});
  });
- // Turtle with domed shell, individual scutes, pale plastron, beak, eyes and four flippers.
- blob(animalParts,'#bfb68b',[0,-.08,0],[.58,.10,.43]);
- blob(animalParts,'#576a43',[0,.04,0],[.58,.24,.43]);
- for(let j=0;j<5;j++)blob(animalParts,'#a19a60',[(j-2)*.17,.245-Math.abs(j-2)*.035,0],[.11,.025,.13]);
- for(const side of [-1,1])for(let j=0;j<4;j++)blob(animalParts,j%2?'#8c8554':'#b0a774',[(j-1.5)*.21,.17,side*.24],[.13,.045,.12]);
- blob(animalParts,'#aaa67a',[.67,.0,0],[.23,.14,.14]);blob(animalParts,'#d0c4a0',[.84,-.035,0],[.09,.07,.10]);
- for(const side of [-1,1]){blob(animalParts,'#182f2e',[.75,.055,side*.119],[.028,.028,.016]);blob(animalParts,'#888b5d',[-.47,-.05,side*.42],[.24,.06,.17]);}
- const turtle=finish(animalParts,'Tortue imbriquée');
- const flippers=[];
- for(const side of [-1,1]){
-  const parts=[];blob(parts,'#919269',[-.13,-.10,side*.34],[.37,.06,.23]);
-  for(let i=0;i<7;i++)blob(parts,'#535e43',[-.3+(i%3)*.14,-.041,side*(.2+Math.floor(i/3)*.12)],[.045,.012,.045]);
-  const flipper=finish(parts,'Nageoire de tortue');flippers.push({mesh:flipper,side});
- }
+ const turtleModel=createTurtle(),turtle=turtleModel.root;root.add(turtle);
  const surface=new THREE.Shape();for(let j=0;j<=segments;j++){const [x,z]=reefEdge(j/segments*Math.PI*2);if(j===0)surface.moveTo(x,-z);else surface.lineTo(x,-z);}
  const tint=new THREE.Mesh(new THREE.ShapeGeometry(surface),new THREE.MeshBasicMaterial({color:'#72c3c0',transparent:true,opacity:.10,depthWrite:false,side:THREE.DoubleSide}));
  tint.rotation.x=-Math.PI/2;tint.position.y=-1.325;tint.name='Fenêtre sur le récif';root.add(tint);
@@ -208,7 +196,7 @@ export function createReef(){
    });mesh.instanceMatrix.needsUpdate=true;
   }
   const a=time*.075+.7;turtle.position.set(Math.cos(a)*3,-2.05+Math.sin(a*2)*.12,-37.6+Math.sin(a)*1.1);turtle.rotation.y=Math.atan2(-Math.cos(a)*1.1,-Math.sin(a)*3);
-  flippers.forEach(({mesh,side})=>{mesh.position.copy(turtle.position);mesh.quaternion.copy(turtle.quaternion);mesh.translateX(.25);mesh.translateZ(side*.34);mesh.rotateX(Math.sin(time*1.7)*.28*side);});
+  turtleModel.update(time);
  }
  update();sphere.dispose();
  return {root,update,setUnderwater(value){tint.visible=!value;},bounds:new THREE.Sphere(new THREE.Vector3(0,-3,reefBounds.z),16)};

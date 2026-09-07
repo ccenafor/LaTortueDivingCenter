@@ -113,7 +113,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syn
 function ensureReef(){
  if(!ready||reef||reefLoading||reefFailed)return;
  $('reefStatus').textContent='Chargement du récif…';
- reefLoading=import('./reef.js?v=21-1').then(({createReef,openWaterWindow})=>{
+ reefLoading=import('./reef.js?v=22-1').then(({createReef,openWaterWindow})=>{
   reef=createReef();scene.add(reef.root);openWaterWindow(model);
   reef.setUnderwater(!!stops[current].reef&&currentView==='inside');
   $('reefStatus').textContent='';invalidateShadows();
