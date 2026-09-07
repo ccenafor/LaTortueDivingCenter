@@ -2,7 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-20';
-import {stops,galleryWidths} from './stops.js?v=labels-24';
+import {stops,galleryWidths} from './stops.js?v=photos-25';
 import {createRenderLoop} from './render-loop.js?v=1';
 import {shouldAnimateReef,inReef} from './reef-layout.js?v=20';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
@@ -49,8 +49,11 @@ const pins=stops.map((s,i)=>{
  const p=document.createElement('button');p.className='pin';p.textContent=s.room&&/^Room/.test(s.short)?s.short.replace('Room ','R'):String(i+1);
  p.setAttribute('aria-label',`Aller à ${s.name}`);p.onclick=()=>{pause();go(i===current&&i!==0?0:i);};$('pins').append(p);
  const n=document.createElement('button');n.textContent=`${i+1}. ${s.short}`;n.onclick=p.onclick;$('stops').append(n);
- if(s.room){const option=document.createElement('option');option.value=i;option.textContent=s.name;$('roomSelect').append(option);}
  return p;
+});
+const roomPriority=s=>s.cutZone==='Dormitory'?0:s.cutZone==='Room 1'?1:2;
+stops.map((s,i)=>({s,i})).filter(({s})=>s.room).sort((a,b)=>roomPriority(a.s)-roomPriority(b.s)||a.i-b.i).forEach(({s,i})=>{
+ const option=document.createElement('option');option.value=i;option.textContent=s.name;$('roomSelect').append(option);
 });
 function updateStepSelection(){
  const free=!!navigation?.active,s=stops[current];
@@ -67,6 +70,11 @@ function showPhoto(){
  $('photo').sizes='(max-width: 800px) calc(100vw - 40px), 302px';
  $('photo').alt=`${stops[current].name} — photo ${photoIndex+1}`;
  $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
+ if($('lightbox').open){
+  $('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;
+  $('lightboxTitle').textContent=stops[current].name;
+  $('largePhotoCount').textContent=$('photoCount').textContent;
+ }
 }
 function setCanopy(on){invalidateShadows();canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=on?'Masquer les feuillages':'Afficher les feuillages';}
 function setCut(on){
@@ -111,9 +119,14 @@ $('cut').onclick=()=>{pause();setCut(!cutOn);setCanopy(!cutOn);};$('trees').oncl
 for(const [id,factor]of [['closer',.8],['farther',1.25]])$(id).onclick=()=>{pause();const d=camera.position.clone().sub(controls.target);d.setLength(THREE.MathUtils.clamp(d.length()*factor,1.5,120));camera.position.copy(controls.target).add(d);};
 $('view').addEventListener('keydown',e=>{if(navigation.active)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();pause();go(current+(e.key==='ArrowRight'?1:-1));}if(e.key==='Escape')pause();});
 $('planview').onclick=()=>{pause();if(planMode){go(0);return;}go(0,true);setCanopy(false);planMode=true;$('planview').setAttribute('aria-pressed','true');document.body.classList.add('close-view');camera.position.set(0,$('stage').clientWidth<600?112:85,-1.99);controls.target.set(0,0,-2);$('tourStatus').textContent='Vue de dessus · entrée en bas, plage en haut';};
-$('photoOpen').onclick=()=>{pause();$('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;$('lightbox').showModal();};
+$('photoOpen').onclick=()=>{pause();$('lightbox').showModal();showPhoto();};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
-$('photoPrev').onclick=()=>{pause();photoIndex--;showPhoto();};$('photoNext').onclick=()=>{pause();photoIndex++;showPhoto();};
+function changePhoto(delta){pause();photoIndex+=delta;showPhoto();}
+for(const id of ['photoPrev','largePhotoPrev'])$(id).onclick=()=>changePhoto(-1);
+for(const id of ['photoNext','largePhotoNext'])$(id).onclick=()=>changePhoto(1);
+$('lightbox').addEventListener('keydown',e=>{
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();e.stopPropagation();changePhoto(e.key==='ArrowRight'?1:-1);}
+});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syncVisibility();});
 function ensureReef(){
  if(!ready||reef||reefLoading||reefFailed)return;

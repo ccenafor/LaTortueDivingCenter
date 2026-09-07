@@ -235,20 +235,11 @@ export const stops=[
   "name": "Cottage vue mer 3",
   "short": "Cottage 3",
   "photos": [
-   84,
-   85,
-   86,
-   88,
-   89,
-   90,
-   80,
-   81,
-   87,
    "/assets/Pictures/rooms/Optimized/seaview-cottage-4.webp",
    "/assets/Pictures/rooms/Optimized/seaview-cottage-3.webp",
    "/resort-3d/assets/gallery/seaview-cottage-1.webp"
   ],
-  "photo": 84,
+  "photo": "/assets/Pictures/rooms/Optimized/seaview-cottage-4.webp",
   "alt": "Room 4-3.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -285,7 +276,7 @@ export const stops=[
      1.7,
      -20.2
     ],
-    "photo": 84
+    "photo": "/resort-3d/assets/gallery/seaview-cottage-1.webp"
    },
    "inside": {
     "label": "Intérieur",
@@ -299,7 +290,7 @@ export const stops=[
      1.45,
      -18.5
     ],
-    "photo": 90
+    "photo": "/assets/Pictures/rooms/Optimized/seaview-cottage-4.webp"
    }
   }
  },

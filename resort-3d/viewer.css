@@ -38,7 +38,7 @@
 #lightbox { margin:auto; border:1px solid var(--color-border-soft); border-radius:0; padding:24px; background:var(--color-bg); color:var(--color-primary); max-width:min(1200px,96vw); max-height:92dvh; box-shadow:0 15px 70px #15204055; }
 #lightbox::backdrop { background:#152040dc; }
 #lightbox .close { display:block; margin:0 0 16px auto; }
-#largePhoto { display:block; max-height:75dvh; max-width:100%; object-fit:contain; }
+#largePhoto { display:block; max-height:calc(92dvh - 175px); max-width:100%; margin:auto; object-fit:contain; }
 #flightControls { position:absolute; inset:0; pointer-events:none; }
 #flightHelp { position:absolute; top:12px; left:16px; right:16px; max-width:600px; margin:0; padding:10px 12px; background:#fffffff0; color:var(--color-primary); font-size:12px; line-height:1.5; }
 .flight-pad, .flight-height { position:absolute; bottom:108px; display:grid; gap:5px; pointer-events:auto; }
