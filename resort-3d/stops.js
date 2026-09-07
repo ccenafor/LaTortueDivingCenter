@@ -1,4 +1,4 @@
-export const galleryWidths={"/resort-3d/assets/gallery/main-1-1.webp":[600,600],"/resort-3d/assets/gallery/main-1-2.webp":[516,516],"/resort-3d/assets/gallery/main-1-3.webp":[450,1200],"/resort-3d/assets/gallery/main-1-4.webp":[600,1440],"/resort-3d/assets/gallery/plage-1.webp":[450,1200],"/resort-3d/assets/gallery/plage-2.webp":[450,1200],"/resort-3d/assets/gallery/plage-3.webp":[600,1080],"/resort-3d/assets/gallery/plage-4.webp":[600,1440],"/resort-3d/assets/gallery/plage-5.webp":[600,1080],"/resort-3d/assets/gallery/plage-6.webp":[600,1346],"/resort-3d/assets/gallery/recif-1.webp":[480,1280],"/resort-3d/assets/gallery/recif-2.webp":[480,1281],"/resort-3d/assets/gallery/reunion-1.webp":[600,1440],"/resort-3d/assets/gallery/reunion-2.webp":[451,1202],"/resort-3d/assets/gallery/seaview-cottage-1.webp":[600,1080]};
+export const galleryWidths={"/resort-3d/assets/gallery/main-1-1.webp":[600,600],"/resort-3d/assets/gallery/main-1-2.webp":[516,516],"/resort-3d/assets/gallery/main-1-3.webp":[450,1200],"/resort-3d/assets/gallery/main-1-4.webp":[600,1440],"/resort-3d/assets/gallery/plage-1.webp":[450,1200],"/resort-3d/assets/gallery/plage-2.webp":[450,1200],"/resort-3d/assets/gallery/plage-3.webp":[600,1080],"/resort-3d/assets/gallery/plage-4.webp":[600,1440],"/resort-3d/assets/gallery/plage-5.webp":[600,1080],"/resort-3d/assets/gallery/plage-6.webp":[600,1346],"/resort-3d/assets/gallery/recif-1.webp":[480,1280],"/resort-3d/assets/gallery/recif-2.webp":[480,1281],"/resort-3d/assets/gallery/reunion-1.webp":[600,1440],"/resort-3d/assets/gallery/reunion-2.webp":[451,1202],"/resort-3d/assets/gallery/seaview-cottage-1.webp":[600,1080],"/resort-3d/assets/gallery/plongee-1.webp":[452,1206],"/resort-3d/assets/gallery/plongee-2.webp":[450,1200],"/resort-3d/assets/gallery/plongee-3.webp":[600,1600],"/resort-3d/assets/gallery/plongee-5.webp":[600,1440]};
 export const photoNames={"17": "Bar Restaurant 1.jpeg", "19": "Bar Restaurant 2.jpeg", "20": "Bar Restaurant 3.jpeg", "21": "Bar Restaurant 4.jpeg", "23": "Bar Restaurant 5.jpeg", "24": "Bar Restaurant 6.jpeg", "93": "Beach view from rooms 2, 3 and 4.jpeg", "7": "Diving area 1.jpeg", "8": "Diving area 2.jpeg", "9": "Diving area 3.jpeg", "12": "Diving equipment 1.jpeg", "14": "Diving equipment 3.jpeg", "16": "Diving equipment 4.jpeg", "18": "Diving equipment and aircon room 2.jpeg", "11": "Diving equipment and aircon room.jpeg", "2": "Entrance 1.jpeg", "3": "entrance 2.jpeg", "4": "Entrance 3.jpeg", "5": "Entrance 4.jpeg", "6": "Entrance 5.jpeg", "68": "Entrance from beach 2.jpeg", "65": "Entrance from beach.jpeg", "91": "Front area of rooms 2, 3 and 4 upstairs.jpeg", "95": "Main alley 2.jpeg", "99": "Main alley 3.jpeg", "29": "Main alley and toilets-showers.jpeg", "94": "Main alley.jpeg", "25": "Meeting zone 1.jpeg", "26": "Meeting zone 2.jpeg", "27": "Meeting zone 3.jpeg", "28": "Meeting zone 4.jpeg", "31": "Meeting zone 5.jpeg", "87": "oom 3 and 4.jpeg", "13": "Parking 2.jpeg", "15": "Parking 3.jpeg", "10": "Parking.jpeg", "57": "Pétanque and Resting area .jpeg", "54": "Pétanque area 2.jpeg", "52": "Pétanque area.jpeg", "55": "Resting area 1.jpeg", "56": "Resting area 2.jpeg", "47": "Room 1-1.jpeg", "98": "Room 1.jpeg", "82": "Room 2 and 3 - 2.jpeg", "61": "Room 2 and 3.jpeg", "67": "Room 2-1.jpeg", "69": "Room 2-2.jpeg", "70": "Room 2-3.jpeg", "71": "Room 2-4.jpeg", "72": "Room 3-1.jpeg", "73": "Room 3-2.jpeg", "74": "Room 3-3.jpeg", "75": "Room 3-4.jpeg", "76": "Room 3-5.jpeg", "77": "Room 3-6.jpeg", "78": "Room 3-7.jpeg", "79": "Room 3-8.jpeg", "83": "Room 3-9.jpeg", "90": "Room 4-.jpeg", "80": "Room 4-1.jpeg", "81": "Room 4-2.jpeg", "84": "Room 4-3.jpeg", "86": "Room 4-4.jpeg", "88": "Room 4-5.jpeg", "89": "Room 4-6.jpeg", "85": "Room 4-hammack.jpeg", "22": "Room dormitory and room 1.jpeg", "48": "Room1-2.jpeg", "49": "Room1-3.jpeg", "50": "Room1-4.jpeg", "51": "Room1-5.jpeg", "53": "Room1-6.jpeg", "92": "Rooms 2 and 3 - 3.jpeg", "58": "Rooms Facing sea.jpeg", "60": "Sea area upstairs 2.jpeg", "59": "Sea area upstairs.jpeg", "32": "Shower 1.jpeg", "33": "Shower 2.jpeg", "35": "Shower 3.jpeg", "34": "Toilet 1.jpeg", "42": "Toilet 2.jpeg", "43": "Toilet 3.jpeg", "46": "Toilet 4.jpeg", "97": "toilets showers area.jpeg", "30": "toilets-showers area 1.jpeg", "36": "toilets-showers area 2.jpeg", "37": "toilets-showers area 3.jpeg", "38": "toilets-showers area 4.jpeg", "39": "toilets-showers area 5.jpeg", "44": "toilets-showers area 6.jpeg", "45": "toilets-showers area 7.jpeg", "62": "View resort from beach .jpeg", "64": "view side beach 1.jpeg", "66": "view side beach 2.jpeg"};
 export const stops=[
  {
@@ -295,8 +295,8 @@ export const stops=[
   }
  },
  {
-  "name": "Pétanque et espace de repos",
-  "short": "Repos",
+  "name": "Pétanque et espace de détente",
+  "short": "Détente",
   "photos": [
    57,
    55,
@@ -392,13 +392,13 @@ export const stops=[
   "name": "Le dortoir",
   "short": "Dortoir",
   "photos": [
+   22,
    "assets/site/dormitory new.webp",
    "assets/site/dormitory new(2).webp",
-   22,
    "/assets/Pictures/rooms/Optimized/dormitory-1.webp",
    "/assets/Pictures/rooms/Optimized/dormitory-2.webp"
   ],
-  "photo": "assets/site/dormitory new.webp",
+  "photo": 22,
   "alt": "Room dormitory and room 1.jpeg",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
@@ -604,7 +604,11 @@ export const stops=[
   "photos": [
    9,
    7,
-   16
+   16,
+   "/resort-3d/assets/gallery/plongee-1.webp",
+   "/resort-3d/assets/gallery/plongee-2.webp",
+   "/resort-3d/assets/gallery/plongee-3.webp",
+   "/resort-3d/assets/gallery/plongee-5.webp"
   ],
   "photo": 9,
   "alt": "Diving area 1.jpeg",
@@ -672,10 +676,8 @@ export const stops=[
    "assets/references/aircon-entry.webp",
    "assets/site/deluxe-1.webp",
    "assets/references/aircon-opposite.webp",
-   "assets/site/deluxe-2.webp",
    "assets/site/deluxe-4.webp",
-   "assets/site/deluxe-bathroom.webp",
-   18
+   "assets/site/deluxe-bathroom.webp"
   ],
   "photo": "assets/references/aircon-entry.webp",
   "alt": "Diving equipment and aircon room.jpeg",
@@ -818,18 +820,18 @@ export const stops=[
   "name": "Toilettes et douches",
   "short": "Sanitaires",
   "photos": [
+   29,
    30,
    36,
    38,
    39,
    44,
    45,
-   29,
    33,
    43,
    46
   ],
-  "photo": 30,
+  "photo": 29,
   "alt": "toilets-showers area 1.jpeg",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [

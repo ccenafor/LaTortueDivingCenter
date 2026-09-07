@@ -2,7 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-20';
-import {stops,galleryWidths} from './stops.js?v=photos-25';
+import {stops,galleryWidths} from './stops.js?v=gallery-26';
 import {createRenderLoop} from './render-loop.js?v=1';
 import {shouldAnimateReef,inReef} from './reef-layout.js?v=20';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
