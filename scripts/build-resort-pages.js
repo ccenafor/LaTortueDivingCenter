@@ -18,10 +18,7 @@ const locales = {
     diveText:'Repérez l’espace plongée, l’accès à la plage et explorez le récif dans notre visite interactive du resort.',
     diveLink:'Explorer le récif en 3D',
     imageAlt:'Vue 3D des cottages, des espaces communs et de la plage de La Tortue à Dauin',
-    pageHeading:'Une visite de La Tortue, de la plage aux cottages',
-    pageText:'Découvrez l’agencement de La Tortue Diving Center à Dauin, sur l’île de Negros aux Philippines. La visite réunit les cottages vue mer et jardin, le dortoir, la chambre Deluxe, le bar-restaurant et les espaces de plongée. Les photos associées permettent de voir les lieux réels.',
-    pageText2:'Suivez le parcours guidé ou explorez librement le resort, la plage et la scène sous-marine du récif.',
-    roomsLabel:'Découvrir les chambres', divingLabel:'Découvrir la plongée à Dauin', homeLabel:'Accueil'
+    homeLabel:'Accueil'
   },
   en: {
     url:'/resort-3d/', home:'/', rooms:'/cottages', diving:'/diving',
@@ -37,10 +34,7 @@ const locales = {
     diveText:'Find the diving facilities and beach access, then explore the reef with our interactive resort tour.',
     diveLink:'Explore the reef in 3D',
     imageAlt:'3D view of the cottages, shared spaces and beach at La Tortue in Dauin',
-    pageHeading:'Explore La Tortue, from the beach to the cottages',
-    pageText:'Discover the layout of La Tortue Diving Center in Dauin, on Negros Island in the Philippines. The tour brings together the sea-view and garden cottages, dormitory, Deluxe room, bar-restaurant and diving facilities. The accompanying photos show the real spaces.',
-    pageText2:'Follow the guided tour or explore the resort, beach and underwater reef scene freely.',
-    roomsLabel:'Discover the rooms', divingLabel:'Discover diving in Dauin', homeLabel:'Home'
+    homeLabel:'Home'
   }
 };
 const escape = text => text.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
@@ -66,7 +60,6 @@ async function buildResortPages(root, dist, env=process.env) {
       isPartOf:{'@type':'WebSite',url:origin+'/',name:'La Tortue Diving Center'},primaryImageOfPage:origin+'/resort-3d/assets/preview.webp',
       breadcrumb:{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:c.homeLabel,item:origin+c.home},{'@type':'ListItem',position:2,name:c.footer,item:url}]}};
     html=html.replace('</head>',`<link rel="canonical" href="${url}"><link rel="alternate" hreflang="fr" href="${origin}/fr/resort-3d/"><link rel="alternate" hreflang="en" href="${origin}/resort-3d/"><link rel="alternate" hreflang="x-default" href="${origin}/resort-3d/"><meta property="og:type" content="website"><meta property="og:title" content="${c.title}"><meta property="og:description" content="${escape(c.description)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${origin}/resort-3d/assets/preview.webp"><meta property="og:image:alt" content="${c.imageAlt}"><meta property="og:locale" content="${locale==='fr'?'fr_FR':'en_GB'}"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">${JSON.stringify(schema)}</script></head>`);
-    html=html.replace('</body>',`<section class="sand resort-tour-context"><div class="container"><h2>${c.pageHeading}</h2><p>${c.pageText}</p><p>${c.pageText2}</p><p><a href="${c.rooms}">${c.roomsLabel}</a> · <a href="${c.diving}">${c.divingLabel}</a></p></div></section></body>`);
     const destination=path.join(dist,c.url,'index.html');
     await fs.mkdir(path.dirname(destination),{recursive:true});await fs.writeFile(destination,html,'utf8');
     const prefix=locale==='fr'?'fr/':'';

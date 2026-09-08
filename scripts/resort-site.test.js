@@ -21,7 +21,7 @@ for (const [locale, c] of Object.entries(locales)) {
   const schema = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
   assert.equal(schema.inLanguage, locale);
   assert.equal(schema.url, 'https://latortuediving.com' + c.url);
-  assert.ok(html.includes(c.pageHeading));
+  assert.ok(!html.includes('resort-tour-context'), 'No text section beneath the 3D viewer');
   const home = read(prefix + 'index.html');
   assert.ok(home.includes(c.cta));
   assert.ok(home.includes('loading="lazy" decoding="async"'));
