@@ -9,7 +9,7 @@ const locales = {
     title:'Visite 3D du resort à Dauin | La Tortue Diving Center',
     description:'Explorez La Tortue à Dauin en 3D : cottages, chambres, restaurant, plage et récif. Découvrez les espaces du resort et leurs photos avant votre séjour.',
     heading:'Découvrez La Tortue avant votre séjour',
-    text:'Des cottages à la plage, repérez les espaces du resort et explorez le récif dans notre visite interactive.',
+    text:'Des cottages à la plage, repérez les espaces du resort et explorez-les en 3D grâce à notre visite interactive.',
     cta:'Explorer le resort en 3D', footer:'Visite 3D du resort',
     roomLink:'Situer les cottages dans le resort', diveLink:'Explorer le resort et son récif',
     imageAlt:'Vue 3D des cottages, des espaces communs et de la plage de La Tortue à Dauin',
@@ -23,7 +23,7 @@ const locales = {
     title:'3D Resort Tour in Dauin | La Tortue Diving Center',
     description:'Explore La Tortue in Dauin in 3D: cottages, rooms, restaurant, beach and reef. Discover the resort layout and real photos before your stay.',
     heading:'Discover La Tortue before your stay',
-    text:'From the cottages to the beach, find your way around the resort and explore the reef in our interactive tour.',
+    text:'From the cottages to the beach, find your way around the resort and explore in 3d with our interactive tour.',
     cta:'Explore the resort in 3D', footer:'3D resort tour',
     roomLink:'Find the cottages in the resort', diveLink:'Explore the resort and its reef',
     imageAlt:'3D view of the cottages, shared spaces and beach at La Tortue in Dauin',
@@ -35,7 +35,7 @@ const locales = {
 };
 const escape = text => text.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function promo(c) {
-  return `<section class="resort-promo sand" aria-labelledby="resort-promo-title"><div class="container resort-promo-grid"><a href="${c.url}" class="resort-promo-image" tabindex="-1" aria-hidden="true"><img src="/resort-3d/assets/preview.webp" srcset="/resort-3d/assets/preview-600.webp 600w, /resort-3d/assets/preview.webp 1000w" sizes="(max-width: 720px) 90vw, 50vw" width="1000" height="700" alt="" loading="lazy" decoding="async"></a><div><p class="resort-promo-label">LA TORTUE · DAUIN</p><h2 id="resort-promo-title">${c.heading}</h2><p>${c.text}</p><a class="btn btn-primary" href="${c.url}">${c.cta} <span aria-hidden="true">↗</span></a></div></div></section>`;
+  return `<section class="resort-promo sand" aria-labelledby="resort-promo-title"><div class="container resort-promo-grid"><a href="${c.url}" class="resort-promo-image" tabindex="-1" aria-hidden="true"><img src="/resort-3d/assets/preview.webp?v=29" srcset="/resort-3d/assets/preview-600.webp?v=29 600w, /resort-3d/assets/preview.webp?v=29 828w" sizes="(max-width: 720px) 90vw, 50vw" width="828" height="510" alt="" loading="lazy" decoding="async"></a><div class="resort-promo-copy"><h2 id="resort-promo-title">${c.heading}</h2><p>${c.text}</p><a class="btn btn-primary" href="${c.url}">${c.cta} <span aria-hidden="true">↗</span></a></div></div></section>`;
 }
 function insertBefore(html, marker, content) {
   if (!html.includes(marker)) throw new Error(`Resort integration marker missing: ${marker}`);
@@ -65,7 +65,7 @@ async function buildResortPages(root, dist, env=process.env) {
       // The home slider is the first section; the preview follows it.
       const index=page.indexOf('</section>');if(index<0)throw new Error('Missing home hero');
       page=page.slice(0,index+10)+'\n'+promo(c)+page.slice(index+10);
-      return page.replace('</head>','<link rel="stylesheet" href="/resort-3d/promo.css?v=28"></head>');
+      return page.replace('</head>','<link rel="stylesheet" href="/resort-3d/promo.css?v=29"></head>');
     });
     await edit('cottages.html',page=>insertBefore(page,'<div class="room-section">',`<p class="section-cta"><a class="btn btn-outline" href="${c.url}?stop=rooms">${c.roomLink}</a></p>\n`));
     await edit('diving.html',page=>insertBefore(page,'<h2 id="ssi-courses">',`<p class="section-cta"><a class="btn btn-outline" href="${c.url}?stop=reef">${c.diveLink}</a></p>\n`));
