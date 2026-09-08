@@ -1,0 +1,9 @@
+.resort-promo { padding:52px 0; }
+.resort-promo-grid { display:grid; grid-template-columns:1.1fr 1fr; align-items:center; gap:48px; }
+.resort-promo-image { display:block; overflow:hidden; background:#e7edf5; border:1px solid var(--color-border-soft); }
+.resort-promo img { display:block; width:100%; height:auto; }
+.resort-promo h2 { margin:0 0 18px; }
+.resort-promo p { margin:0 0 24px; }
+.resort-promo .resort-promo-label { font-size:12px; letter-spacing:2px; margin-bottom:14px; }
+.resort-promo .btn { white-space:normal; }
+@media(max-width:720px) { .resort-promo{padding:32px 0}.resort-promo-grid{grid-template-columns:1fr;gap:24px} }

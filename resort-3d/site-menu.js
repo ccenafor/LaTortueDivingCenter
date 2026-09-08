@@ -1,24 +1,34 @@
-// Load the same French menu fragment as the site, without adding a Resort 3D link.
+// Load the matching site menu fragment, without adding a Resort 3D link.
 const placeholder = document.getElementById('menu-placeholder');
 const viewer = document.getElementById('resort-viewer');
+const english=document.documentElement.lang.toLowerCase().startsWith('en');
+const menuPath=english?'/menu.html':'/fr/menu.html';
+const tourPath=english?'/resort-3d/':'/fr/resort-3d/';
 async function loadSiteMenu() {
-  const response = await fetch('/fr/menu.html');
-  if (!response.ok) throw new Error('Le menu du site ne peut pas être chargé.');
+  const response = await fetch(menuPath);
+  if (!response.ok) throw new Error('The site menu could not be loaded.');
   const template = document.createElement('template');
   template.innerHTML = await response.text();
-  const base = new URL('/fr/menu.html', location.origin);
+  const base = new URL(menuPath, location.origin);
   template.content.querySelectorAll('[href], [src]').forEach(element => {
     for (const attribute of ['href', 'src']) {
       const value = element.getAttribute(attribute);
       if (value && !/^(#|mailto:|tel:|data:)/i.test(value)) element.setAttribute(attribute, new URL(value, base).href);
     }
   });
+  template.content.querySelectorAll('[srcset]').forEach(element => {
+    element.setAttribute('srcset', element.getAttribute('srcset').split(',').map(candidate => {
+      const [url, ...descriptor] = candidate.trim().split(/\s+/);
+      return [new URL(url, base).href, ...descriptor].join(' ');
+    }).join(', '));
+  });
   placeholder.replaceChildren(template.content);
   const header = placeholder.querySelector('header');
   header.classList.remove('nav-transparent');
   placeholder.querySelectorAll('a.active').forEach(link => link.classList.remove('active'));
   placeholder.querySelectorAll('[data-lang-switch]').forEach(link => {
-    link.href = '/'; link.setAttribute('aria-label', 'Site en anglais');
+    link.href = english?'/fr/resort-3d/':'/resort-3d/';
+    link.setAttribute('aria-label', english?'French site':'English site');
   });
   const toggle = document.getElementById('menuToggle');
   const panel = document.getElementById('mpanel');
@@ -57,6 +67,6 @@ async function loadSiteMenu() {
 }
 loadSiteMenu().catch(error => {
   console.error(error);
-  const link = document.createElement('a'); link.href = '/fr/'; link.textContent = 'La Tortue — Accueil';
+  const link = document.createElement('a'); link.href = english?'/':'/fr/'; link.textContent = english?'La Tortue — Home':'La Tortue — Accueil';
   placeholder.replaceChildren(link);
 });

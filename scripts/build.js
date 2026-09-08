@@ -6,6 +6,7 @@ const terser = require('terser');
 const { generateBlogPages } = require('./generate-blog-pages');
 const { generateSearchIndex } = require('./generate-search-index');
 const { includeResort3d } = require('./resort-3d-context');
+const { buildResortPages } = require('./build-resort-pages');
 
 const root = path.resolve(__dirname, '..');
 const dist = path.join(root, 'dist');
@@ -83,7 +84,8 @@ const copyPublicSite = async () => {
 
   if (includeResort3d()) {
     await copyRecursive(path.join(root, 'resort-3d'), path.join(dist, 'resort-3d'));
-    console.log('Owner preview included: /resort-3d/ (preprod only).');
+    await buildResortPages(root, dist);
+    console.log('Bilingual Resort 3D pages and contextual links included.');
   }
 };
 

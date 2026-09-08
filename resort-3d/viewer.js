@@ -1,11 +1,14 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
-import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=reef-20';
-import {stops,galleryWidths} from './stops.js?v=gallery-26';
+import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=i18n-28';
+import {stops as sourceStops,galleryWidths} from './stops.js?v=gallery-26';
+import {t,localizeStop,localeOf} from './i18n.js?v=i18n-28';
 import {createRenderLoop} from './render-loop.js?v=1';
 import {shouldAnimateReef,inReef} from './reef-layout.js?v=20';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
+const locale=localeOf(document.documentElement.lang);
+const stops=sourceStops.map((stop,index)=>localizeStop(stop,index,locale));
 const TOUR_STEP_SECONDS=7;
 $('progress').max=TOUR_STEP_SECONDS;
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
@@ -25,7 +28,7 @@ motionPreference.addEventListener('change',()=>{syncReefMotion();invalidate();})
 const scene=new THREE.Scene();scene.background=new THREE.Color('#e7edf5');scene.fog=new THREE.Fog('#e7edf5',75,150);
 const camera=new THREE.PerspectiveCamera(45,1,.05,180);
 let renderer;
-try{renderer=new THREE.WebGLRenderer({canvas:$('view'),antialias:true});}catch(e){$('loading').textContent='WebGL indisponible. Les photos et les rendus restent disponibles.';throw e;}
+try{renderer=new THREE.WebGLRenderer({canvas:$('view'),antialias:true});}catch(e){$('loading').textContent=t(locale,'WebGL indisponible. Les photos et les rendus restent disponibles.');throw e;}
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
 renderer.shadowMap.enabled=true;renderer.shadowMap.autoUpdate=false;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
@@ -47,7 +50,7 @@ new IntersectionObserver(([entry])=>{stageVisible=entry.isIntersecting;syncVisib
 new ResizeObserver(resize).observe($('stage'));
 const pins=stops.map((s,i)=>{
  const p=document.createElement('button');p.className='pin';p.textContent=s.room&&/^Room/.test(s.short)?s.short.replace('Room ','R'):String(i+1);
- p.setAttribute('aria-label',`Aller à ${s.name}`);p.onclick=()=>{pause();go(i===current&&i!==0?0:i);};$('pins').append(p);
+ p.setAttribute('aria-label',t(locale,'Aller à {name}',{name:s.name}));p.onclick=()=>{pause();go(i===current&&i!==0?0:i);};$('pins').append(p);
  const n=document.createElement('button');n.textContent=`${i+1}. ${s.short}`;n.onclick=p.onclick;$('stops').append(n);
  return p;
 });
@@ -57,7 +60,7 @@ stops.map((s,i)=>({s,i})).filter(({s})=>s.room).sort((a,b)=>roomPriority(a.s)-ro
 });
 function updateStepSelection(){
  const free=!!navigation?.active,s=stops[current];
- $('counter').textContent=free?'LIBRE':`${String(current+1).padStart(2,'0')} / ${stops.length}`;
+ $('counter').textContent=free?t(locale,'LIBRE'):`${String(current+1).padStart(2,'0')} / ${stops.length}`;
  $('roomSelect').value=!free&&s.room?String(current):'';
  for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{const selected=!free&&j===current;p.setAttribute('aria-current',String(selected));p.setAttribute('aria-pressed',String(selected));});
 }
@@ -68,7 +71,7 @@ function showPhoto(){
  const widths=fromSite&&galleryWidths[p];
  $('photo').srcset=widths&&widths[0]<widths[1]?`${p.replace('.webp','-600.webp')} ${widths[0]}w, ${p} ${widths[1]}w`:'';
  $('photo').sizes='(max-width: 800px) calc(100vw - 40px), 302px';
- $('photo').alt=`${stops[current].name} — photo ${photoIndex+1}`;
+ $('photo').alt=t(locale,'{name} — photo {number}',{name:stops[current].name,number:photoIndex+1});
  $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
  if($('lightbox').open){
   $('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;
@@ -76,13 +79,13 @@ function showPhoto(){
   $('largePhotoCount').textContent=$('photoCount').textContent;
  }
 }
-function setCanopy(on){invalidateShadows();canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=on?'Masquer les feuillages':'Afficher les feuillages';}
+function setCanopy(on){invalidateShadows();canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=t(locale,on?'Masquer les feuillages':'Afficher les feuillages');}
 function setCut(on){
  invalidateShadows();
  const s=stops[current],zones=s.cutZones||[s.cutZone];cutOn=!!on&&!!s.cutZone;
  const chosen=s.views?.[currentView]?.cutParts;
  if(model)model.traverse(o=>{const p=o.userData.part||'';const standard=/ROOF|FRONT|CEILING/.test(p);if(standard||p.startsWith('AIR_'))o.visible=!(cutOn&&zones.includes(o.userData.zone)&&(chosen?chosen.includes(p):standard));});
- $('cut').disabled=!s.cutZone;$('cut').setAttribute('aria-pressed',String(cutOn));$('cut').textContent=cutOn?'Fermer la coupe':'Ouvrir la coupe';
+ $('cut').disabled=!s.cutZone;$('cut').setAttribute('aria-pressed',String(cutOn));$('cut').textContent=t(locale,cutOn?'Fermer la coupe':'Ouvrir la pièce');
 }
 function moveTo(pos,target,instant=false){
  invalidate();
@@ -99,7 +102,7 @@ function applyView(mode,instant=false,selectPhoto=true){
  setCut(v?.cut??(v?mode!=='outside':s.cut));setCanopy(v?.hideCanopy?false:!cutOn);
  for(const name of ['outside','inside','reverse','bath']){$(name).hidden=!s.views?.[name];$(name).textContent=s.views?.[name]?.label||name;$(name).setAttribute('aria-pressed',String(mode===name));}
  $('spaceViews').hidden=!s.views;$('cut').hidden=!!s.views;
- $('viewStatus').textContent=s.room?`${s.name} · ${v?.label||'Intérieur'}${cutOn?' · '+(v?.cutLabel||'toiture et façade retirées'):''}`:(v?`${v.label}${cutOn?' · vue ouverte':''}`:'');
+ $('viewStatus').textContent=s.room?`${s.name} · ${v?.label||t(locale,'Intérieur')}${cutOn?' · '+t(locale,v?.cutLabel||'toiture et façade retirées'):''}`:(v?`${v.label}${cutOn?' · '+t(locale,'vue ouverte'):''}`:'');
  if(selectPhoto&&v?.photo!==undefined&&v.photo!==null){const n=photoList().indexOf(v.photo);if(n>=0)photoIndex=n;}
  showPhoto();camera.fov=v?.fov||45;camera.updateProjectionMatrix();moveTo(v?.pos||s.pos,v?.target||s.target,instant);
 }
@@ -108,17 +111,17 @@ function go(i,instant=false){
  current=(i+stops.length)%stops.length;elapsed=0;completed=false;photoIndex=0;const s=stops[current];
  document.body.classList.toggle('close-view',current!==0);$('title').textContent=s.name;
  updateStepSelection();
- applyView(s.defaultView||(s.cut?'inside':'outside'),instant,false);$('tourStatus').textContent=`${playing?'Parcours en cours':'Étape'} · ${current+1}/${stops.length} · ${s.name}`;
+ applyView(s.defaultView||(s.cut?'inside':'outside'),instant,false);$('tourStatus').textContent=`${playing?t(locale,'Parcours en cours'):t(locale,'Étape')} · ${current+1}/${stops.length} · ${s.name}`;
 }
-function pause(){invalidate();playing=false;transition=null;$('play').textContent=completed?'Rejouer le parcours':'Reprendre le parcours';$('tourStatus').textContent=`En pause · ${stops[current].name}`;}
+function pause(){invalidate();playing=false;transition=null;$('play').textContent=t(locale,completed?'Rejouer le parcours':'Reprendre le parcours');$('tourStatus').textContent=`${t(locale,'En pause')} · ${stops[current].name}`;}
 $('roomSelect').onchange=()=>{if($('roomSelect').value!==''){pause();go(Number($('roomSelect').value));}};
 for(const name of ['outside','inside','reverse','bath'])$(name).onclick=()=>{pause();applyView(name);};
-$('play').onclick=()=>{if(!ready)return;if(navigation.active)applyView(currentView);if(playing){pause();return;}if(completed)go(0);playing=true;loop.invalidate();$('play').textContent='Mettre en pause';$('tourStatus').textContent=`Parcours en cours · ${current+1}/${stops.length}`;};
+$('play').onclick=()=>{if(!ready)return;if(navigation.active)applyView(currentView);if(playing){pause();return;}if(completed)go(0);playing=true;loop.invalidate();$('play').textContent=t(locale,'Mettre en pause');$('tourStatus').textContent=`${t(locale,'Parcours en cours')} · ${current+1}/${stops.length}`;};
 $('prev').onclick=()=>{pause();go(current-1);};$('next').onclick=()=>{pause();go(current+1);};$('home').onclick=()=>{pause();go(0);};
 $('cut').onclick=()=>{pause();setCut(!cutOn);setCanopy(!cutOn);};$('trees').onclick=()=>{pause();setCanopy(!canopyVisible);};
 for(const [id,factor]of [['closer',.8],['farther',1.25]])$(id).onclick=()=>{pause();const d=camera.position.clone().sub(controls.target);d.setLength(THREE.MathUtils.clamp(d.length()*factor,1.5,120));camera.position.copy(controls.target).add(d);};
 $('view').addEventListener('keydown',e=>{if(navigation.active)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();pause();go(current+(e.key==='ArrowRight'?1:-1));}if(e.key==='Escape')pause();});
-$('planview').onclick=()=>{pause();if(planMode){go(0);return;}go(0,true);setCanopy(false);planMode=true;$('planview').setAttribute('aria-pressed','true');document.body.classList.add('close-view');camera.position.set(0,$('stage').clientWidth<600?112:85,-1.99);controls.target.set(0,0,-2);$('tourStatus').textContent='Vue de dessus · entrée en bas, plage en haut';};
+$('planview').onclick=()=>{pause();if(planMode){go(0);return;}go(0,true);setCanopy(false);planMode=true;$('planview').setAttribute('aria-pressed','true');document.body.classList.add('close-view');camera.position.set(0,$('stage').clientWidth<600?112:85,-1.99);controls.target.set(0,0,-2);$('tourStatus').textContent=t(locale,'Vue de dessus · entrée en bas, plage en haut');};
 $('photoOpen').onclick=()=>{pause();$('lightbox').showModal();showPhoto();};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 function changePhoto(delta){pause();photoIndex+=delta;showPhoto();}
@@ -130,39 +133,41 @@ $('lightbox').addEventListener('keydown',e=>{
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();syncVisibility();});
 function ensureReef(){
  if(!ready||reef||reefLoading||reefFailed)return;
- $('reefStatus').textContent='Chargement du récif…';
+ $('reefStatus').textContent=t(locale,'Chargement du récif…');
  reefLoading=import('./reef.js?v=22-1').then(({createReef,openWaterWindow})=>{
   reef=createReef();scene.add(reef.root);openWaterWindow(model);
   reef.setUnderwater(!!stops[current].reef&&currentView==='inside');
   $('reefStatus').textContent='';invalidateShadows();
- }).catch(error=>{reefFailed=true;$('reefStatus').textContent='Le récif n’a pas pu être chargé. Sélectionner à nouveau Le récif pour réessayer.';console.error('Reef loading failed',error);}).finally(()=>{reefLoading=null;});
+ }).catch(error=>{reefFailed=true;$('reefStatus').textContent=t(locale,'Le récif n’a pas pu être chargé. Sélectionner à nouveau Le récif pour réessayer.');console.error('Reef loading failed',error);}).finally(()=>{reefLoading=null;});
 }
 function syncReefMotion(){
  const suppressed=motionPreference.matches;
  $('reefMotion').disabled=suppressed;
  $('reefMotion').setAttribute('aria-pressed',String(reefMotion&&!suppressed));
- $('reefMotion').textContent=suppressed?'Mouvements réduits activés':reefMotion?'Mettre les animaux en pause':'Animer les animaux';
+ $('reefMotion').textContent=t(locale,suppressed?'Mouvements réduits activés':reefMotion?'Mettre les animaux en pause':'Animer les animaux');
 }
 $('reefMotion').onclick=()=>{reefMotion=!reefMotion;syncReefMotion();invalidate();};
 syncReefMotion();
-navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),onChange:invalidate,onModeChange:updateStepSelection,
+navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),labels:{exploreFree:t(locale,'Explorer librement'),exitFree:t(locale,'Quitter le mode libre'),freeCanvas:t(locale,'Exploration libre du resort. Glisser pour regarder, WASD ou ZQSD pour se déplacer.')},onChange:invalidate,onModeChange:updateStepSelection,
  onEnter(){const pending=transition;pause();if(pending&&current!==0){camera.position.copy(pending.p);camera.lookAt(pending.t);}planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
   if(current===0){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
-  camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent='Exploration libre · Échap pour retrouver la vue guidée';
- },onExit(){navigation.setActive(false);applyView(currentView);$('freeWalk').focus({preventScroll:true});$('tourStatus').textContent='Vue guidée · '+stops[current].name;}});
+  camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent=t(locale,'Exploration libre · Échap pour retrouver la vue guidée');
+ },onExit(){navigation.setActive(false);applyView(currentView);$('freeWalk').focus({preventScroll:true});$('tourStatus').textContent=t(locale,'Vue guidée')+' · '+stops[current].name;}});
 $('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else navigation.setActive(true);};
-go(0,true);resize();
+const requestedStop=new URLSearchParams(location.search).get('stop');
+const initialStop=requestedStop==='rooms'?stops.findIndex(stop=>stop.cutZone==='Dormitory'):requestedStop==='reef'?stops.findIndex(stop=>stop.reef):0;
+go(initialStop>=0?initialStop:0,true);resize();
 const draco=new DRACOLoader().setDecoderPath('./vendor/draco/');
 new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=17-1',g=>{
  draco.dispose();model=g.scene;model.traverse(o=>{o.updateMatrix();o.matrixAutoUpdate=false;if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
   if(o.userData.part==='LOGO FACE'){o.material.transparent=true;o.material.depthWrite=false;o.material.alphaTest=.02;o.castShadow=false;}
   if(o.userData.part==='net'){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=.13;o.material.depthWrite=false;o.castShadow=false;}
  }});scene.add(model);ready=true;setCut(cutOn);setCanopy(canopyVisible);$('loading').hidden=true;$('freeWalk').disabled=false;
-},undefined,error=>{console.error('Resort 3D: model loading failed',error);draco.dispose();$('loading').textContent='Le modèle ne peut pas être chargé. Les photos restent consultables. Réessayer en rechargeant la page.';});
+},undefined,error=>{console.error('Resort 3D: model loading failed',error);draco.dispose();$('loading').textContent=t(locale,'Le modèle ne peut pas être chargé. Les photos restent consultables. Réessayer en rechargeant la page.');});
 // Reuse pin vectors and viewport measurements; update overlays only when the view changes.
 const pinPositions=stops.map(s=>vec(s.pin)),projected=new THREE.Vector3();
 function frame(now,dt){
- if(playing){elapsed+=dt;if(elapsed>=TOUR_STEP_SECONDS){if(current===stops.length-1){playing=false;completed=true;elapsed=TOUR_STEP_SECONDS;$('play').textContent='Rejouer le parcours';$('tourStatus').textContent='Parcours terminé';}else go(current+1);}}
+ if(playing){elapsed+=dt;if(elapsed>=TOUR_STEP_SECONDS){if(current===stops.length-1){playing=false;completed=true;elapsed=TOUR_STEP_SECONDS;$('play').textContent=t(locale,'Rejouer le parcours');$('tourStatus').textContent=t(locale,'Parcours terminé');}else go(current+1);}}
  $('progress').value=elapsed;
  if(transition){dirty=true;let t=Math.min((now-transition.start)/1000,1);t=t*t*(3-2*t);camera.position.lerpVectors(transition.a,transition.p,t);controls.target.lerpVectors(transition.b,transition.t,t);if(t===1)transition=null;}
  if(navigation.active)navigation.update(dt);else controls.update();

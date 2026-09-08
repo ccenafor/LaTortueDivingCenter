@@ -11,7 +11,7 @@ export function createOrbitNavigation(camera,canvas){
  return controls;
 }
 
-export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit,onEnter,onChange=()=>{},onModeChange=()=>{}}){
+export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit,onEnter,onChange=()=>{},onModeChange=()=>{},labels={}}){
  let active=false,yaw=0,pitch=0,drag=null;
  const keys=new Set(),held=new Map(),euler=new THREE.Euler(0,0,0,'YXZ');
  const originalLabel=canvas.getAttribute('aria-label');
@@ -29,9 +29,9 @@ export function createFreeNavigation({camera,controls,canvas,panel,toggle,onExit
  }
  function setActive(value){
   clear();active=value;controls.enabled=!value;panel.hidden=!value;toggle.setAttribute('aria-pressed',String(value));
-  toggle.textContent=value?'Quitter le mode libre':'Explorer librement';
+  toggle.textContent=value?(labels.exitFree||'Quitter le mode libre'):(labels.exploreFree||'Explorer librement');
   document.body.classList.toggle('free-mode',value);onModeChange(value);
-  if(value){canvas.setAttribute('aria-label','Exploration libre du resort. Glisser pour regarder, WASD ou ZQSD pour se déplacer.');canvas.setAttribute('aria-describedby','flightHelp');}
+  if(value){canvas.setAttribute('aria-label',labels.freeCanvas||'Exploration libre du resort. Glisser pour regarder, WASD ou ZQSD pour se déplacer.');canvas.setAttribute('aria-describedby','flightHelp');}
   else{canvas.setAttribute('aria-label',originalLabel);canvas.removeAttribute('aria-describedby');}
   if(value){
    onEnter();euler.setFromQuaternion(camera.quaternion,'YXZ');yaw=euler.y;pitch=euler.x;orient();canvas.focus({preventScroll:true});
