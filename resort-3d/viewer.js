@@ -3,8 +3,9 @@ import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=i18n-28';
 import {stops as sourceStops,galleryWidths} from './stops.js?v=gallery-26';
-import {t,localizeStop,localeOf} from './i18n.js?v=i18n-28';
+import {t,localizeStop,localeOf} from './i18n.js?v=pets-34';
 import {createRenderLoop} from './render-loop.js?v=1';
+import {createPets,shouldAnimatePets} from './pets.js?v=34';
 import {shouldAnimateReef,inReef} from './reef-layout.js?v=20';
 const $=id=>document.getElementById(id),vec=a=>new THREE.Vector3(...a);
 const locale=localeOf(document.documentElement.lang);
@@ -14,6 +15,8 @@ $('progress').max=TOUR_STEP_SECONDS;
 let current=0,currentView='outside',cutOn=false,photoIndex=0,canopyVisible=true,planMode=false;
 let model,ready=false,playing=false,elapsed=0,transition=null,completed=false;
 let navigation;
+let animals=null,focusedPet=null,petMotion=true,petTick=0;
+const petSphere=new THREE.Sphere(new THREE.Vector3(),1.2);
 let reef=null,reefLoading=null,reefFailed=false,reefMotion=true,reefTick=0,underwater=false;
 const reefFrustum=new THREE.Frustum(),reefProjection=new THREE.Matrix4();
 const reefSphere=new THREE.Sphere(new THREE.Vector3(0,-3,-36),12);
@@ -24,7 +27,7 @@ function invalidate(){dirty=true;loop.invalidate();}
 function invalidateShadows(){renderer.shadowMap.needsUpdate=true;invalidate();}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
-motionPreference.addEventListener('change',()=>{syncReefMotion();invalidate();});
+motionPreference.addEventListener('change',()=>{syncReefMotion();syncPetMotion();invalidate();});
 const scene=new THREE.Scene();scene.background=new THREE.Color('#e7edf5');scene.fog=new THREE.Fog('#e7edf5',75,150);
 const camera=new THREE.PerspectiveCamera(45,1,.05,180);
 let renderer;
@@ -61,21 +64,22 @@ stops.map((s,i)=>({s,i})).filter(({s})=>s.room).sort((a,b)=>roomPriority(a.s)-ro
 function updateStepSelection(){
  const free=!!navigation?.active,s=stops[current];
  $('counter').textContent=free?t(locale,'LIBRE'):`${String(current+1).padStart(2,'0')} / ${stops.length}`;
- $('roomSelect').value=!free&&s.room?String(current):'';
- for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{const selected=!free&&j===current;p.setAttribute('aria-current',String(selected));p.setAttribute('aria-pressed',String(selected));});
+ $('roomSelect').value=!free&&!focusedPet&&s.room?String(current):'';
+ $('petSelect').value=focusedPet?.name||'';
+ for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{const selected=!free&&!focusedPet&&j===current;p.setAttribute('aria-current',String(selected));p.setAttribute('aria-pressed',String(selected));});
 }
-function photoList(){const s=stops[current];return [...(s.extraPhotos||[]),...s.photos];}
+function photoList(){if(focusedPet)return ['/assets/Pictures/Staff/Optimized/'+focusedPet.photo];const s=stops[current];return [...(s.extraPhotos||[]),...s.photos];}
 function showPhoto(){
  const list=photoList();photoIndex=(photoIndex+list.length)%list.length;const p=list[photoIndex],fromSite=typeof p==='string';
  $('photo').src=fromSite?p:`assets/photos/photo-${String(p).padStart(3,'0')}.webp`;
  const widths=fromSite&&galleryWidths[p];
  $('photo').srcset=widths&&widths[0]<widths[1]?`${p.replace('.webp','-600.webp')} ${widths[0]}w, ${p} ${widths[1]}w`:'';
  $('photo').sizes='(max-width: 800px) calc(100vw - 40px), 302px';
- $('photo').alt=t(locale,'{name} — photo {number}',{name:stops[current].name,number:photoIndex+1});
+ $('photo').alt=t(locale,'{name} — photo {number}',{name:focusedPet?.name||stops[current].name,number:photoIndex+1});
  $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
  if($('lightbox').open){
   $('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;
-  $('lightboxTitle').textContent=stops[current].name;
+  $('lightboxTitle').textContent=focusedPet?.name||stops[current].name;
   $('largePhotoCount').textContent=$('photoCount').textContent;
  }
 }
@@ -108,6 +112,7 @@ function applyView(mode,instant=false,selectPhoto=true){
 }
 function go(i,instant=false){
  if(navigation?.active)navigation.setActive(false);
+ focusedPet=null;$('petMotion').hidden=true;
  current=(i+stops.length)%stops.length;elapsed=0;completed=false;photoIndex=0;const s=stops[current];
  document.body.classList.toggle('close-view',current!==0);$('title').textContent=s.name;
  updateStepSelection();
@@ -116,7 +121,7 @@ function go(i,instant=false){
 function pause(){invalidate();playing=false;transition=null;$('play').textContent=t(locale,completed?'Rejouer le parcours':'Reprendre le parcours');$('tourStatus').textContent=`${t(locale,'En pause')} · ${stops[current].name}`;}
 $('roomSelect').onchange=()=>{if($('roomSelect').value!==''){pause();go(Number($('roomSelect').value));}};
 for(const name of ['outside','inside','reverse','bath'])$(name).onclick=()=>{pause();applyView(name);};
-$('play').onclick=()=>{if(!ready)return;if(navigation.active)applyView(currentView);if(playing){pause();return;}if(completed)go(0);playing=true;loop.invalidate();$('play').textContent=t(locale,'Mettre en pause');$('tourStatus').textContent=`${t(locale,'Parcours en cours')} · ${current+1}/${stops.length}`;};
+$('play').onclick=()=>{if(!ready)return;if(navigation.active)applyView(currentView);if(playing){pause();return;}if(completed||focusedPet)go(0);playing=true;loop.invalidate();$('play').textContent=t(locale,'Mettre en pause');$('tourStatus').textContent=`${t(locale,'Parcours en cours')} · ${current+1}/${stops.length}`;};
 $('prev').onclick=()=>{pause();go(current-1);};$('next').onclick=()=>{pause();go(current+1);};$('home').onclick=()=>{pause();go(0);};
 $('cut').onclick=()=>{pause();setCut(!cutOn);setCanopy(!cutOn);};$('trees').onclick=()=>{pause();setCanopy(!canopyVisible);};
 for(const [id,factor]of [['closer',.8],['farther',1.25]])$(id).onclick=()=>{pause();const d=camera.position.clone().sub(controls.target);d.setLength(THREE.MathUtils.clamp(d.length()*factor,1.5,120));camera.position.copy(controls.target).add(d);};
@@ -127,6 +132,7 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.c
 function changePhoto(delta){pause();photoIndex+=delta;showPhoto();}
 for(const id of ['photoPrev','largePhotoPrev'])$(id).onclick=()=>changePhoto(-1);
 for(const id of ['photoNext','largePhotoNext'])$(id).onclick=()=>changePhoto(1);
+$('lightbox').addEventListener('close',invalidate);
 $('lightbox').addEventListener('keydown',e=>{
  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();e.stopPropagation();changePhoto(e.key==='ArrowRight'?1:-1);}
 });
@@ -150,10 +156,25 @@ $('reefMotion').onclick=()=>{reefMotion=!reefMotion;syncReefMotion();invalidate(
 syncReefMotion();
 navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),labels:{exploreFree:t(locale,'Explorer librement'),exitFree:t(locale,'Quitter le mode libre'),freeCanvas:t(locale,'Exploration libre du resort. Glisser pour regarder, WASD ou ZQSD pour se déplacer.')},onChange:invalidate,onModeChange:updateStepSelection,
  onEnter(){const pending=transition;pause();if(pending&&current!==0){camera.position.copy(pending.p);camera.lookAt(pending.t);}planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
-  if(current===0){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
+  if(current===0&&!focusedPet){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
   camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent=t(locale,'Exploration libre · Échap pour retrouver la vue guidée');
  },onExit(){navigation.setActive(false);applyView(currentView);$('freeWalk').focus({preventScroll:true});$('tourStatus').textContent=t(locale,'Vue guidée')+' · '+stops[current].name;}});
 $('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else navigation.setActive(true);};
+function syncPetMotion(){
+ $('petMotion').disabled=motionPreference.matches;
+ $('petMotion').setAttribute('aria-pressed',String(petMotion&&!motionPreference.matches));
+ $('petMotion').textContent=t(locale,motionPreference.matches?'Mouvements réduits activés':petMotion?'Mettre les animaux en pause':'Animer les animaux');
+}
+$('petMotion').onclick=()=>{petMotion=!petMotion;syncPetMotion();invalidate();};
+$('petSelect').onchange=()=>{
+ const pet=animals?.pets.find(p=>p.name===$('petSelect').value);if(!pet)return;
+ pause();go(0,true);focusedPet=pet;updateStepSelection();$('title').textContent=pet.name;
+ $('petMotion').hidden=false;syncPetMotion();showPhoto();document.body.classList.add('close-view');
+ const pos=pet.root.position,target=pos.clone().add(new THREE.Vector3(0,pet.height*.65,0));
+ const distance=pet.kind==='dog'?2.0:1.25;
+ moveTo(target.clone().add(new THREE.Vector3(distance,.8,distance).applyQuaternion(pet.root.quaternion)).toArray(),target.toArray());
+ $('tourStatus').textContent=pet.name;
+};
 // Every entry point starts with the whole resort, including legacy query links.
 go(0,true);resize();
 const draco=new DRACOLoader().setDecoderPath('./vendor/draco/');
@@ -161,7 +182,9 @@ new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=17-1',g=>{
  draco.dispose();model=g.scene;model.traverse(o=>{o.updateMatrix();o.matrixAutoUpdate=false;if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
   if(o.userData.part==='LOGO FACE'){o.material.transparent=true;o.material.depthWrite=false;o.material.alphaTest=.02;o.castShadow=false;}
   if(o.userData.part==='net'){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=.13;o.material.depthWrite=false;o.castShadow=false;}
- }});scene.add(model);ready=true;setCut(cutOn);setCanopy(canopyVisible);$('loading').hidden=true;$('freeWalk').disabled=false;
+ }});scene.add(model);animals=createPets();scene.add(animals.root);
+ for(const pet of animals.pets){const option=document.createElement('option');option.value=pet.name;option.textContent=pet.name;$('petSelect').append(option);}
+ $('petSelect').disabled=false;ready=true;setCut(cutOn);setCanopy(canopyVisible);$('loading').hidden=true;$('freeWalk').disabled=false;
 },undefined,error=>{console.error('Resort 3D: model loading failed',error);draco.dispose();$('loading').textContent=t(locale,'Le modèle ne peut pas être chargé. Les photos restent consultables. Réessayer en rechargeant la page.');});
 // Reuse pin vectors and viewport measurements; update overlays only when the view changes.
 const pinPositions=stops.map(s=>vec(s.pin)),projected=new THREE.Vector3();
@@ -178,6 +201,10 @@ function frame(now,dt){
  if(ready&&reefVisible)ensureReef();
  const animateReef=!!reef&&shouldAnimateReef({visible:reefVisible,enabled:reefMotion,reduced:motionPreference.matches,close:(!!stops[current].reef||navigation.active)&&camera.position.distanceToSquared(reefSphere.center)<28*28,hidden:document.hidden||!stageVisible});
  if(animateReef){reefTick+=dt;if(reefTick>=1/30){reef.update(reefTick);reefTick=0;dirty=true;}}else reefTick=0;
+ let petsVisible=false,petsClose=false;
+ if(animals){for(const pet of animals.pets){petSphere.center.copy(pet.root.position);if(reefFrustum.intersectsSphere(petSphere)&&camera.position.distanceToSquared(pet.root.position)<18*18){petsVisible=true;petsClose=true;break;}}}
+ const animatePets=!!animals&&shouldAnimatePets({enabled:petMotion,reduced:motionPreference.matches,hidden:document.hidden||!stageVisible||$('lightbox').open,close:petsClose,visible:petsVisible});
+ if(animatePets){petTick+=dt;if(petTick>=1/30){animals.update(petTick);petTick=0;dirty=true;}}else petTick=0;
  if(dirty){
   dirty=false;
   // Projection must use the current camera matrix, including in free navigation.
@@ -185,5 +212,5 @@ function frame(now,dt){
   pins.forEach((p,i)=>{const v=projected.copy(pinPositions[i]).project(camera);p.style.left=`${(v.x*.5+.5)*stageWidth}px`;p.style.top=`${(-v.y*.5+.5)*stageHeight}px`;p.hidden=navigation.active||!ready||v.z>1||v.z< -1||Math.abs(v.x)>.9||Math.abs(v.y)>.8||(cutOn&&i!==current);});
   renderer.render(scene,camera);
  }
- return playing||!!transition||navigation.moving||animateReef;
+ return playing||!!transition||navigation.moving||animateReef||animatePets;
 }

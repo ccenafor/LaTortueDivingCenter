@@ -1,4 +1,5 @@
 const en={
+  'Les animaux du resort':'The resort pets','Choisir un animal…':'Choose a pet…',
   'Ensemble':'Overview',
   'Resort 3D | La Tortue':'Resort 3D | La Tortue',
   'Visite interactive du resort La Tortue et photos des chambres et espaces communs.':'Explore La Tortue resort in 3D, with photos of the rooms and shared spaces.',
