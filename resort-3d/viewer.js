@@ -154,9 +154,8 @@ navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('fligh
   camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent=t(locale,'Exploration libre · Échap pour retrouver la vue guidée');
  },onExit(){navigation.setActive(false);applyView(currentView);$('freeWalk').focus({preventScroll:true});$('tourStatus').textContent=t(locale,'Vue guidée')+' · '+stops[current].name;}});
 $('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else navigation.setActive(true);};
-const requestedStop=new URLSearchParams(location.search).get('stop');
-const initialStop=requestedStop==='rooms'?stops.findIndex(stop=>stop.cutZone==='Dormitory'):requestedStop==='reef'?stops.findIndex(stop=>stop.reef):0;
-go(initialStop>=0?initialStop:0,true);resize();
+// Every entry point starts with the whole resort, including legacy query links.
+go(0,true);resize();
 const draco=new DRACOLoader().setDecoderPath('./vendor/draco/');
 new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=17-1',g=>{
  draco.dispose();model=g.scene;model.traverse(o=>{o.updateMatrix();o.matrixAutoUpdate=false;if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
