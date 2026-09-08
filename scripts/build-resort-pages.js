@@ -11,7 +11,12 @@ const locales = {
     heading:'Découvrez La Tortue avant votre séjour',
     text:'Des cottages à la plage, repérez les espaces du resort et explorez-les en 3D grâce à notre visite interactive.',
     cta:'Explorer le resort en 3D', footer:'Visite 3D du resort',
-    roomLink:'Situer les cottages dans le resort', diveLink:'Explorer le resort et son récif',
+    roomHeading:'Explorez les chambres en 3D',
+    roomText:'Situez les cottages par rapport à la plage et aux espaces communs, puis découvrez leur intérieur dans notre visite interactive.',
+    roomLink:'Visiter les chambres en 3D',
+    diveHeading:'De la plage au récif, en 3D',
+    diveText:'Repérez l’espace plongée, l’accès à la plage et explorez le récif dans notre visite interactive du resort.',
+    diveLink:'Explorer le récif en 3D',
     imageAlt:'Vue 3D des cottages, des espaces communs et de la plage de La Tortue à Dauin',
     pageHeading:'Une visite de La Tortue, de la plage aux cottages',
     pageText:'Découvrez l’agencement de La Tortue Diving Center à Dauin, sur l’île de Negros aux Philippines. La visite réunit les cottages vue mer et jardin, le dortoir, la chambre Deluxe, le bar-restaurant et les espaces de plongée. Les photos associées permettent de voir les lieux réels.',
@@ -25,7 +30,12 @@ const locales = {
     heading:'Discover La Tortue before your stay',
     text:'From the cottages to the beach, find your way around the resort and explore in 3d with our interactive tour.',
     cta:'Explore the resort in 3D', footer:'3D resort tour',
-    roomLink:'Find the cottages in the resort', diveLink:'Explore the resort and its reef',
+    roomHeading:'Explore the rooms in 3D',
+    roomText:'Find the cottages in relation to the beach and shared spaces, then step inside with our interactive tour.',
+    roomLink:'Tour the rooms in 3D',
+    diveHeading:'From the beach to the reef, in 3D',
+    diveText:'Find the diving facilities and beach access, then explore the reef with our interactive resort tour.',
+    diveLink:'Explore the reef in 3D',
     imageAlt:'3D view of the cottages, shared spaces and beach at La Tortue in Dauin',
     pageHeading:'Explore La Tortue, from the beach to the cottages',
     pageText:'Discover the layout of La Tortue Diving Center in Dauin, on Negros Island in the Philippines. The tour brings together the sea-view and garden cottages, dormitory, Deluxe room, bar-restaurant and diving facilities. The accompanying photos show the real spaces.',
@@ -34,8 +44,8 @@ const locales = {
   }
 };
 const escape = text => text.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-function promo(c) {
-  return `<section class="resort-promo sand" aria-labelledby="resort-promo-title"><div class="container resort-promo-grid"><a href="${c.url}" class="resort-promo-image" tabindex="-1" aria-hidden="true"><img src="/resort-3d/assets/preview.webp?v=29" srcset="/resort-3d/assets/preview-600.webp?v=29 600w, /resort-3d/assets/preview.webp?v=29 828w" sizes="(max-width: 720px) 90vw, 50vw" width="828" height="510" alt="" loading="lazy" decoding="async"></a><div class="resort-promo-copy"><h2 id="resort-promo-title">${c.heading}</h2><p>${c.text}</p><a class="btn btn-primary" href="${c.url}">${c.cta} <span aria-hidden="true">↗</span></a></div></div></section>`;
+function promo(c, featured=false) {
+  return `<section class="resort-promo sand${featured?' resort-promo-featured':''}" aria-labelledby="resort-promo-title"><div class="container resort-promo-grid"><a href="${c.url}" class="resort-promo-image" tabindex="-1" aria-hidden="true"><img src="/resort-3d/assets/preview.webp?v=29" srcset="/resort-3d/assets/preview-600.webp?v=29 600w, /resort-3d/assets/preview.webp?v=29 828w" sizes="(max-width: 720px) 90vw, 50vw" width="828" height="510" alt="" loading="lazy" decoding="async"></a><div class="resort-promo-copy"><h2 id="resort-promo-title">${c.heading}</h2><p>${c.text}</p><a class="btn btn-primary" href="${c.url}">${c.cta} <span aria-hidden="true">↗</span></a></div></div></section>`;
 }
 function insertBefore(html, marker, content) {
   if (!html.includes(marker)) throw new Error(`Resort integration marker missing: ${marker}`);
@@ -61,14 +71,14 @@ async function buildResortPages(root, dist, env=process.env) {
     await fs.mkdir(path.dirname(destination),{recursive:true});await fs.writeFile(destination,html,'utf8');
     const prefix=locale==='fr'?'fr/':'';
     const edit=async(file,transform)=>{const p=path.join(dist,prefix+file);await fs.writeFile(p,transform(await fs.readFile(p,'utf8')),'utf8');};
-    await edit('index.html',page=>{
-      // The home slider is the first section; the preview follows it.
-      const index=page.indexOf('</section>');if(index<0)throw new Error('Missing home hero');
-      page=page.slice(0,index+10)+'\n'+promo(c)+page.slice(index+10);
-      return page.replace('</head>','<link rel="stylesheet" href="/resort-3d/promo.css?v=29"></head>');
-    });
-    await edit('cottages.html',page=>insertBefore(page,'<div class="room-section">',`<p class="section-cta"><a class="btn btn-outline" href="${c.url}?stop=rooms">${c.roomLink}</a></p>\n`));
-    await edit('diving.html',page=>insertBefore(page,'<h2 id="ssi-courses">',`<p class="section-cta"><a class="btn btn-outline" href="${c.url}?stop=reef">${c.diveLink}</a></p>\n`));
+    const afterHero=(page,content)=>{
+      const index=page.indexOf('</section>');if(index<0)throw new Error('Missing page hero');
+      page=page.slice(0,index+10)+'\n'+content+page.slice(index+10);
+      return page.replace('</head>','<link rel="stylesheet" href="/resort-3d/promo.css?v=30"></head>');
+    };
+    await edit('index.html',page=>afterHero(page,promo(c)));
+    await edit('cottages.html',page=>afterHero(page,promo({...c,url:c.url+'?stop=rooms',heading:c.roomHeading,text:c.roomText,cta:c.roomLink},true)));
+    await edit('diving.html',page=>afterHero(page,promo({...c,url:c.url+'?stop=reef',heading:c.diveHeading,text:c.diveText,cta:c.diveLink},true)));
     await edit('footer.html',page=>insertBefore(page,`<a href="${locale==='fr'?'/fr/':''}cottages.html">`,`<a href="${c.url}">${c.footer}</a>\n`));
   }
   const sitemap=path.join(dist,'sitemap.xml');

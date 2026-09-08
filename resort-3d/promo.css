@@ -7,3 +7,12 @@
 .resort-promo-copy { text-align:center; }
 .resort-promo .btn { white-space:normal; }
 @media(max-width:720px) { .resort-promo{padding:32px 0}.resort-promo-grid{grid-template-columns:1fr;gap:24px} }
+
+.resort-promo-featured .resort-promo-grid { padding:0; gap:0; align-items:stretch; background:var(--color-primary); border:1px solid var(--color-border-soft); }
+.resort-promo-featured .resort-promo-image { border:0; display:flex; align-items:center; }
+.resort-promo-featured .resort-promo-copy { padding:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.resort-promo-featured h2, .resort-promo-featured p { color:var(--color-text-light); }
+.resort-promo-featured .btn { background:var(--color-secondary); color:var(--color-primary); }
+.resort-promo-featured .btn:hover { background:var(--color-text-light); color:var(--color-primary); }
+.resort-promo-featured .btn:focus-visible { outline:3px solid var(--color-accent); outline-offset:5px; }
+@media(max-width:720px) { .resort-promo-featured .resort-promo-copy{padding:28px 22px}.resort-promo-featured .btn{width:100%} }
