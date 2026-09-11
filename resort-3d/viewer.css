@@ -31,7 +31,16 @@
 #stage .gesture { position:absolute; bottom:9px; left:0; width:100%; max-width:none; margin:0; text-align:center; font-size:11px; color:var(--color-primary); }
 #resort-viewer .pin { position:absolute; transform:translate(-50%,-50%); width:40px; height:40px; min-height:40px; padding:0; border:2px solid white; border-radius:50%; background:var(--color-primary); color:white; box-shadow:var(--shadow-md); font-size:11px; }
 #resort-viewer .pin[aria-current=true] { background:var(--color-secondary); color:var(--color-primary); border-color:white; }
-#loading { position:absolute; top:50%; width:100%; text-align:center; padding:14px; background:var(--color-block); }
+#loading { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(280px,90%); display:grid; justify-items:center; gap:14px; text-align:center; padding:22px; background:var(--color-block); border-radius:16px; color:var(--color-primary); z-index:3; pointer-events:none; font-size:13px; }
+#loading[hidden] { display:none; }
+.loading-turtle { display:block; width:124px; height:98px; overflow:visible; }
+.turtle-fin { animation:turtle-paddle 1.65s ease-in-out infinite alternate; }
+.fin-a { transform-origin:342px 102px; --paddle-start:-10deg; --paddle-end:11deg; }
+.fin-b { transform-origin:190px 170px; --paddle-start:8deg; --paddle-end:-9deg; }
+.fin-c { transform-origin:223px 311px; --paddle-start:-7deg; --paddle-end:8deg; }
+.fin-d { transform-origin:405px 275px; --paddle-start:11deg; --paddle-end:-12deg; }
+@keyframes turtle-paddle { from { transform:rotate(var(--paddle-start)); } to { transform:rotate(var(--paddle-end)); } }
+@media(prefers-reduced-motion:reduce) { .turtle-fin { animation:none; } }
 .tour { display:grid; grid-template-columns:44px 1fr 44px; gap:7px; margin-top:20px; }
 .tour button { padding:8px!important; font-size:12px!important; }
 #progress { grid-column:1/-1; width:100%; height:3px; accent-color:var(--color-secondary); }
