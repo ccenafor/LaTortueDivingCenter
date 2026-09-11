@@ -178,7 +178,7 @@ $('petSelect').onchange=()=>{
 // Every entry point starts with the whole resort, including legacy query links.
 go(0,true);resize();
 const draco=new DRACOLoader().setDecoderPath('./vendor/draco/');
-new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=17-1',g=>{
+new GLTFLoader().setDRACOLoader(draco).load('assets/resort.glb?v=35',g=>{
  draco.dispose();model=g.scene;model.traverse(o=>{o.updateMatrix();o.matrixAutoUpdate=false;if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.material.side=THREE.DoubleSide;
   if(o.userData.part==='LOGO FACE'){o.material.transparent=true;o.material.depthWrite=false;o.material.alphaTest=.02;o.castShadow=false;}
   if(o.userData.part==='net'){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=.13;o.material.depthWrite=false;o.castShadow=false;}

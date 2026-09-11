@@ -29,7 +29,8 @@ for (const [locale, c] of Object.entries(locales)) {
   assert.ok(!/resort\.glb|viewer\.js|three\.module/.test(home), 'Home must not load the 3D engine or model');
   assert.ok(read(prefix + 'footer.html').includes(`href="${c.url}"`));
   assert.ok(read(prefix + 'cottages.html').includes(`href="${c.url}"`));
-  assert.ok(read(prefix + 'diving.html').includes(`href="${c.url}"`));
+  assert.ok(!read(prefix + 'diving.html').includes('resort-promo'), 'No 3D promo on diving');
+  assert.match(home, /resort-promo[\s\S]*<\/section>\s*<div id="footer-placeholder">/, 'Home promo immediately precedes footer');
   assert.ok(!read(prefix + 'menu.html').includes('resort-3d'), 'No extra top-menu entry');
   assert.equal(read('sitemap.xml').includes('https://latortuediving.com' + c.url), production);
 }

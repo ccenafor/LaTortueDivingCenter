@@ -69,9 +69,8 @@ async function buildResortPages(root, dist, env=process.env) {
       page=page.slice(0,index+10)+'\n'+content+page.slice(index+10);
       return page.replace('</head>','<link rel="stylesheet" href="/resort-3d/promo.css?v=30"></head>');
     };
-    await edit('index.html',page=>afterHero(page,promo(c)));
+    await edit('index.html',page=>insertBefore(page,'<div id="footer-placeholder">',promo(c)+'\n').replace('</head>','<link rel="stylesheet" href="/resort-3d/promo.css?v=30"></head>'));
     await edit('cottages.html',page=>afterHero(page,promo({...c,heading:c.roomHeading,text:c.roomText,cta:c.roomLink},true)));
-    await edit('diving.html',page=>afterHero(page,promo({...c,heading:c.diveHeading,text:c.diveText,cta:c.diveLink},true)));
     await edit('footer.html',page=>insertBefore(page,`<a href="${locale==='fr'?'/fr/':''}cottages.html">`,`<a href="${c.url}">${c.footer}</a>\n`));
   }
   const sitemap=path.join(dist,'sitemap.xml');
