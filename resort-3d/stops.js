@@ -5,15 +5,15 @@ export const stops=[
   "name": "Vue d’ensemble",
   "short": "Ensemble",
   "photos": [
-   "/resort-3d/assets/gallery/main-1-1.webp",
    "/resort-3d/assets/gallery/main-1-2.webp",
+   "/resort-3d/assets/gallery/main-1-1.webp",
    "/resort-3d/assets/gallery/marielle/stop-01-01.webp",
    "/resort-3d/assets/gallery/marielle/stop-01-02.webp",
    "/resort-3d/assets/gallery/marielle/stop-01-03.webp",
    "/resort-3d/assets/gallery/marielle/stop-01-04.webp",
    "/resort-3d/assets/gallery/marielle/stop-01-05.webp"
   ],
-  "photo": "/resort-3d/assets/gallery/main-1-1.webp",
+  "photo": "/resort-3d/assets/gallery/main-1-2.webp",
   "alt": "View resort from beach .jpeg",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [

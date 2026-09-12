@@ -2,7 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {DRACOLoader} from './vendor/DRACOLoader.js';
 import {createFreeNavigation,createOrbitNavigation} from './free-navigation.js?v=i18n-28';
-import {stops as sourceStops,galleryWidths} from './stops.js?v=marielle-36';
+import {stops as sourceStops,galleryWidths} from './stops.js?v=gallery-38';
 import {t,localizeStop,localeOf} from './i18n.js?v=marielle-36';
 import {createRenderLoop} from './render-loop.js?v=1';
 import {createPets,shouldAnimatePets} from './pets.js?v=34';
@@ -69,19 +69,50 @@ function updateStepSelection(){
  for(const buttons of [pins,[...$('stops').children]])buttons.forEach((p,j)=>{const selected=!free&&!focusedPet&&j===current;p.setAttribute('aria-current',String(selected));p.setAttribute('aria-pressed',String(selected));});
 }
 function photoList(){if(focusedPet)return ['/assets/Pictures/Staff/Optimized/'+focusedPet.photo];const s=stops[current];return [...(s.extraPhotos||[]),...s.photos];}
+const photoSizes='(max-width: 800px) calc(100vw - 40px), 302px';
+const photoCache=new Map();
+let photoWarmTimer;
+function photoSource(p,large=false){
+ const src=typeof p==='string'?p:`assets/photos/photo-${String(p).padStart(3,'0')}.webp`;
+ const widths=galleryWidths[p];
+ return {src,srcset:!large&&widths&&widths[0]<widths[1]?`${p.replace('.webp','-600.webp')} ${widths[0]}w, ${p} ${widths[1]}w`:''};
+}
+function assignPhoto(img,source){
+ // Set responsive candidates first so the browser does not request a needless full-size image.
+ img.sizes=photoSizes;img.srcset=source.srcset;img.src=source.src;
+}
+function warmPhotos(){
+ clearTimeout(photoWarmTimer);
+ if(document.hidden||navigator.connection?.saveData||/^(slow-)?2g$/.test(navigator.connection?.effectiveType||''))return;
+ photoWarmTimer=setTimeout(()=>{
+  const list=photoList(),large=$('lightbox').open;
+  for(const delta of [1,-1,2]){
+   const source=photoSource(list[(photoIndex+delta+list.length)%list.length],large);
+   const key=JSON.stringify(source);if(photoCache.has(key))continue;
+   const img=new Image();img.decoding='async';img.fetchPriority='low';
+   photoCache.set(key,img);
+   img.onerror=()=>photoCache.delete(key);
+   assignPhoto(img,source);img.decode().catch(()=>{});
+   // Bound retained decoded images; HTTP cache still serves earlier gallery visits.
+   if(photoCache.size>8)photoCache.delete(photoCache.keys().next().value);
+  }
+ },100);
+}
 function showPhoto(){
- const list=photoList();photoIndex=(photoIndex+list.length)%list.length;const p=list[photoIndex],fromSite=typeof p==='string';
- $('photo').src=fromSite?p:`assets/photos/photo-${String(p).padStart(3,'0')}.webp`;
- const widths=fromSite&&galleryWidths[p];
- $('photo').srcset=widths&&widths[0]<widths[1]?`${p.replace('.webp','-600.webp')} ${widths[0]}w, ${p} ${widths[1]}w`:'';
- $('photo').sizes='(max-width: 800px) calc(100vw - 40px), 302px';
- $('photo').alt=t(locale,'{name} — photo {number}',{name:focusedPet?.name||stops[current].name,number:photoIndex+1});
+ clearTimeout(photoWarmTimer);
+ const list=photoList();photoIndex=(photoIndex+list.length)%list.length;const p=list[photoIndex];
+ const photo=$('photo');photo.decoding='async';assignPhoto(photo,photoSource(p));
+ photo.alt=t(locale,'{name} — photo {number}',{name:focusedPet?.name||stops[current].name,number:photoIndex+1});
  $('photoCount').textContent=`${photoIndex+1} / ${list.length}`;
+ const large=$('largePhoto');
  if($('lightbox').open){
-  $('largePhoto').src=$('photo').src;$('largePhoto').alt=$('photo').alt;
+  large.decoding='async';assignPhoto(large,photoSource(p,true));large.alt=photo.alt;
   $('lightboxTitle').textContent=focusedPet?.name||stops[current].name;
   $('largePhotoCount').textContent=$('photoCount').textContent;
  }
+ const active=$('lightbox').open?large:photo;
+ active.onload=warmPhotos;active.onerror=warmPhotos;
+ if(active.complete)warmPhotos();
 }
 function setCanopy(on){invalidateShadows();canopyVisible=on;if(model)model.traverse(o=>{if(o.userData.part==='CANOPY')o.visible=on;});$('trees').setAttribute('aria-pressed',String(on));$('trees').textContent=t(locale,on?'Masquer les feuillages':'Afficher les feuillages');}
 function setCut(on){
