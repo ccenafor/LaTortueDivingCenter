@@ -186,11 +186,11 @@ function syncReefMotion(){
 $('reefMotion').onclick=()=>{reefMotion=!reefMotion;syncReefMotion();invalidate();};
 syncReefMotion();
 navigation=createFreeNavigation({camera,controls,canvas:$('view'),panel:$('flightControls'),toggle:$('freeWalk'),labels:{exploreFree:t(locale,'Explorer librement'),exitFree:t(locale,'Quitter le mode libre'),freeCanvas:t(locale,'Exploration libre du resort. Glisser pour regarder, WASD ou ZQSD pour se déplacer.')},onChange:invalidate,onModeChange:updateStepSelection,
- onEnter(){const pending=transition;pause();if(pending&&current!==0){camera.position.copy(pending.p);camera.lookAt(pending.t);}planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
-  if(current===0&&!focusedPet){camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);}
+ onEnter(){pause();planMode=false;$('planview').setAttribute('aria-pressed','false');document.body.classList.add('close-view');
+  camera.position.set(0,1.7,20);camera.lookAt(0,1.7,-20);
   camera.fov=65;camera.updateProjectionMatrix();$('tourStatus').textContent=t(locale,'Exploration libre · Échap pour retrouver la vue guidée');
  },onExit(){navigation.setActive(false);applyView(currentView);$('freeWalk').focus({preventScroll:true});$('tourStatus').textContent=t(locale,'Vue guidée')+' · '+stops[current].name;}});
-$('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else navigation.setActive(true);};
+$('freeWalk').onclick=()=>{if(!ready)return;if(navigation.active){navigation.setActive(false);applyView(currentView);}else{go(0,true);navigation.setActive(true);}};
 function syncPetMotion(){
  $('petMotion').disabled=motionPreference.matches;
  $('petMotion').setAttribute('aria-pressed',String(petMotion&&!motionPreference.matches));
