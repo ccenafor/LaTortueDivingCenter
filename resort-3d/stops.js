@@ -112,13 +112,12 @@ export const stops=[
   "name": "Cottage vue mer 3",
   "short": "Cottage 3",
   "photos": [
-   61,
    "/assets/Pictures/rooms/Optimized/seaview-cottage-1.webp",
    "/assets/Pictures/rooms/Optimized/seaview-cottage-2.webp",
    "/resort-3d/assets/gallery/marielle/stop-03-01.webp"
   ],
-  "photo": 61,
-  "alt": "Room 2-1.jpeg",
+  "photo": "/assets/Pictures/rooms/Optimized/seaview-cottage-1.webp",
+  "alt": "Seaview Cottage 3",
   "type": "CHAMBRE · VUE INTÉRIEURE DISPONIBLE",
   "pos": [
    9.8,
@@ -154,7 +153,7 @@ export const stops=[
      1.8,
      -20
     ],
-    "photo": 61
+    "photo": "/assets/Pictures/rooms/Optimized/seaview-cottage-1.webp"
    },
    "inside": {
     "label": "Intérieur",
@@ -542,85 +541,17 @@ export const stops=[
   }
  },
  {
-  "name": "Entrée et parking",
-  "short": "Entrée",
-  "photos": [
-   2,
-   3,
-   4,
-   5,
-   15
-  ],
-  "photo": 2,
-  "alt": "Entrance 1.jpeg",
-  "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
-  "pos": [
-   3.5,
-   4.5,
-   30
-  ],
-  "target": [
-   1.5,
-   1,
-   18
-  ],
-  "pin": [
-   1,
-   0.5,
-   20
-  ],
-  "text": "L’enseigne ronde La Tortue Diving Center surplombe le muret à droite de l’entrée. Elle reprend le logo couleur original, un fond blanc, une tranche sombre et son support. Le parking se trouve derrière le muret.",
-  "cutZone": null,
-  "cut": false,
-  "note": "Dimensions et positions fines estimées à partir des photos et du croquis.",
-  "views": {
-   "outside": {
-    "label": "Entrée complète",
-    "pos": [
-     3.5,
-     4.5,
-     30
-    ],
-    "target": [
-     1.5,
-     1,
-     18
-    ],
-    "cut": false,
-    "photo": 2
-   },
-   "inside": {
-    "label": "Enseigne ronde",
-    "pos": [
-     3.9,
-     3.35,
-     26.8
-    ],
-    "target": [
-     5.7,
-     3.0,
-     21.64
-    ],
-    "cut": false,
-    "hideCanopy": true,
-    "photo": 3
-   }
-  },
-  "defaultView": "outside"
- },
- {
   "name": "Plongée",
   "short": "Plongée",
   "photos": [
-   7,
    "/resort-3d/assets/gallery/plongee-1.webp",
    "/resort-3d/assets/gallery/plongee-2.webp",
    "/resort-3d/assets/gallery/plongee-3.webp",
    "/resort-3d/assets/gallery/plongee-5.webp",
    "/resort-3d/assets/gallery/marielle/stop-11-01.webp"
   ],
-  "photo": 7,
-  "alt": "Diving area 1.jpeg",
+  "photo": "/resort-3d/assets/gallery/plongee-1.webp",
+  "alt": "Diving preparation area",
   "type": "PHOTOS RENOMMÉES · REPÈRES DU RESORT",
   "pos": [
    -1.4,
@@ -659,7 +590,7 @@ export const stops=[
      1.15,
      18
     ],
-    "photo": 7,
+    "photo": "/resort-3d/assets/gallery/plongee-1.webp",
     "cut": true
    },
    "inside": {
@@ -674,7 +605,7 @@ export const stops=[
      1.05,
      12.0
     ],
-    "photo": 7
+    "photo": "/resort-3d/assets/gallery/plongee-1.webp"
    }
   }
  },
