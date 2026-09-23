@@ -1921,6 +1921,13 @@ a.btn[style*="background:#25D366"]:hover {
   margin-bottom: 0.5rem;
   color: var(--color-primary);
 }
+.card .card-title {
+  display: block;
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 700;
+}
 .card .muted {
   font-size: 0.9rem;
 }
