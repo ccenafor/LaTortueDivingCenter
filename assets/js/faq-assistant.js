@@ -20,14 +20,23 @@
     return 0;
   };
 
-  const matchQuery = (question, entries) => {
+  const matchQuery = (question, entries, searchRoutes) => {
     const query = normalizeText(question);
     if (!query || !Array.isArray(entries)) return null;
+
+    // Full editorial questions win before keyword routing (in either language).
+    const exact = entries.find(entry => (entry.questions || []).some(value => normalizeText(value) === query));
+    if (exact) return exact;
 
     let bestMatch = null;
     let bestScore = 0;
     entries.forEach(entry => {
-      const score = (entry.keywords || []).reduce((total, keyword) => {
+      if ((entry.excludeKeywords || []).some(word => scoreKeyword(query, word))) return;
+      // Each rule is an AND of synonym groups. Specific intent beats broad routing.
+      const intent = (entry.matchRules || []).some(rule =>
+        rule.every(group => group.some(word => scoreKeyword(query, word)))
+      );
+      const score = (intent ? 1000 : 0) + (entry.keywords || []).reduce((total, keyword) => {
         return total + scoreKeyword(query, keyword);
       }, 0);
       if (score > bestScore) {
@@ -36,7 +45,13 @@
       }
     });
 
-    return bestScore > 0 ? bestMatch : null;
+    if (bestScore > 0) return bestMatch;
+
+    // Broad category terms should offer guided choices instead of pretending
+    // that one detailed answer is the only possible intent.
+    return (searchRoutes || []).find(route =>
+      (route.keywords || []).some(keyword => scoreKeyword(query, keyword))
+    ) || null;
   };
 
   const getLocale = () => {
@@ -151,9 +166,45 @@
       title.className = 'faq-assistant__result-title';
       title.textContent = entry.title;
       answer.className = 'faq-assistant__result-text';
-      answer.textContent = entry.answer;
+      answer.textContent = entry.answer || '';
 
       fragment.append(title, answer);
+      if (entry.entryIds) {
+        const questions = document.createElement('div');
+        questions.className = 'faq-assistant__questions';
+        entry.entryIds.forEach(id => {
+          const item = localeContent.entries.find(candidate => candidate.id === id);
+          if (!item) return;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'faq-assistant__topic';
+          button.textContent = item.title;
+          button.addEventListener('click', () => {
+            renderResult(item, { activeTopic: entry.id, focusResult: true });
+            track('faq_assistant_match', locale, content.version, { faq_result_id: item.id });
+          });
+          questions.appendChild(button);
+        });
+        fragment.appendChild(questions);
+      }
+      if (entry.topicIds) {
+        const topicChoices = document.createElement('div');
+        topicChoices.className = 'faq-assistant__questions';
+        entry.topicIds.forEach(id => {
+          const topic = localeContent.topics.find(candidate => candidate.id === id);
+          if (!topic) return;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'faq-assistant__topic';
+          button.textContent = topic.label;
+          button.addEventListener('click', () => {
+            renderResult(topic, { activeTopic: topic.id, focusResult: true });
+            track('faq_assistant_topic_select', locale, content.version, { faq_topic_id: topic.id });
+          });
+          topicChoices.appendChild(button);
+        });
+        fragment.appendChild(topicChoices);
+      }
       if (entry.links && entry.links.length) {
         fragment.appendChild(renderLinks(entry.links, entry.id));
       }
@@ -184,7 +235,7 @@
       button.dataset.faqTopic = topic.id;
       button.setAttribute('aria-pressed', 'false');
       button.addEventListener('click', () => {
-        renderResult(topic, { activeTopic: topic.id });
+        renderResult(topic, { activeTopic: topic.id, focusResult: true });
         track('faq_assistant_topic_select', locale, content.version, { faq_topic_id: topic.id });
       });
       topicsContainer.appendChild(button);
@@ -220,7 +271,7 @@
         return;
       }
 
-      const match = matchQuery(question, localeContent.entries);
+      const match = matchQuery(question, localeContent.entries, localeContent.searchRoutes);
       input.value = '';
 
       if (match) {
@@ -240,7 +291,10 @@
     });
 
     const handleDocumentClick = event => {
-      if (!panel.hidden && !root.contains(event.target)) closePanel(false);
+      // A question click replaces its button before bubbling to document.
+      // The event path still identifies that click as originating inside the widget.
+      const inside = event.composedPath().includes(root);
+      if (!panel.hidden && !inside) closePanel(false);
     };
     const handleDocumentKeydown = event => {
       if (event.key === 'Escape' && !panel.hidden) closePanel(true);

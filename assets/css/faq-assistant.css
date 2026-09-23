@@ -247,7 +247,12 @@ body.has-mobile-dive-bar.has-cookie-banner .faq-assistant {
 
 .faq-assistant__result-text {
   color: var(--color-text-main, #152040);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
+
+.faq-assistant__result-text:empty { display: none; }
+.faq-assistant__questions { display: grid; gap: 0.5rem; margin-top: 0.75rem; }
 
 .faq-assistant__validation {
   color: #8a2d2d;

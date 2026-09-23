@@ -1,58 +1,69 @@
 # Guided FAQ assistant content
 
-The website-wide FAQ assistant is a small, non-AI routing guide. Its current answers are deliberately marked as provisional in both languages. They point visitors to existing pages and ask the La Tortue team to confirm details that can change.
+## Source and editorial status
 
-## Files and responsibilities
+Snapshot imported on 2026-09-12 from [FAQ Question Answers](https://docs.google.com/spreadsheets/d/1jrasLdj2Zv3f7qAdtyGM0n4YgkTASdZFCsJHoIHZcBA/edit), modified 2026-09-11.
+Folder: Latortue Website 2.0 with Micka / Website / 2026-08 Evolutions.
 
-- `assets/js/faq-assistant-content.js`: editable English and French labels, topics, answers, keywords, links, and generic WhatsApp fallback message.
-- `assets/js/faq-assistant.js`: matching, rendering, accessibility, localization, and anonymous event logic. Content editors should not need to change this file.
-- `assets/partials/faq-assistant.html`: shared semantic structure.
-- `assets/css/faq-assistant.css`: widget layout and responsive styling.
-- `assets/site.js`: shared loader used by every actual English and French page.
+The 15 completed English answers are preserved from the source (paragraph whitespace normalized). French questions and answers are translations prepared for this preview and still need owner review. The source is a work in progress, not a claim of final approval. Draft/source status is kept in data and this document, without adding extra disclaimers to the widget.
 
-## Update an existing answer
+The two unanswered rows, “How to get to Dauin” and “Payment methods - how to reserve”, use the existing contact/page guidance; no transport instructions or payment policy have been invented. The internal-links row is an editorial reminder, not a visitor question.
 
-1. Open `assets/js/faq-assistant-content.js` as UTF-8.
-2. Find the same entry `id` under `locales.en.entries` and `locales.fr.entries`.
-3. Update `title`, `answer`, `keywords`, or `links` in both languages.
-4. Keep claims conservative. Availability, schedules, prices, conditions, wildlife sightings, prerequisites, and final quotes should be confirmed by the team unless the owners have approved exact wording.
-5. Keep internal `path` values in their English root form, such as `/cottages.html`. The behavior script automatically adds `/fr` on French URLs.
-6. Increment the top-level `version` value so analytics can distinguish the revised content without recording a visitor’s question.
-7. Run `npm run verify-faq-assistant` and `npm run build`.
-8. Review both `/` and `/fr/` locally at desktop and mobile widths. Also check keyboard opening, topic buttons, typed matches, no-match WhatsApp fallback, Escape-to-close, and visible focus states.
+## Categories
 
-## Add an answer
+The second source tab already proposes six categories, now assigned through `topicId`:
 
-Add an object with the same unique `id` to both locale `entries` arrays:
+- Fun Dives: Dauin marine life, prices, daily schedule, equipment, experience, private guides.
+- Courses & Try Scuba: certification validity, beginners, children, refresher.
+- Apo Island Trips: trip schedule and inclusions.
+- Rooms & Booking: accommodation and separate room/diving booking.
+- Getting Here: contact/location guidance while the source answer is unfinished.
+- Resort & Restaurant: non-divers/snorkeling and restaurant-page guidance.
 
-```js
-{
-  id: 'stable_machine_name',
-  title: 'Visitor-facing result title',
-  answer: 'Short, cautious guidance with no unapproved operational claim.',
-  keywords: ['specific phrase', 'useful synonym'],
-  links: [
-    { id: 'analytics_destination_name', label: 'Visitor-facing link', path: '/relevant-page.html' }
-  ]
-}
+Each category opens a list of questions, then a single answer. WhatsApp remains available as a site-level action and an unmatched-question fallback.
+
+## Editable files
+
+- `assets/js/faq-assistant-content.js`: bilingual labels, topics, answers, matching terms, internal links and source provenance.
+- `assets/js/faq-assistant.js`: search and rendering.
+- `assets/partials/faq-assistant.html`: shared markup.
+- `assets/css/faq-assistant.css`: responsive layout.
+- `scripts/verify-faq-assistant.js`: source-question, intent, localization and integration regression checks.
+
+## Update or extend answers
+
+1. Edit the content file as UTF-8. Find the same stable entry `id` in both `locales.en.entries` and `locales.fr.entries`.
+2. Update `title`, `answer` and `questions` in both languages. Keep prices, inclusions, ages and schedules faithful to the source. Paragraphs and lists use `\n\n` and `\n`.
+3. Set `topicId` to one of the six category IDs and add the entry ID to that category’s `entryIds` in both locales.
+4. Keep `sourceRow` tied to the source spreadsheet row (header is row 1); use `status: "source-draft"` while still in progress.
+5. Keep English-root internal paths such as `/cottages.html`; the widget adds `/fr` automatically.
+6. Keep keyword, question and matching-rule lists mirrored across locales so either language can find the answer.
+7. Increment `version` and the FAQ cache suffix in `assets/site.js`. Update the source revision/date after re-reading Drive.
+8. Run `npm run verify-faq-assistant`, `npm run build` and `npm run verify-blog-seo`. Review both locales on desktop and mobile.
+
+## Matching
+
+Exact editorial questions are checked first. `keywords` provide bounded phrase matching, insensitive to punctuation, case and accents.
+For detailed intents, `matchRules` is an OR of rules; each rule is an AND of synonym groups. Example: price terms AND dive terms.
+`excludeKeywords` prevents general dive pricing from overriding Apo, snorkeling or refresher requests.
+`searchRoutes` handles broad category wording only when no precise answer matched. The broad `diving`/`dive`/`plongée`/`plonger` route offers the Fun Dives and Courses topic choices instead of forcing one answer. Day-visit phrases such as `day use`, `day visit`, `visite à la journée` and `accès journée` route to the restaurant/day-visit entry.
+Add natural paraphrases to the verifier whenever adding an intent. Avoid generic interrogatives and standalone arrival verbs.
+
+## Local preview with the updated resort tour
+
+The upstream build includes the resort tour only in an eligible environment. To preview it locally without changing any Git branch, run in PowerShell:
+
+```powershell
+$env:BRANCH = 'preprod'
+$env:CONTEXT = 'branch-deploy'
+$env:NETLIFY = 'true'
+npm.cmd run build
+node scripts/netlify-noindex-guard.js dist
+node scripts/resort-site.test.js
 ```
 
-Use specific keywords before broad ones. Matching ignores capitalization, punctuation, and accents. Keywords may be phrases. Add both English and French synonyms to both versions so either language can still find the topic.
+These environment variables affect only the build; Git stays on `feature/faq-assistant`. The preview uses upstream noindex protections. Serve `dist/` on loopback, not the repository root.
 
-## Update topic shortcuts
+## Usage data
 
-The two `topics` arrays control the visible Resort and Diving shortcut buttons. Keep the `id` aligned between English and French. Each topic can show several relevant internal links.
-
-## Privacy-safe usage events
-
-The assistant pushes only structured IDs and page context to `dataLayer`, and also dispatches the same payload in the `lt:faq-assistant` custom event. Events are:
-
-- `faq_assistant_open`
-- `faq_assistant_topic_select`
-- `faq_assistant_match`
-- `faq_assistant_no_match`
-- `faq_assistant_link_click`
-
-Typed questions, visible answer text, names, phone numbers, email addresses, and other visitor-entered content are never included. The typed question is cleared after matching and is not persisted. Do not add raw input to tracking payloads.
-
-The no-match WhatsApp link contains only the generic localized message stored in `ui.whatsappMessage`; it deliberately does not copy the visitor’s typed question.
+Existing events contain only stable FAQ IDs and page context. Typed questions are cleared after matching, never persisted and never included in analytics or WhatsApp URLs. Category question selection uses the existing match event. No new external tracking service is added.

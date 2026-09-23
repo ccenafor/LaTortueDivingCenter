@@ -12,7 +12,8 @@ const assistant = globalThis.ltFaqAssistant;
 
 assert.ok(content, 'FAQ content must load');
 assert.ok(assistant, 'FAQ behavior must load');
-assert.match(content.version, /^provisional-/, 'MVP content must be marked provisional');
+assert.match(content.version, /^draft-drive-/, 'Imported content must retain its draft provenance');
+assert.equal(content.source.status, 'work-in-progress');
 
 const cases = {
   en: [
@@ -67,9 +68,59 @@ const noMatchCases = {
   fr: ['Puis-je venir avec mon chien ?']
 };
 
+const broadRouteCases = {
+  en: [
+    ['diving', 'diving_overview'],
+    ['dive', 'diving_overview'],
+    ['I would like information about diving', 'diving_overview']
+  ],
+  fr: [
+    ['plongée', 'diving_overview'],
+    ['plonger', 'diving_overview'],
+    ['Je voudrais des informations sur la plongée', 'diving_overview']
+  ]
+};
+
+const detailedCases = [
+  ['How much is a fun dive?', 'dive_prices'],
+  ['What is the price of a fun dive?', 'dive_prices'],
+  ['How much does diving cost?', 'dive_prices'],
+  ['What does the Apo Island trip include?', 'apo_inclusions'],
+  ['Do you offer snorkeling at Apo Island?', 'non_divers'],
+  ['What age can children learn to dive?', 'children_diving'],
+  ['Do I need to rent equipment for fun dives?', 'dive_equipment'],
+  ['Quel est le prix des plongées loisirs ?', 'dive_prices'],
+  ['Le matériel est-il inclus dans les plongées loisirs ?', 'dive_equipment'],
+  ['Que comprend le voyage à Apo Island ?', 'apo_inclusions'],
+  ['Can I have a private guide at Apo Island?', 'private_guide'],
+  ['Combien de plongées par jour ?', 'dive_schedule'],
+  ['Do I need a refresher?', 'refresher'],
+  ['Quels sont les moyens de paiement ?', 'quote_booking']
+];
+for (const locale of ['en', 'fr']) {
+  for (const [question, expected] of detailedCases) {
+    assert.equal(assistant.matchQuery(question, content.locales[locale].entries)?.id, expected, `${locale}: ${question}`);
+  }
+}
+
 Object.entries(cases).forEach(([locale, localeCases]) => {
   const localeContent = content.locales[locale];
-  assert.equal(localeContent.topics.length, 2, `${locale} must expose two topic shortcuts`);
+  assert.equal(localeContent.topics.length, 6, `${locale} must expose the six source categories`);
+  assert.equal(localeContent.entries.filter(entry => entry.sourceRow).length, 15, 'All completed source answers must be included');
+  localeContent.entries.forEach(entry => {
+    assert.ok(localeContent.topics.some(topic => topic.id === entry.topicId), `Unknown topic for ${entry.id}`);
+    for (const question of entry.questions || []) {
+      assert.equal(assistant.matchQuery(question, localeContent.entries)?.id, entry.id, `Editorial question: ${question}`);
+    }
+  });
+  localeContent.topics.forEach(topic => {
+    assert.ok(topic.entryIds.length);
+    topic.entryIds.forEach(id => assert.ok(localeContent.entries.some(entry => entry.id === id && entry.topicId === topic.id)));
+  });
+  assert.equal(localeContent.searchRoutes.length, 1, `${locale} must expose the broad diving route`);
+  localeContent.searchRoutes.forEach(route => {
+    route.topicIds.forEach(id => assert.ok(localeContent.topics.some(topic => topic.id === id)));
+  });
   ['eyebrow', 'intro', 'questionPlaceholder', 'privacy', 'resultLabel', 'provisionalNote'].forEach(key => {
     assert.equal(key in localeContent.ui, false, `${locale} removed UI copy must stay absent: ${key}`);
   });
@@ -84,6 +135,19 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
     const match = assistant.matchQuery(question, localeContent.entries);
     assert.equal(match && match.id, expectedId, `${locale} query should match ${expectedId}: ${question}`);
   });
+
+  broadRouteCases[locale].forEach(([question, expectedId]) => {
+    const match = assistant.matchQuery(question, localeContent.entries, localeContent.searchRoutes);
+    assert.equal(match && match.id, expectedId, `${locale} broad query should route to choices: ${question}`);
+  });
+
+  for (const dayVisitQuery of ['day use', 'day visit', 'visite à la journée', 'accès journée']) {
+    assert.equal(
+      assistant.matchQuery(dayVisitQuery, localeContent.entries, localeContent.searchRoutes)?.id,
+      'restaurant',
+      `${locale} day-visit query should match restaurant: ${dayVisitQuery}`
+    );
+  }
 
   noMatchCases[locale].forEach(question => {
     assert.equal(
@@ -112,6 +176,7 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
     (entry.links || []).forEach(link => {
       const localFile = path.join(root, link.path.replace(/^\//, ''));
       assert.ok(fs.existsSync(localFile), `Missing internal FAQ destination: ${link.path}`);
+      assert.ok(fs.existsSync(path.join(root, 'fr', link.path.replace(/^\//, ''))), `Missing French FAQ destination: ${link.path}`);
     });
   });
 });
