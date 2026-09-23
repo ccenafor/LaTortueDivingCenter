@@ -415,6 +415,9 @@ function canonicalizePageUrl(url) {
 function renderSitemap(siteContents) {
   const urls = new Set();
 
+  ['/privacy', '/terms', '/fr/privacy', '/fr/terms']
+    .forEach((url) => urls.add(absoluteUrl(url)));
+
   siteContents.forEach(({ content }) => {
     (content.pages || []).forEach((page) => urls.add(absoluteUrl(canonicalizePageUrl(page.url))));
     (content.posts || []).forEach((post) => urls.add(absoluteUrl(post.url)));

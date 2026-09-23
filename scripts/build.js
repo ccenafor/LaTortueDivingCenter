@@ -36,9 +36,11 @@ const PUBLIC_ROOT_FILES = [
   'index.html',
   'menu.html',
   'new_styles.css',
+  'privacy.html',
   'robots.txt',
   'search.html',
-  'sitemap.xml'
+  'sitemap.xml',
+  'terms.html'
 ];
 
 const isMinified = (file) => file.endsWith('.min.js') || file.endsWith('.min.css');
