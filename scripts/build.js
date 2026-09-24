@@ -27,6 +27,7 @@ const PUBLIC_ROOT_FILES = [
   'contact.html',
   'cottages.html',
   'dining.html',
+  'documents.html',
   'diving-apo-trips.html',
   'diving-fun-dives.html',
   'diving-sites.html',
