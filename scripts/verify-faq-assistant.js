@@ -36,6 +36,9 @@ const cases = {
     ['I am certified and want guided shore dives', 'fun_dives'],
     ['Do you offer shore dives?', 'fun_dives'],
     ['How much is an Apo Island trip?', 'apo_island'],
+    ['Do I need a coastal dive before Apo Island?', 'apo_requirements'],
+    ["What if we don't have time to do a dive prior to Apo Island?", 'apo_no_prior_dive'],
+    ['How do I get there from Moalboal?', 'arrival_contact'],
     ['Where can I see muck dive sites?', 'dive_sites'],
     ['Can I get a quote?', 'quote_booking']
   ],
@@ -58,6 +61,9 @@ const cases = {
     ['Je veux des plongées guidées du bord', 'fun_dives'],
     ['Proposez-vous des plongées du bord ?', 'fun_dives'],
     ['Quel est le prix d’une sortie Apo Island ?', 'apo_island'],
+    ['Faut-il faire une plongée côtière avant Apo Island ?', 'apo_requirements'],
+    ['Je n’ai pas le temps de plonger avant Apo Island', 'apo_no_prior_dive'],
+    ['Comment venir depuis Siquijor ?', 'arrival_contact'],
     ['Quels sont les sites de plongée macro ?', 'dive_sites'],
     ['Je voudrais un devis', 'quote_booking']
   ]
@@ -92,6 +98,10 @@ const detailedCases = [
   ['Quel est le prix des plongées loisirs ?', 'dive_prices'],
   ['Le matériel est-il inclus dans les plongées loisirs ?', 'dive_equipment'],
   ['Que comprend le voyage à Apo Island ?', 'apo_inclusions'],
+  ['What are the requirements for Apo Island?', 'apo_requirements'],
+  ['Quelles sont les conditions pour Apo Island ?', 'apo_requirements'],
+  ['I have no time for a dive before Apo Island', 'apo_no_prior_dive'],
+  ['Et si je n’ai pas le temps de plonger avant Apo Island ?', 'apo_no_prior_dive'],
   ['Can I have a private guide at Apo Island?', 'private_guide'],
   ['Combien de plongées par jour ?', 'dive_schedule'],
   ['Do I need a refresher?', 'refresher'],
@@ -117,6 +127,21 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
     assert.ok(topic.entryIds.length);
     topic.entryIds.forEach(id => assert.ok(localeContent.entries.some(entry => entry.id === id && entry.topicId === topic.id)));
   });
+  assert.deepEqual(
+    localeContent.topics.find(topic => topic.id === 'apo_island').entryIds,
+    ['apo_island', 'apo_inclusions', 'apo_requirements', 'apo_no_prior_dive'],
+    `${locale} Apo Island topic must expose exactly four questions`
+  );
+  assert.match(
+    localeContent.entries.find(entry => entry.id === 'apo_requirements').answer,
+    /1[ ,]900/,
+    `${locale} Apo requirements must include the coastal-dive price`
+  );
+  assert.match(
+    localeContent.entries.find(entry => entry.id === 'apo_no_prior_dive').answer,
+    /2[ ,]500/,
+    `${locale} Apo alternative must include the private-guide price`
+  );
   assert.equal(localeContent.searchRoutes.length, 1, `${locale} must expose the broad diving route`);
   localeContent.searchRoutes.forEach(route => {
     route.topicIds.forEach(id => assert.ok(localeContent.topics.some(topic => topic.id === id)));
@@ -197,6 +222,8 @@ const styles = fs.readFileSync(path.join(root, 'assets/css/faq-assistant.css'), 
 const behavior = fs.readFileSync(path.join(root, 'assets/js/faq-assistant.js'), 'utf8');
 const siteScript = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
 const siteStyles = fs.readFileSync(path.join(root, 'new_styles.css'), 'utf8');
+const footerEn = fs.readFileSync(path.join(root, 'footer.html'), 'utf8');
+const footerFr = fs.readFileSync(path.join(root, 'fr/footer.html'), 'utf8');
 
 assert.match(partial, /role="dialog"/, 'FAQ partial must expose a dialog landmark');
 assert.match(partial, /aria-live="polite"/, 'FAQ result must be announced politely');
@@ -207,6 +234,11 @@ assert.match(styles, /\.faq-assistant__panel\s*\{[^}]*padding:\s*0;/s, 'FAQ pane
 assert.match(styles, /\.faq-assistant__input,\s*\.faq-assistant__submit\s*\{[^}]*height:\s*2\.85rem;/s, 'FAQ input and submit button must share an explicit height');
 assert.doesNotMatch(behavior, /ui\.(?:intro|questionPlaceholder|privacy|resultLabel|provisionalNote)/, 'Removed helper copy must not be rendered');
 assert.match(behavior, /links:\s*\[\{ id: 'whatsapp', label: ui\.whatsappLabel \}\]/, 'FAQ no-match result must keep its contextual WhatsApp fallback');
+assert.match(behavior, /closest\('\[data-faq-open\]'\)/, 'Delegated footer FAQ control must open the assistant after async footer loading');
+assert.match(behavior, /openPanel\(footerTrigger\)/, 'Footer FAQ control must be recorded as the dialog opener');
+assert.match(behavior, /returnFocusTarget\.isConnected/, 'Closing the FAQ must return focus to the active opener when it remains available');
+assert.match(footerEn, /<a href="#faq-assistant-panel" data-faq-open>FAQ<\/a>/, 'English footer must expose the FAQ control');
+assert.match(footerFr, /<a href="#faq-assistant-panel" data-faq-open>FAQ<\/a>/, 'French footer must expose the FAQ control');
 assert.doesNotMatch(behavior, /faq_(?:question|query|input|text)\s*:/, 'Tracking must not include typed text');
 assert.match(siteScript, /setupFaqAssistant\(\)/, 'Shared site initialization must load the FAQ');
 assert.match(siteScript, /setupFloatingWhatsApp\(\)/, 'Shared site initialization must restore the site-level WhatsApp action');

@@ -7,7 +7,9 @@ Folder: Latortue Website 2.0 with Micka / Website / 2026-08 Evolutions.
 
 The 15 completed English answers are preserved from the source (paragraph whitespace normalized). French questions and answers are translations prepared for this preview and still need owner review. The source is a work in progress, not a claim of final approval. Draft/source status is kept in data and this document, without adding extra disclaimers to the widget.
 
-The two unanswered rows, “How to get to Dauin” and “Payment methods - how to reserve”, use the existing contact/page guidance; no transport instructions or payment policy have been invented. The internal-links row is an editorial reminder, not a visitor question.
+The unanswered payment row still uses the existing contact/page guidance; no payment policy has been invented. “How to get to Dauin” now uses high-level route guidance derived from the project’s transport visual and existing site copy, without naming operators or publishing changeable timetables. The internal-links row is an editorial reminder, not a visitor question.
+
+Two client-supplied Apo Island answers were added on 2026-09-25 with `status: "client-draft"`: the required prior coastal dive (₱1,900 including equipment and marine fees) and the ₱2,500 full-day private-guide alternative when that dive is not possible. These additions remain draft content until owner approval.
 
 ## Categories
 
@@ -15,12 +17,12 @@ The second source tab already proposes six categories, now assigned through `top
 
 - Fun Dives: Dauin marine life, prices, daily schedule, equipment, experience, private guides.
 - Courses & Try Scuba: certification validity, beginners, children, refresher.
-- Apo Island Trips: trip schedule and inclusions.
+- Apo Island Trips: trip schedule, inclusions, minimum requirements and the private-guide alternative.
 - Rooms & Booking: accommodation and separate room/diving booking.
-- Getting Here: contact/location guidance while the source answer is unfinished.
+- Getting Here: high-level routes from Dumaguete, Siquijor, Bohol, Cebu, Moalboal and elsewhere on Negros, with variable connections confirmed by the team.
 - Resort & Restaurant: non-divers/snorkeling and restaurant-page guidance.
 
-Each category opens a list of questions, then a single answer. WhatsApp remains available as a site-level action and an unmatched-question fallback.
+Each category opens a list of questions, then a single answer. The English and French footers also include a keyboard-accessible FAQ link that opens the same dialog. WhatsApp remains available as a site-level action and an unmatched-question fallback.
 
 ## Editable files
 

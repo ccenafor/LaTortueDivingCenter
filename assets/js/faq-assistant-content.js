@@ -3,7 +3,7 @@
 
   // Editable source snapshot and French translation. See docs/faq-assistant-content.md.
   global.ltFaqAssistantContent = {
-  "version": "draft-drive-2026-09-12-routing-2",
+  "version": "draft-drive-2026-09-12-routing-3",
   "whatsappNumber": "639695291297",
   "locales": {
     "en": {
@@ -66,7 +66,9 @@
           "title": "Apo Island Trips",
           "entryIds": [
             "apo_island",
-            "apo_inclusions"
+            "apo_inclusions",
+            "apo_requirements",
+            "apo_no_prior_dive"
           ],
           "links": [
             {
@@ -235,8 +237,8 @@
         },
         {
           "id": "arrival_contact",
-          "title": "Contact, location and arrival",
-          "answer": "The Contact page has the site’s contact options and location details. Confirm any pickup, transfer or time-sensitive travel plan directly with the team.",
+          "title": "How do I get to La Tortue?",
+          "answer": "From Dumaguete, La Tortue is about 30 minutes south by road from the airport or seaport.\n\nFrom Siquijor, Bohol or Cebu, take a ferry to Dumaguete, then continue south by road to the resort.\n\nFrom Moalboal or western Cebu, travel south by road, cross to Negros by ferry, then continue by road towards Dumaguete and Dauin.\n\nFrom elsewhere on Negros, continue by road towards Dumaguete and Dauin.\n\nFerry and bus routes can change. Send the team your starting point, travel date and arrival time so they can help confirm the best current connection or transfer.",
           "keywords": [
             "contact",
             "address",
@@ -256,6 +258,11 @@
             "arrival time",
             "arrival",
             "dumaguete",
+            "siquijor",
+            "bohol",
+            "cebu",
+            "moalboal",
+            "negros",
             "ferry",
             "adresse",
             "où êtes-vous situés",
@@ -726,6 +733,87 @@
           ]
         },
         {
+          "id": "apo_requirements",
+          "topicId": "apo_island",
+          "status": "client-draft",
+          "title": "Do you have any minimum requirements to join an Apo Island trip?",
+          "answer": "For scuba divers, a prior coastal dive with La Tortue is necessary before joining an Apo Island trip. This gives the team a chance to make any needed adjustments to your gear and tank size, and to create appropriate dive groups before the full-day boat trip.\n\nThe coastal fun dive costs ₱1,900 per person, including equipment and marine fees.",
+          "questions": [
+            "Do you have any minimum requirements to join an Apo Island trip?",
+            "Quelles sont les conditions minimales pour participer à une sortie Apo Island ?"
+          ],
+          "keywords": [
+            "apo minimum requirements",
+            "requirements for apo",
+            "prior coastal dive",
+            "coastal dive before apo",
+            "dive before apo",
+            "conditions pour apo",
+            "conditions minimales apo",
+            "plongée côtière avant apo",
+            "plongée avant apo"
+          ],
+          "excludeKeywords": [
+            "no time",
+            "dont have time",
+            "don't have time",
+            "cannot",
+            "can't",
+            "pas le temps",
+            "impossible"
+          ],
+          "links": [
+            {
+              "id": "apo_island",
+              "label": "See details",
+              "path": "/diving-apo-trips.html"
+            }
+          ],
+          "matchRules": [
+            [
+              ["apo"],
+              ["requirement", "requirements", "required", "prior", "before", "condition", "conditions", "nécessaire", "avant"]
+            ]
+          ]
+        },
+        {
+          "id": "apo_no_prior_dive",
+          "topicId": "apo_island",
+          "status": "client-draft",
+          "title": "What if I don’t have time for a dive before Apo Island?",
+          "answer": "If you do not have time for a coastal dive before the Apo Island trip, La Tortue can arrange a private guide for ₱2,500 for the full day at Apo Island. This gives you dedicated attention if you need assistance without disrupting the other members of the group.",
+          "questions": [
+            "What if I don’t have time for a dive before Apo Island?",
+            "What if we don't have time to do a dive prior to Apo Island?",
+            "Et si je n’ai pas le temps de plonger avant Apo Island ?"
+          ],
+          "keywords": [
+            "no time before apo",
+            "no time for prior dive",
+            "cannot dive before apo",
+            "can't dive before apo",
+            "private guide instead",
+            "pas le temps avant apo",
+            "pas le temps de plonger avant apo",
+            "impossible de plonger avant apo",
+            "guide privé à la place"
+          ],
+          "links": [
+            {
+              "id": "apo_island",
+              "label": "See details",
+              "path": "/diving-apo-trips.html"
+            }
+          ],
+          "matchRules": [
+            [
+              ["apo"],
+              ["no time", "cannot", "can't", "dont have time", "don't have time", "pas le temps", "impossible"],
+              ["before", "prior", "avant"]
+            ]
+          ]
+        },
+        {
           "id": "children_diving",
           "topicId": "courses",
           "sourceRow": 10,
@@ -1017,7 +1105,9 @@
           "title": "Sorties Apo Island",
           "entryIds": [
             "apo_island",
-            "apo_inclusions"
+            "apo_inclusions",
+            "apo_requirements",
+            "apo_no_prior_dive"
           ],
           "links": [
             {
@@ -1186,8 +1276,8 @@
         },
         {
           "id": "arrival_contact",
-          "title": "Contact, localisation et arrivée",
-          "answer": "La page Contact regroupe les moyens de joindre l’équipe et les informations de localisation du site. Confirmez directement tout transfert, prise en charge ou trajet soumis à un horaire.",
+          "title": "Comment venir à La Tortue ?",
+          "answer": "Depuis Dumaguete, La Tortue se trouve à environ 30 minutes de route au sud de l’aéroport ou du port.\n\nDepuis Siquijor, Bohol ou Cebu, prenez un ferry jusqu’à Dumaguete, puis continuez vers le sud par la route jusqu’au resort.\n\nDepuis Moalboal ou l’ouest de Cebu, descendez vers le sud par la route, traversez jusqu’à Negros en ferry, puis continuez par la route vers Dumaguete et Dauin.\n\nDepuis une autre partie de Negros, continuez par la route vers Dumaguete et Dauin.\n\nLes liaisons de ferry et de bus peuvent changer. Envoyez à l’équipe votre point de départ, votre date de voyage et votre heure d’arrivée afin de confirmer la meilleure liaison ou le meilleur transfert disponible.",
           "keywords": [
             "contact",
             "address",
@@ -1207,6 +1297,11 @@
             "arrival time",
             "arrival",
             "dumaguete",
+            "siquijor",
+            "bohol",
+            "cebu",
+            "moalboal",
+            "negros",
             "ferry",
             "adresse",
             "où êtes-vous situés",
@@ -1677,6 +1772,87 @@
           ]
         },
         {
+          "id": "apo_requirements",
+          "topicId": "apo_island",
+          "status": "client-draft",
+          "title": "Quelles sont les conditions minimales pour participer à une sortie Apo Island ?",
+          "answer": "Pour les plongeurs, une plongée côtière préalable avec La Tortue est nécessaire avant de participer à une sortie Apo Island. Elle permet à l’équipe d’ajuster si besoin le matériel et la taille de la bouteille, puis de constituer des groupes de niveau adaptés avant la journée complète en bateau.\n\nCette plongée loisir côtière coûte ₱1 900 par personne, matériel et frais marins inclus.",
+          "questions": [
+            "Do you have any minimum requirements to join an Apo Island trip?",
+            "Quelles sont les conditions minimales pour participer à une sortie Apo Island ?"
+          ],
+          "keywords": [
+            "apo minimum requirements",
+            "requirements for apo",
+            "prior coastal dive",
+            "coastal dive before apo",
+            "dive before apo",
+            "conditions pour apo",
+            "conditions minimales apo",
+            "plongée côtière avant apo",
+            "plongée avant apo"
+          ],
+          "excludeKeywords": [
+            "no time",
+            "dont have time",
+            "don't have time",
+            "cannot",
+            "can't",
+            "pas le temps",
+            "impossible"
+          ],
+          "links": [
+            {
+              "id": "apo_island",
+              "label": "Voir les détails",
+              "path": "/diving-apo-trips.html"
+            }
+          ],
+          "matchRules": [
+            [
+              ["apo"],
+              ["requirement", "requirements", "required", "prior", "before", "condition", "conditions", "nécessaire", "avant"]
+            ]
+          ]
+        },
+        {
+          "id": "apo_no_prior_dive",
+          "topicId": "apo_island",
+          "status": "client-draft",
+          "title": "Et si je n’ai pas le temps de plonger avant Apo Island ?",
+          "answer": "Si vous n’avez pas le temps de faire une plongée côtière avant la sortie Apo Island, La Tortue peut organiser un guide privé pour ₱2 500 pour toute la journée à Apo Island. Vous bénéficiez ainsi de l’attention nécessaire si vous avez besoin d’aide, sans perturber les autres membres du groupe.",
+          "questions": [
+            "What if I don’t have time for a dive before Apo Island?",
+            "What if we don't have time to do a dive prior to Apo Island?",
+            "Et si je n’ai pas le temps de plonger avant Apo Island ?"
+          ],
+          "keywords": [
+            "no time before apo",
+            "no time for prior dive",
+            "cannot dive before apo",
+            "can't dive before apo",
+            "private guide instead",
+            "pas le temps avant apo",
+            "pas le temps de plonger avant apo",
+            "impossible de plonger avant apo",
+            "guide privé à la place"
+          ],
+          "links": [
+            {
+              "id": "apo_island",
+              "label": "Voir les détails",
+              "path": "/diving-apo-trips.html"
+            }
+          ],
+          "matchRules": [
+            [
+              ["apo"],
+              ["no time", "cannot", "can't", "dont have time", "don't have time", "pas le temps", "impossible"],
+              ["before", "prior", "avant"]
+            ]
+          ]
+        },
+        {
           "id": "children_diving",
           "topicId": "courses",
           "sourceRow": 10,
@@ -1917,7 +2093,6 @@
     "status": "work-in-progress",
     "translation": "French translated from English source; owner review pending",
     "pending": [
-      "How to get to Dauin",
       "Payment methods - how to reserve"
     ]
   }

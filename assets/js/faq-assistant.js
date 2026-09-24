@@ -241,7 +241,10 @@
       topicsContainer.appendChild(button);
     });
 
-    const openPanel = () => {
+    let returnFocusTarget = trigger;
+
+    const openPanel = opener => {
+      if (opener) returnFocusTarget = opener;
       if (!panel.hidden) return;
       panel.hidden = false;
       trigger.setAttribute('aria-expanded', 'true');
@@ -254,11 +257,16 @@
       if (panel.hidden) return;
       panel.hidden = true;
       trigger.setAttribute('aria-expanded', 'false');
-      if (returnFocus) trigger.focus();
+      if (returnFocus) {
+        const focusTarget = returnFocusTarget && returnFocusTarget.isConnected
+          ? returnFocusTarget
+          : trigger;
+        focusTarget.focus();
+      }
     };
 
     trigger.addEventListener('click', () => {
-      if (panel.hidden) openPanel();
+      if (panel.hidden) openPanel(trigger);
       else closePanel(false);
     });
     closeButton.addEventListener('click', () => closePanel(true));
@@ -291,6 +299,12 @@
     });
 
     const handleDocumentClick = event => {
+      const footerTrigger = event.target.closest && event.target.closest('[data-faq-open]');
+      if (footerTrigger) {
+        event.preventDefault();
+        openPanel(footerTrigger);
+        return;
+      }
       // A question click replaces its button before bubbling to document.
       // The event path still identifies that click as originating inside the widget.
       const inside = event.composedPath().includes(root);
