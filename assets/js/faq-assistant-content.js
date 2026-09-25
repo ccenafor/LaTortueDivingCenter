@@ -3,7 +3,7 @@
 
   // Editable source snapshot and French translation. See docs/faq-assistant-content.md.
   global.ltFaqAssistantContent = {
-  "version": "draft-drive-2026-09-12-routing-4-editorial-list",
+  "version": "draft-drive-2026-09-25-routing-5-transfer-prices",
   "whatsappNumber": "639695291297",
   "locales": {
     "en": {
@@ -238,7 +238,7 @@
         {
           "id": "arrival_contact",
           "title": "How do I get to La Tortue?",
-          "answer": "From Dumaguete, La Tortue is about 30 minutes south by road from the airport or seaport.\n\nFrom Siquijor, Bohol or Cebu, take a ferry to Dumaguete, then continue south by road to the resort.\n\nFrom Moalboal or western Cebu, travel south by road, cross to Negros by ferry, then continue by road towards Dumaguete and Dauin.\n\nFrom elsewhere on Negros, continue by road towards Dumaguete and Dauin.\n\nFerry and bus routes can change. Send the team your starting point, travel date and arrival time so they can help confirm the best current connection or transfer.",
+          "answer": "From Manila or Cebu by air: fly to Dumaguete-Sibulan Airport (DGT), then allow about 30-40 minutes by road to La Tortue.\n\nFrom Cebu City: take a ferry to Dumaguete Seaport, then allow about 30-40 minutes by road.\n\nFrom Siquijor or Bohol: take a fast ferry to Dumaguete Seaport, then continue by road for about 30-40 minutes.\n\nTransfers from Dumaguete Airport or Seaport (price per way):\nTuk-tuk - ₱700\nSedan - ₱1,200\nAir-conditioned van - ₱1,400\n\nFrom South Cebu, including Oslob or Moalboal: travel to Liloan Port in Santander, take the ferry to Sibulan Port, then allow about 45-60 minutes by road. Transfers from Sibulan Port (price per way):\nTuk-tuk - ₱800\nSedan - ₱1,400\n\nLa Tortue can arrange the appropriate vehicle. Send the team your arrival date and time, flight or ferry details, and number of passengers.",
           "keywords": [
             "contact",
             "address",
@@ -247,6 +247,9 @@
             "where are you located",
             "airport",
             "transfer",
+            "transfer vehicle",
+            "transfer vehicles",
+            "airport transfer price",
             "transport",
             "get there",
             "getting there",
@@ -268,6 +271,9 @@
             "où êtes-vous situés",
             "aéroport",
             "transfert",
+            "véhicule de transfert",
+            "véhicules de transfert",
+            "prix du transfert aéroport",
             "transport",
             "comment venir",
             "comment arriver",
@@ -1277,7 +1283,7 @@
         {
           "id": "arrival_contact",
           "title": "Comment venir à La Tortue ?",
-          "answer": "Depuis Dumaguete, La Tortue se trouve à environ 30 minutes de route au sud de l’aéroport ou du port.\n\nDepuis Siquijor, Bohol ou Cebu, prenez un ferry jusqu’à Dumaguete, puis continuez vers le sud par la route jusqu’au resort.\n\nDepuis Moalboal ou l’ouest de Cebu, descendez vers le sud par la route, traversez jusqu’à Negros en ferry, puis continuez par la route vers Dumaguete et Dauin.\n\nDepuis une autre partie de Negros, continuez par la route vers Dumaguete et Dauin.\n\nLes liaisons de ferry et de bus peuvent changer. Envoyez à l’équipe votre point de départ, votre date de voyage et votre heure d’arrivée afin de confirmer la meilleure liaison ou le meilleur transfert disponible.",
+          "answer": "Depuis Manille ou Cebu en avion : prenez un vol pour l’aéroport de Dumaguete-Sibulan (DGT), puis comptez environ 30 à 40 minutes de route jusqu’à La Tortue.\n\nDepuis Cebu City : prenez un ferry jusqu’au port de Dumaguete, puis comptez environ 30 à 40 minutes de route.\n\nDepuis Siquijor ou Bohol : prenez un ferry rapide jusqu’au port de Dumaguete, puis continuez par la route pendant environ 30 à 40 minutes.\n\nTransferts depuis l’aéroport ou le port de Dumaguete (prix par trajet) :\nTuk-tuk - ₱700\nBerline - ₱1 200\nVan climatisé - ₱1 400\n\nDepuis le sud de Cebu, notamment Oslob ou Moalboal : rejoignez le port de Liloan à Santander, prenez le ferry jusqu’au port de Sibulan, puis comptez environ 45 à 60 minutes de route. Transferts depuis le port de Sibulan (prix par trajet) :\nTuk-tuk - ₱800\nBerline - ₱1 400\n\nLa Tortue peut organiser le véhicule approprié. Envoyez à l’équipe votre date et heure d’arrivée, les détails de votre vol ou ferry, ainsi que le nombre de passagers.",
           "keywords": [
             "contact",
             "address",
@@ -1286,6 +1292,9 @@
             "where are you located",
             "airport",
             "transfer",
+            "transfer vehicle",
+            "transfer vehicles",
+            "airport transfer price",
             "transport",
             "get there",
             "getting there",
@@ -1307,6 +1316,9 @@
             "où êtes-vous situés",
             "aéroport",
             "transfert",
+            "véhicule de transfert",
+            "véhicules de transfert",
+            "prix du transfert aéroport",
             "transport",
             "comment venir",
             "comment arriver",

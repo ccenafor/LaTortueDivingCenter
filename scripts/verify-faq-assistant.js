@@ -31,6 +31,8 @@ const cases = {
     ['I have a late arrival', 'arrival_contact'],
     ['What is the arrival time?', 'arrival_contact'],
     ['How do I get there from Dumaguete airport?', 'arrival_contact'],
+    ['How much is an airport transfer?', 'arrival_contact'],
+    ['Which transfer vehicles are available?', 'arrival_contact'],
     ['I want an Open Water course', 'courses'],
     ['guided shore dives for a certified diver', 'fun_dives'],
     ['I am certified and want guided shore dives', 'fun_dives'],
@@ -56,6 +58,8 @@ const cases = {
     ['J’ai une arrivée tardive', 'arrival_contact'],
     ['Quelle est l’heure d’arrivée ?', 'arrival_contact'],
     ['Proposez-vous un transfert depuis l’aéroport ?', 'arrival_contact'],
+    ['Quel est le prix du transfert depuis l’aéroport ?', 'arrival_contact'],
+    ['Quels véhicules de transfert sont disponibles ?', 'arrival_contact'],
     ['Je cherche un cours Open Water', 'courses'],
     ['Je veux faire des plongées loisirs guidées', 'fun_dives'],
     ['Je veux des plongées guidées du bord', 'fun_dives'],
@@ -147,6 +151,15 @@ Object.entries(cases).forEach(([locale, localeCases]) => {
     /2[ ,]500/,
     `${locale} Apo alternative must include the private-guide price`
   );
+  const arrivalAnswer = localeContent.entries.find(entry => entry.id === 'arrival_contact').answer;
+  for (const amount of locale === 'fr' ? ['₱700', '₱1 200', '₱1 400', '₱800'] : ['₱700', '₱1,200', '₱1,400', '₱800']) {
+    assert.ok(arrivalAnswer.includes(amount), `${locale} Getting Here must include transfer price ${amount}`);
+  }
+  for (const vehicle of locale === 'fr' ? ['Tuk-tuk', 'Berline', 'Van climatisé'] : ['Tuk-tuk', 'Sedan', 'Air-conditioned van']) {
+    assert.ok(arrivalAnswer.includes(vehicle), `${locale} Getting Here must include vehicle type ${vehicle}`);
+  }
+  assert.match(arrivalAnswer, /Dumaguete-Sibulan/, `${locale} Getting Here must identify Dumaguete-Sibulan Airport`);
+  assert.match(arrivalAnswer, /Sibulan Port|port de Sibulan/, `${locale} Getting Here must include the South Cebu via Sibulan route`);
   assert.equal(localeContent.searchRoutes.length, 1, `${locale} must expose the broad diving route`);
   localeContent.searchRoutes.forEach(route => {
     route.topicIds.forEach(id => assert.ok(localeContent.topics.some(topic => topic.id === id)));
