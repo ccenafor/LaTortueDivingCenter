@@ -27,11 +27,12 @@
       'M4 21h16'
     ],
     rooms: [
-      'M4 18v-7h16v7',
-      'M4 14h16',
-      'M6 11V8h5v3',
-      'M4 21v-3',
-      'M20 21v-3'
+      'M4 15V9.5A2.5 2.5 0 0 1 6.5 7h11A2.5 2.5 0 0 1 20 9.5V15',
+      'M4 15h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2Z',
+      'M6 15v-3a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 11 12v3',
+      'M13 15v-3a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 18 12v3',
+      'M4 19v2',
+      'M20 19v2'
     ],
     resort: [
       'M7 3v8',
@@ -69,7 +70,7 @@
   const appendTopicNavigation = (button, topic) => {
     const label = document.createElement('span');
     const icon = createSvg(topicIconPaths[topic.id] || topicIconPaths.fun_dives, 'faq-assistant__topic-icon');
-    if (topic.id === 'fun_dives') icon.setAttribute('stroke-width', '2.1');
+    if (topic.id === 'fun_dives' || topic.id === 'rooms') icon.setAttribute('stroke-width', '2.1');
     label.className = 'faq-assistant__topic-label';
     label.textContent = topic.label;
     button.append(

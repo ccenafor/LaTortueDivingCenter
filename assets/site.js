@@ -108,13 +108,13 @@
         document.body.appendChild(placeholder);
       }
 
-      loadStylesheet('/assets/css/faq-assistant.css?v=20260925f', 'faq-assistant-styles');
+      loadStylesheet('/assets/css/faq-assistant.css?v=20260925g', 'faq-assistant-styles');
 
       await Promise.all([
-        fetchHTML('/assets/partials/faq-assistant.html?v=20260925f', 'faq-assistant-placeholder'),
-        loadScript('/assets/js/faq-assistant-content.js?v=20260925f', 'faq-assistant-content-script', 'ltFaqAssistantContent')
+        fetchHTML('/assets/partials/faq-assistant.html?v=20260925g', 'faq-assistant-placeholder'),
+        loadScript('/assets/js/faq-assistant-content.js?v=20260925g', 'faq-assistant-content-script', 'ltFaqAssistantContent')
       ]);
-      await loadScript('/assets/js/faq-assistant.js?v=20260925f', 'faq-assistant-script', 'ltFaqAssistant');
+      await loadScript('/assets/js/faq-assistant.js?v=20260925g', 'faq-assistant-script', 'ltFaqAssistant');
 
       if (window.ltFaqAssistant && typeof window.ltFaqAssistant.init === 'function') {
         window.ltFaqAssistant.init();
