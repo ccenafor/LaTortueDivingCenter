@@ -116,6 +116,11 @@ for (const locale of ['en', 'fr']) {
 Object.entries(cases).forEach(([locale, localeCases]) => {
   const localeContent = content.locales[locale];
   assert.equal(localeContent.topics.length, 6, `${locale} must expose the six source categories`);
+  assert.deepEqual(
+    localeContent.topics.map(topic => topic.id),
+    ['fun_dives', 'courses', 'apo_island', 'rooms', 'resort', 'arrival'],
+    `${locale} editorial list must keep Getting Here last`
+  );
   assert.equal(localeContent.entries.filter(entry => entry.sourceRow).length, 15, 'All completed source answers must be included');
   localeContent.entries.forEach(entry => {
     assert.ok(localeContent.topics.some(topic => topic.id === entry.topicId), `Unknown topic for ${entry.id}`);
@@ -232,7 +237,11 @@ assert.doesNotMatch(partial, /data-faq-(?:eyebrow|intro|privacy)/, 'Removed help
 assert.match(styles, /prefers-reduced-motion/, 'FAQ styles must respect reduced motion');
 assert.match(styles, /\.faq-assistant__panel\s*\{[^}]*padding:\s*0;/s, 'FAQ panel must override global section padding');
 assert.match(styles, /\.faq-assistant__input,\s*\.faq-assistant__submit\s*\{[^}]*height:\s*2\.85rem;/s, 'FAQ input and submit button must share an explicit height');
+assert.match(styles, /\.faq-assistant__topics\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column;/s, 'FAQ topics must use the editorial list layout');
+assert.match(styles, /\.faq-assistant__topic--navigation\s*\{[^}]*grid-template-columns:/s, 'Editorial list rows must align icon, label and chevron');
 assert.doesNotMatch(behavior, /ui\.(?:intro|questionPlaceholder|privacy|resultLabel|provisionalNote)/, 'Removed helper copy must not be rendered');
+assert.match(behavior, /className = 'faq-assistant__topic faq-assistant__topic--navigation'/, 'Top-level topics must use editorial navigation rows');
+assert.match(behavior, /svg\.setAttribute\('aria-hidden', 'true'\)/, 'Editorial topic icons must stay decorative for assistive technology');
 assert.match(behavior, /links:\s*\[\{ id: 'whatsapp', label: ui\.whatsappLabel \}\]/, 'FAQ no-match result must keep its contextual WhatsApp fallback');
 assert.match(behavior, /closest\('\[data-faq-open\]'\)/, 'Delegated footer FAQ control must open the assistant after async footer loading');
 assert.match(behavior, /openPanel\(footerTrigger\)/, 'Footer FAQ control must be recorded as the dialog opener');

@@ -24,6 +24,8 @@ The second source tab already proposes six categories, now assigned through `top
 
 Each category opens a list of questions, then a single answer. The English and French footers also include a keyboard-accessible FAQ link that opens the same dialog. WhatsApp remains available as a site-level action and an unmatched-question fallback.
 
+The compact launcher opens an editorial navigation list with one full-width row per category. The presentation order is Fun Dives, Courses & Try Scuba, Apo Island Trips, Rooms & Booking, Resort & Restaurant, then Getting Here. Each row includes a decorative line icon and chevron; Getting Here intentionally remains last in both languages.
+
 ## Editable files
 
 - `assets/js/faq-assistant-content.js`: bilingual labels, topics, answers, matching terms, internal links and source provenance.

@@ -9,6 +9,76 @@
     .replace(/\s+/g, ' ')
     .trim();
 
+  const topicIconPaths = {
+    fun_dives: [
+      'M6.25 7.75h11.5a3.75 3.75 0 0 1 3.75 3.75v.35A5.15 5.15 0 0 1 16.35 17h-.45a3.2 3.2 0 0 1-2.55-1.27l-.55-.72a1 1 0 0 0-1.6 0l-.55.72A3.2 3.2 0 0 1 8.1 17h-.45a5.15 5.15 0 0 1-5.15-5.15v-.35a3.75 3.75 0 0 1 3.75-3.75Z',
+      'M10.15 17.15h4.7v.85a2.1 2.1 0 0 1-2.1 2.1h-.5a2.1 2.1 0 0 1-2.1-2.1v-.85Z',
+      'M17.9 5.45a1.15 1.15 0 1 0 0-2.3 1.15 1.15 0 0 0 0 2.3Z',
+      'M20.9 8.2a.8.8 0 1 0 0-1.6.8.8 0 0 0 0 1.6Z',
+      'M21 2.15a.55.55 0 1 0 0-1.1.55.55 0 0 0 0 1.1Z'
+    ],
+    courses: [
+      'm3 9 9-5 9 5-9 5-9-5Z',
+      'M7 12v4.5c2.8 2 7.2 2 10 0V12',
+      'M21 9v6'
+    ],
+    apo_island: [
+      'm3 18 5-7 4 5 3-4 6 6H3Z',
+      'M4 21h16'
+    ],
+    rooms: [
+      'M4 18v-7h16v7',
+      'M4 14h16',
+      'M6 11V8h5v3',
+      'M4 21v-3',
+      'M20 21v-3'
+    ],
+    resort: [
+      'M7 3v8',
+      'M4 3v5c0 2 6 2 6 0V3',
+      'M7 11v10',
+      'M17 3v18',
+      'M17 3c3 3 3 7 0 10'
+    ],
+    arrival: [
+      'M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z',
+      'M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'
+    ]
+  };
+
+  const createSvg = (paths, className) => {
+    const namespace = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(namespace, 'svg');
+    svg.setAttribute('class', className);
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.8');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    paths.forEach(data => {
+      const path = document.createElementNS(namespace, 'path');
+      path.setAttribute('d', data);
+      svg.appendChild(path);
+    });
+    return svg;
+  };
+
+  const appendTopicNavigation = (button, topic) => {
+    const label = document.createElement('span');
+    const icon = createSvg(topicIconPaths[topic.id] || topicIconPaths.fun_dives, 'faq-assistant__topic-icon');
+    if (topic.id === 'fun_dives') icon.setAttribute('stroke-width', '2.1');
+    label.className = 'faq-assistant__topic-label';
+    label.textContent = topic.label;
+    button.append(
+      icon,
+      label,
+      createSvg(['m9 5 7 7-7 7'], 'faq-assistant__topic-chevron')
+    );
+  };
+
   const scoreKeyword = (query, keyword) => {
     const normalizedKeyword = normalizeText(keyword);
     if (!normalizedKeyword) return 0;
@@ -177,7 +247,7 @@
           if (!item) return;
           const button = document.createElement('button');
           button.type = 'button';
-          button.className = 'faq-assistant__topic';
+          button.className = 'faq-assistant__topic faq-assistant__topic--question';
           button.textContent = item.title;
           button.addEventListener('click', () => {
             renderResult(item, { activeTopic: entry.id, focusResult: true });
@@ -195,7 +265,7 @@
           if (!topic) return;
           const button = document.createElement('button');
           button.type = 'button';
-          button.className = 'faq-assistant__topic';
+          button.className = 'faq-assistant__topic faq-assistant__topic--question';
           button.textContent = topic.label;
           button.addEventListener('click', () => {
             renderResult(topic, { activeTopic: topic.id, focusResult: true });
@@ -229,9 +299,9 @@
 
     localeContent.topics.forEach(topic => {
       const button = document.createElement('button');
-      button.className = 'faq-assistant__topic';
+      button.className = 'faq-assistant__topic faq-assistant__topic--navigation';
       button.type = 'button';
-      button.textContent = topic.label;
+      appendTopicNavigation(button, topic);
       button.dataset.faqTopic = topic.id;
       button.setAttribute('aria-pressed', 'false');
       button.addEventListener('click', () => {

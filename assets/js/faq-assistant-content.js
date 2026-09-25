@@ -3,7 +3,7 @@
 
   // Editable source snapshot and French translation. See docs/faq-assistant-content.md.
   global.ltFaqAssistantContent = {
-  "version": "draft-drive-2026-09-12-routing-3",
+  "version": "draft-drive-2026-09-12-routing-4-editorial-list",
   "whatsappNumber": "639695291297",
   "locales": {
     "en": {
@@ -96,21 +96,6 @@
           ]
         },
         {
-          "id": "arrival",
-          "label": "Getting Here",
-          "title": "Getting Here",
-          "entryIds": [
-            "arrival_contact"
-          ],
-          "links": [
-            {
-              "id": "arrival",
-              "label": "See page",
-              "path": "/contact.html"
-            }
-          ]
-        },
-        {
           "id": "resort",
           "label": "Resort & Restaurant",
           "title": "Resort & Restaurant",
@@ -123,6 +108,21 @@
               "id": "resort",
               "label": "See page",
               "path": "/dining.html"
+            }
+          ]
+        },
+        {
+          "id": "arrival",
+          "label": "Getting Here",
+          "title": "Getting Here",
+          "entryIds": [
+            "arrival_contact"
+          ],
+          "links": [
+            {
+              "id": "arrival",
+              "label": "See page",
+              "path": "/contact.html"
             }
           ]
         }
@@ -1135,21 +1135,6 @@
           ]
         },
         {
-          "id": "arrival",
-          "label": "Venir à La Tortue",
-          "title": "Venir à La Tortue",
-          "entryIds": [
-            "arrival_contact"
-          ],
-          "links": [
-            {
-              "id": "arrival",
-              "label": "Voir la page",
-              "path": "/contact.html"
-            }
-          ]
-        },
-        {
           "id": "resort",
           "label": "Resort & restaurant",
           "title": "Resort & restaurant",
@@ -1162,6 +1147,21 @@
               "id": "resort",
               "label": "Voir la page",
               "path": "/dining.html"
+            }
+          ]
+        },
+        {
+          "id": "arrival",
+          "label": "Venir à La Tortue",
+          "title": "Venir à La Tortue",
+          "entryIds": [
+            "arrival_contact"
+          ],
+          "links": [
+            {
+              "id": "arrival",
+              "label": "Voir la page",
+              "path": "/contact.html"
             }
           ]
         }
