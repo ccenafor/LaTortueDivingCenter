@@ -319,6 +319,7 @@
       if (!panel.hidden) return;
       panel.hidden = false;
       trigger.setAttribute('aria-expanded', 'true');
+      root.dispatchEvent(new global.CustomEvent('faq-assistant-open', { bubbles: true }));
       track('faq_assistant_open', locale, content.version);
       panelBody.scrollTop = 0;
       global.requestAnimationFrame(() => closeButton.focus({ preventScroll: true }));

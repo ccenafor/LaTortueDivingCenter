@@ -396,8 +396,8 @@ body.has-mobile-dive-bar.has-cookie-banner .faq-assistant {
     margin-inline: auto;
     width: auto;
     max-width: 27.5rem;
-    max-height: calc(100vh - var(--faq-assistant-bottom-offset) - 6.75rem);
-    max-height: calc(100dvh - var(--faq-assistant-bottom-offset) - 6.75rem);
+    max-height: calc(100vh - var(--faq-assistant-bottom-offset) - 10.75rem);
+    max-height: calc(100dvh - var(--faq-assistant-bottom-offset) - 10.75rem);
   }
 
   .faq-assistant__trigger {

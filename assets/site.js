@@ -108,7 +108,7 @@
         document.body.appendChild(placeholder);
       }
 
-      loadStylesheet('/assets/css/faq-assistant.css?v=20261006move', 'faq-assistant-styles');
+      loadStylesheet('/assets/css/faq-assistant.css?v=20261006hold', 'faq-assistant-styles');
 
       await Promise.all([
         // The mounted assistant moves out of this placeholder into floating actions.
@@ -118,7 +118,7 @@
           : fetchHTML('/assets/partials/faq-assistant.html?v=20260925h', 'faq-assistant-placeholder'),
         loadScript('/assets/js/faq-assistant-content.js?v=20260925h', 'faq-assistant-content-script', 'ltFaqAssistantContent')
       ]);
-      await loadScript('/assets/js/faq-assistant.js?v=20260925h', 'faq-assistant-script', 'ltFaqAssistant');
+      await loadScript('/assets/js/faq-assistant.js?v=20261006hold', 'faq-assistant-script', 'ltFaqAssistant');
 
       if (window.ltFaqAssistant && typeof window.ltFaqAssistant.init === 'function') {
         window.ltFaqAssistant.init();
@@ -228,29 +228,46 @@
   };
 
   const setupFloatingActionMovement = actions => {
+    const french = (document.documentElement.lang || 'en').toLowerCase() === 'fr';
+    const updateControlHints = () => {
+      const enabled = window.matchMedia('(max-width: 768px)').matches;
+      [actions.querySelector('.floating-whatsapp'), actions.querySelector('[data-faq-trigger]')].filter(Boolean).forEach(control => {
+        if (enabled) {
+          control.setAttribute('aria-describedby', 'floating-actions-move-hint');
+          control.setAttribute('draggable', 'false');
+          control.title = french ? 'Maintenez puis glissez pour déplacer' : 'Hold, then drag to move';
+        } else {
+          control.removeAttribute('aria-describedby');
+          control.removeAttribute('draggable');
+          control.removeAttribute('title');
+        }
+      });
+    };
+    updateControlHints();
     if (actions.dataset.movementReady === 'true') return;
     actions.dataset.movementReady = 'true';
     const mobile = window.matchMedia('(max-width: 768px)');
-    const french = (document.documentElement.lang || 'en').toLowerCase() === 'fr';
-    const handle = document.createElement('button');
-    handle.type = 'button';
-    handle.className = 'floating-actions__move';
-    handle.setAttribute('aria-label', french ? 'Déplacer les boutons d’aide' : 'Move help buttons');
-    handle.title = french ? 'Glissez pour déplacer, ou appuyez pour changer de coin' : 'Drag to move, or tap to change corner';
-    handle.setAttribute('aria-describedby', 'floating-actions-move-hint');
-    handle.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg>';
     const hint = document.createElement('span');
     hint.id = 'floating-actions-move-hint';
     hint.className = 'sr-only';
     hint.textContent = french
-      ? 'Glissez pour déplacer les boutons. Appuyez pour changer de coin. Au clavier, utilisez les flèches ; Début rétablit la position initiale.'
-      : 'Drag to move the buttons. Tap to change corner. With a keyboard, use the arrow keys; Home resets the position.';
-    actions.appendChild(handle);
+      ? 'Appuyez pour ouvrir. Maintenez puis glissez pour déplacer les boutons, ou relâchez sans glisser pour changer de coin. Au clavier, utilisez les flèches ; Début rétablit la position initiale.'
+      : 'Tap to open. Hold, then drag to move the buttons, or release without dragging to change corner. With a keyboard, use the arrow keys; Home resets the position.';
     actions.appendChild(hint);
 
     let drag = null;
-    let suppressClick = false;
+    let suppressedControl = null;
     let corner = -1;
+    const eventControl = event => event.target.closest?.('.floating-whatsapp') || event.target.closest?.('[data-faq-trigger]');
+    const faqIsOpen = () => actions.querySelector('[data-faq-trigger]')?.getAttribute('aria-expanded') === 'true';
+    const cancelDrag = () => {
+      if (!drag) return;
+      const { control, id, timer } = drag;
+      clearTimeout(timer);
+      drag = null;
+      actions.classList.remove('is-dragging');
+      if (control.hasPointerCapture(id)) control.releasePointerCapture(id);
+    };
     const reset = () => {
       actions.classList.remove('is-positioned');
       actions.style.removeProperty('--floating-actions-x');
@@ -280,53 +297,73 @@
       actions.classList.add('is-positioned');
     };
     const syncPosition = () => {
-      if (!mobile.matches) {
-        drag = null;
-        actions.classList.remove('is-dragging');
+      updateControlHints();
+      if (!mobile.matches || faqIsOpen()) {
+        cancelDrag();
         reset();
       } else if (actions.classList.contains('is-positioned')) {
         const rect = actions.getBoundingClientRect();
         moveTo(rect.left, rect.top);
       }
     };
-    handle.addEventListener('pointerdown', event => {
-      if (!mobile.matches || !event.isPrimary || event.button !== 0) return;
-      suppressClick = false;
+    actions.addEventListener('pointerdown', event => {
+      const control = eventControl(event);
+      if (!control || !mobile.matches || faqIsOpen() || !event.isPrimary || event.button !== 0) return;
+      cancelDrag();
+      suppressedControl = null;
       const rect = actions.getBoundingClientRect();
-      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top, bounds: getBounds(), moved: false };
-      handle.setPointerCapture(event.pointerId);
+      drag = { control, id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top, bounds: getBounds(), armed: false, moved: false, cancelled: false };
+      drag.timer = setTimeout(() => {
+        if (!drag || drag.cancelled) return;
+        drag.armed = true;
+        actions.classList.add('is-dragging');
+      }, 450);
+      control.setPointerCapture(event.pointerId);
     });
-    handle.addEventListener('pointermove', event => {
+    actions.addEventListener('pointermove', event => {
       if (!drag || event.pointerId !== drag.id) return;
       const dx = event.clientX - drag.x;
       const dy = event.clientY - drag.y;
+      if (!drag.armed) {
+        if (Math.hypot(dx, dy) >= 8) { drag.cancelled = true; clearTimeout(drag.timer); }
+        return;
+      }
       if (!drag.moved && Math.hypot(dx, dy) < 6) return;
       drag.moved = true;
       corner = -1;
-      actions.classList.add('is-dragging');
       moveTo(drag.left + dx, drag.top + dy, drag.bounds);
     });
     const endDrag = event => {
       if (!drag || event.pointerId !== drag.id) return;
-      suppressClick = event.type === 'pointerup' && drag.moved;
-      drag = null;
-      actions.classList.remove('is-dragging');
-      if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+      const { control, armed, moved, cancelled } = drag;
+      if (armed || cancelled) suppressedControl = control;
+      if (event.type === 'pointerup' && armed && !moved) {
+        const bounds = getBounds();
+        corner = (corner + 1) % 4;
+        moveTo(corner === 0 || corner === 3 ? bounds.right : bounds.left,
+          corner < 2 ? bounds.top : bounds.bottom, bounds);
+      }
+      cancelDrag();
     };
-    handle.addEventListener('pointerup', endDrag);
-    handle.addEventListener('pointercancel', endDrag);
-    handle.addEventListener('lostpointercapture', endDrag);
-    handle.addEventListener('click', event => {
-      event.stopPropagation();
-      if (!mobile.matches) return;
-      if (suppressClick) { suppressClick = false; return; }
-      const bounds = getBounds();
-      corner = (corner + 1) % 4;
-      moveTo(corner === 0 || corner === 3 ? bounds.right : bounds.left,
-        corner < 2 ? bounds.top : bounds.bottom, bounds);
+    actions.addEventListener('pointerup', endDrag);
+    actions.addEventListener('pointercancel', endDrag);
+    actions.addEventListener('lostpointercapture', endDrag);
+    // Capture precedes the FAQ click handler and the anchor's default navigation.
+    actions.addEventListener('click', event => {
+      const control = eventControl(event);
+      if (event.detail === 0) { suppressedControl = null; return; }
+      if (!control || control !== suppressedControl) return;
+      suppressedControl = null;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }, true);
+    actions.addEventListener('contextmenu', event => { if (mobile.matches && eventControl(event)) event.preventDefault(); });
+    actions.addEventListener('dragstart', event => { if (mobile.matches && eventControl(event)) event.preventDefault(); });
+    actions.addEventListener('faq-assistant-open', () => {
+      if (mobile.matches) { cancelDrag(); reset(); }
     });
-    handle.addEventListener('keydown', event => {
-      if (!mobile.matches) return;
+    actions.addEventListener('keydown', event => {
+      if (!mobile.matches || faqIsOpen() || !eventControl(event)) return;
       if (event.key === 'Home') { event.preventDefault(); reset(); return; }
       const directions = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
       const direction = directions[event.key];

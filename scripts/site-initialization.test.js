@@ -39,9 +39,11 @@ class Element {
   }
   setAttribute(key, value) { this.attributes[key] = value; }
   getAttribute(key) { return this.attributes[key] || null; }
+  removeAttribute(key) { delete this.attributes[key]; }
   matches(selector) {
     if (selector.startsWith('.')) return this.classList.contains(selector.slice(1));
     if (selector === '[data-faq-assistant]') return this.faqRoot;
+    if (selector === '[data-faq-trigger]') return Object.hasOwn(this.attributes, 'data-faq-trigger');
     if (selector === '.reveal') return this.classList.contains('reveal');
     return false;
   }
@@ -49,11 +51,21 @@ class Element {
     return this.children.flatMap(x => [...(x.matches(selector) ? [x] : []), ...x.querySelectorAll(selector)]);
   }
   querySelector(selector) { return this.querySelectorAll(selector)[0] || null; }
-  addEventListener(type, callback) { (this.events[type] ||= []).push(callback); }
+  closest(selector) { return this.matches(selector) ? this : this.parentElement?.closest(selector); }
+  addEventListener(type, callback, capture = false) { (this.events[type] ||= []).push({ callback, capture }); }
   emit(type, values = {}) {
-    const event = { type, isPrimary: true, button: 0, pointerId: 1, clientX: 0, clientY: 0,
-      preventDefault() { this.prevented = true; }, stopPropagation() { this.stopped = true; }, ...values };
-    (this.events[type] || []).forEach(callback => callback(event));
+    const event = { type, target: this, detail: 1, isPrimary: true, button: 0, pointerId: 1, clientX: 0, clientY: 0,
+      preventDefault() { this.prevented = true; }, stopPropagation() { this.stopped = true; },
+      stopImmediatePropagation() { this.stopped = true; this.immediateStopped = true; }, ...values };
+    const path = [];
+    for (let element = this; element; element = element.parentElement) path.push(element);
+    const run = (element, capture) => {
+      for (const listener of element.events[type] || []) {
+        if (listener.capture === capture && !event.immediateStopped) listener.callback(event);
+      }
+    };
+    for (const element of [...path].reverse()) { run(element, true); if (event.stopped) break; }
+    if (!event.stopped) for (const element of path) { run(element, false); if (event.stopped) break; }
     return event;
   }
   setPointerCapture(id) { this.capture = id; }
@@ -71,12 +83,27 @@ class Element {
   }
 }
 
+const fakeAssistant = () => {
+  const assistant = new Element('aside');
+  assistant.faqRoot = true;
+  assistant.className = 'faq-assistant';
+  const trigger = new Element('button');
+  trigger.className = 'faq-assistant__trigger';
+  trigger.setAttribute('data-faq-trigger', '');
+  trigger.setAttribute('aria-expanded', 'false');
+  assistant.appendChild(trigger);
+  return assistant;
+};
+
 const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {}) => {
   const body = new Element('body');
   const head = new Element('head');
   const roots = [head, body];
   let faqFetches = 0;
   const observers = [];
+  let now = 0;
+  let timerId = 0;
+  const timers = new Map();
   const section = new Element('section');
   section.rect = { top: 1100, bottom: 12304, height: 11204 };
   if (tallSection) {
@@ -103,9 +130,7 @@ const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {})
       if (tag === 'template') {
         // fetchHTML clones the assistant partial into its placeholder.
         el.content = { querySelectorAll: () => [], cloneNode: () => {
-          const assistant = new Element('aside');
-          assistant.faqRoot = true;
-          return assistant;
+          return fakeAssistant();
         } };
       }
       return el;
@@ -135,11 +160,17 @@ const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {})
   };
   vm.runInNewContext(source, {
     window, document, URL, IntersectionObserver,
-    requestAnimationFrame: callback => callback(), setTimeout: () => {},
+    requestAnimationFrame: callback => callback(),
+    setTimeout: (callback, delay) => { const id = ++timerId; timers.set(id, { callback, due: now + delay }); return id; },
+    clearTimeout: id => timers.delete(id),
     console: { error: error => { throw error; } },
     fetch: async () => { faqFetches++; return { ok: true, text: async () => '<aside data-faq-assistant></aside>' }; }
   });
   return { window, document, section, observers, getFaqFetches: () => faqFetches,
+    advance(milliseconds) {
+      now += milliseconds;
+      for (const [id, timer] of timers) if (timer.due <= now) { timers.delete(id); timer.callback(); }
+    },
     resize(width, height) {
       window.innerWidth = width;
       window.innerHeight = height;
@@ -169,58 +200,104 @@ test('reinitialization reuses the FAQ after it has moved into floating actions',
   assert.equal(h.document.querySelectorAll('.floating-whatsapp').length, 1);
   assert.equal(assistants[0].label, 'Need help?');
   assert.equal(h.getFaqFetches(), 1, 'An already mounted assistant must not fetch another partial');
-  assert.equal(h.document.querySelectorAll('.floating-actions__move').length, 1);
+  assert.equal(h.document.querySelectorAll('.floating-actions__move').length, 0, 'The separate move handle is removed');
   assert.equal(h.window.events.resize.length, 1, 'Cached-page initialization must not add drag listeners again');
 });
 
 const movableActions = options => {
   const h = createHarness(options);
+  h.document.body.appendChild(fakeAssistant());
   h.window.testSite.setupFloatingWhatsApp();
-  return { ...h, actions: h.document.querySelector('.floating-actions'), handle: h.document.querySelector('.floating-actions__move') };
+  return { ...h, actions: h.document.querySelector('.floating-actions'), whatsapp: h.document.querySelector('.floating-whatsapp'), faq: h.document.querySelector('[data-faq-trigger]') };
 };
 
-test('a tap moves help actions away from the footer; arrows and Home work without dragging', () => {
+const hold = (h, control, values = {}) => {
+  control.emit('pointerdown', values);
+  h.advance(450);
+};
+
+test('normal taps keep their original action; holding either button can reposition without dragging', () => {
   const h = movableActions({ lang: 'fr' });
-  assert.equal(h.handle.getAttribute('aria-label'), 'Déplacer les boutons d’aide');
-  assert.ok(h.document.getElementById(h.handle.getAttribute('aria-describedby')).textContent.includes('flèches'));
-  h.handle.emit('click');
+  assert.ok(h.document.getElementById(h.faq.getAttribute('aria-describedby')).textContent.includes('Maintenez'));
+  for (const control of [h.faq, h.whatsapp]) {
+    control.emit('pointerdown');
+    h.advance(200);
+    control.emit('pointerup');
+    assert.equal(control.emit('click').prevented, undefined, 'Quick taps must still open help or navigate to WhatsApp');
+    assert.equal(h.actions.classList.contains('is-positioned'), false);
+  }
+  hold(h, h.whatsapp);
+  h.whatsapp.emit('pointerup');
+  assert.equal(h.whatsapp.emit('click').prevented, true, 'Holding to move must not navigate to WhatsApp');
   assert.equal(h.actions.getBoundingClientRect().top, 88);
   assert.equal(h.actions.getBoundingClientRect().right, 378);
-  assert.equal(h.handle.emit('keydown', { key: 'ArrowLeft' }).prevented, true);
+  assert.equal(h.faq.emit('keydown', { key: 'ArrowLeft' }).prevented, true);
   assert.equal(h.actions.getBoundingClientRect().left, 84);
-  h.handle.emit('keydown', { key: 'Home' });
+  h.faq.emit('keydown', { key: 'Home' });
   assert.equal(h.actions.classList.contains('is-positioned'), false);
-  h.handle.emit('click');
-  h.handle.emit('click');
-  assert.equal(h.actions.getBoundingClientRect().left, 12, 'The next tap selects the opposite top corner');
+  hold(h, h.faq);
+  h.faq.emit('pointerup');
+  assert.equal(h.faq.emit('click').immediateStopped, true, 'Capture must suppress the FAQ click after a hold');
+  assert.equal(h.actions.getBoundingClientRect().top, 88);
 });
 
-test('dragging is clamped, captures the pointer and does not also change corner on release', () => {
+test('long-press dragging is clamped and does not open FAQ on release', () => {
   const h = movableActions();
-  h.handle.emit('pointerdown', { clientX: 130, clientY: 800 });
-  assert.equal(h.handle.capture, 1);
-  h.handle.emit('pointermove', { clientX: -1000, clientY: 300 });
+  hold(h, h.faq, { clientX: 130, clientY: 800, pointerType: 'touch' });
+  assert.equal(h.faq.capture, 1);
+  h.faq.emit('pointermove', { clientX: -1000, clientY: 300 });
   const dragged = h.actions.getBoundingClientRect();
   assert.equal(dragged.left, 12);
   assert.equal(dragged.top, 279);
-  h.handle.emit('pointerup');
-  h.handle.emit('click');
+  h.faq.emit('pointerup');
+  let faqClicks = 0;
+  h.faq.addEventListener('click', () => { faqClicks++; });
+  assert.equal(h.faq.emit('click').prevented, true);
+  assert.equal(faqClicks, 0, 'The capture handler must run before the FAQ bubble handler');
   assert.deepEqual(h.actions.getBoundingClientRect(), dragged, 'The click generated by a drag must not trigger the tap shortcut');
-  assert.equal(h.handle.capture, null);
+  assert.equal(h.faq.capture, null);
   assert.equal(h.actions.classList.contains('is-dragging'), false);
-  h.handle.emit('pointerdown');
-  h.handle.emit('pointermove', { clientX: 2000, clientY: -2000 });
+  hold(h, h.whatsapp);
+  h.whatsapp.emit('pointermove', { clientX: 2000, clientY: -2000 });
   assert.equal(h.actions.getBoundingClientRect().top, 88);
   assert.equal(h.actions.getBoundingClientRect().right, 378);
-  h.handle.emit('pointercancel');
+  h.whatsapp.emit('pointercancel');
   assert.equal(h.actions.classList.contains('is-dragging'), false);
-  h.handle.emit('click');
-  assert.equal(h.actions.getBoundingClientRect().top, 88, 'A cancelled gesture does not disable subsequent taps');
+  h.whatsapp.emit('pointerdown');
+  h.whatsapp.emit('pointerup');
+  assert.equal(h.whatsapp.emit('click').prevented, undefined, 'A cancelled gesture must not disable subsequent taps');
+});
+
+test('moving before the hold delay cancels both repositioning and accidental navigation', () => {
+  const h = movableActions();
+  h.whatsapp.emit('pointerdown');
+  h.advance(100);
+  h.whatsapp.emit('pointermove', { clientY: -100 });
+  h.advance(500);
+  h.whatsapp.emit('pointerup');
+  assert.equal(h.whatsapp.emit('click').prevented, true);
+  assert.equal(h.actions.classList.contains('is-positioned'), false);
+  assert.equal(h.actions.classList.contains('is-dragging'), false);
+});
+
+test('opening the FAQ returns actions to the bottom and locks movement until it closes', () => {
+  const h = movableActions();
+  h.faq.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(h.actions.classList.contains('is-positioned'), true);
+  h.faq.setAttribute('aria-expanded', 'true');
+  h.faq.emit('faq-assistant-open');
+  assert.equal(h.actions.classList.contains('is-positioned'), false);
+  hold(h, h.whatsapp);
+  h.whatsapp.emit('pointermove', { clientY: -200 });
+  h.whatsapp.emit('pointerup');
+  assert.equal(h.actions.classList.contains('is-positioned'), false);
+  h.faq.setAttribute('aria-expanded', 'false');
+  assert.equal(h.faq.emit('click', { detail: 0 }).prevented, undefined, 'Keyboard activation must always be available');
 });
 
 test('resizing keeps actions in view, above bottom banners, and restores the desktop dock', () => {
   const h = movableActions();
-  for (let i = 0; i < 4; i++) h.handle.emit('click');
+  h.faq.emit('keydown', { key: 'ArrowUp' });
   h.window.bottomClearance = 96;
   h.resize(320, 360);
   const rect = h.actions.getBoundingClientRect();
@@ -230,8 +307,9 @@ test('resizing keeps actions in view, above bottom banners, and restores the des
   h.resize(320, 360);
   assert.ok(h.actions.getBoundingClientRect().bottom <= 208, 'The keyboard-reduced visual viewport must also bound movement');
   h.resize(1280, 720);
+  assert.equal(h.faq.getAttribute('aria-describedby'), null, 'Desktop controls must not announce unavailable mobile gestures');
   assert.equal(h.actions.classList.contains('is-positioned'), false);
   assert.equal(h.actions.style['--floating-actions-x'], undefined);
-  h.handle.emit('click');
+  h.faq.emit('keydown', { key: 'ArrowUp' });
   assert.equal(h.actions.classList.contains('is-positioned'), false, 'Mobile movement must not activate on desktop');
 });
