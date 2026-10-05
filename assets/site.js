@@ -108,7 +108,7 @@
         document.body.appendChild(placeholder);
       }
 
-      loadStylesheet('/assets/css/faq-assistant.css?v=20260925h', 'faq-assistant-styles');
+      loadStylesheet('/assets/css/faq-assistant.css?v=20261006move', 'faq-assistant-styles');
 
       await Promise.all([
         // The mounted assistant moves out of this placeholder into floating actions.
@@ -227,6 +227,129 @@
     }
   };
 
+  const setupFloatingActionMovement = actions => {
+    if (actions.dataset.movementReady === 'true') return;
+    actions.dataset.movementReady = 'true';
+    const mobile = window.matchMedia('(max-width: 768px)');
+    const french = (document.documentElement.lang || 'en').toLowerCase() === 'fr';
+    const handle = document.createElement('button');
+    handle.type = 'button';
+    handle.className = 'floating-actions__move';
+    handle.setAttribute('aria-label', french ? 'Déplacer les boutons d’aide' : 'Move help buttons');
+    handle.title = french ? 'Glissez pour déplacer, ou appuyez pour changer de coin' : 'Drag to move, or tap to change corner';
+    handle.setAttribute('aria-describedby', 'floating-actions-move-hint');
+    handle.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg>';
+    const hint = document.createElement('span');
+    hint.id = 'floating-actions-move-hint';
+    hint.className = 'sr-only';
+    hint.textContent = french
+      ? 'Glissez pour déplacer les boutons. Appuyez pour changer de coin. Au clavier, utilisez les flèches ; Début rétablit la position initiale.'
+      : 'Drag to move the buttons. Tap to change corner. With a keyboard, use the arrow keys; Home resets the position.';
+    actions.appendChild(handle);
+    actions.appendChild(hint);
+
+    let drag = null;
+    let suppressClick = false;
+    let corner = -1;
+    const reset = () => {
+      actions.classList.remove('is-positioned');
+      actions.style.removeProperty('--floating-actions-x');
+      actions.style.removeProperty('--floating-actions-y');
+      corner = -1;
+    };
+    const getBounds = () => {
+      // Measure the normal dock to preserve cookie-banner, booking-bar and safe-area clearance.
+      const positioned = actions.classList.contains('is-positioned');
+      actions.classList.remove('is-positioned');
+      const anchor = actions.getBoundingClientRect();
+      if (positioned) actions.classList.add('is-positioned');
+      const viewport = window.visualViewport;
+      const left = (viewport ? viewport.offsetLeft : 0) + 12;
+      const top = Math.max((viewport ? viewport.offsetTop : 0) + 12,
+        (document.querySelector('header.nav')?.getBoundingClientRect().bottom || 76) + 12);
+      return {
+        left, top,
+        right: Math.max(left, (viewport ? viewport.offsetLeft + viewport.width : window.innerWidth) - anchor.width - 12),
+        bottom: Math.max(top, Math.min(anchor.top,
+          (viewport ? viewport.offsetTop + viewport.height : window.innerHeight) - anchor.height - 12))
+      };
+    };
+    const moveTo = (x, y, bounds = getBounds()) => {
+      actions.style.setProperty('--floating-actions-x', `${Math.max(bounds.left, Math.min(bounds.right, x))}px`);
+      actions.style.setProperty('--floating-actions-y', `${Math.max(bounds.top, Math.min(bounds.bottom, y))}px`);
+      actions.classList.add('is-positioned');
+    };
+    const syncPosition = () => {
+      if (!mobile.matches) {
+        drag = null;
+        actions.classList.remove('is-dragging');
+        reset();
+      } else if (actions.classList.contains('is-positioned')) {
+        const rect = actions.getBoundingClientRect();
+        moveTo(rect.left, rect.top);
+      }
+    };
+    handle.addEventListener('pointerdown', event => {
+      if (!mobile.matches || !event.isPrimary || event.button !== 0) return;
+      suppressClick = false;
+      const rect = actions.getBoundingClientRect();
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top, bounds: getBounds(), moved: false };
+      handle.setPointerCapture(event.pointerId);
+    });
+    handle.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 6) return;
+      drag.moved = true;
+      corner = -1;
+      actions.classList.add('is-dragging');
+      moveTo(drag.left + dx, drag.top + dy, drag.bounds);
+    });
+    const endDrag = event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      suppressClick = event.type === 'pointerup' && drag.moved;
+      drag = null;
+      actions.classList.remove('is-dragging');
+      if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+    };
+    handle.addEventListener('pointerup', endDrag);
+    handle.addEventListener('pointercancel', endDrag);
+    handle.addEventListener('lostpointercapture', endDrag);
+    handle.addEventListener('click', event => {
+      event.stopPropagation();
+      if (!mobile.matches) return;
+      if (suppressClick) { suppressClick = false; return; }
+      const bounds = getBounds();
+      corner = (corner + 1) % 4;
+      moveTo(corner === 0 || corner === 3 ? bounds.right : bounds.left,
+        corner < 2 ? bounds.top : bounds.bottom, bounds);
+    });
+    handle.addEventListener('keydown', event => {
+      if (!mobile.matches) return;
+      if (event.key === 'Home') { event.preventDefault(); reset(); return; }
+      const directions = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+      const direction = directions[event.key];
+      if (!direction) return;
+      event.preventDefault();
+      const rect = actions.getBoundingClientRect();
+      const step = event.shiftKey ? 64 : 24;
+      moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step);
+    });
+    window.addEventListener('resize', syncPosition);
+    window.addEventListener('pageshow', syncPosition);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', syncPosition);
+      window.visualViewport.addEventListener('scroll', syncPosition);
+    }
+    if (window.ResizeObserver) new window.ResizeObserver(syncPosition).observe(actions);
+    if (window.MutationObserver) {
+      const observer = new window.MutationObserver(syncPosition);
+      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    }
+  };
+
   const setupFloatingWhatsApp = () => {
     let actions = document.querySelector('.floating-actions');
     if (!actions) {
@@ -259,6 +382,7 @@
 
     const faqAssistant = document.querySelector('[data-faq-assistant]');
     if (faqAssistant) actions.appendChild(faqAssistant);
+    setupFloatingActionMovement(actions);
   };
 
   const gtmId = 'GTM-NKSBQWHS';

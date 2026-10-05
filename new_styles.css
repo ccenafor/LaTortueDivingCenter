@@ -1198,6 +1198,9 @@ header.nav.nav-transparent .nav-locale .lang-option {
   bottom: auto;
   z-index: auto;
 }
+.floating-actions__move {
+  display: none;
+}
 .floating-whatsapp {
   position: static;
   display: inline-flex;
@@ -1264,10 +1267,44 @@ body.has-mobile-dive-bar.has-cookie-banner {
     bottom: calc(0.75rem + var(--floating-actions-bottom-offset, 0px) + env(safe-area-inset-bottom, 0px));
     gap: 0.5rem;
   }
+  .floating-actions.is-positioned {
+    left: var(--floating-actions-x);
+    top: var(--floating-actions-y);
+    right: auto;
+    bottom: auto;
+  }
+  .floating-actions__move {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    order: -1;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #152040;
+    border-radius: 50%;
+    background: #fff;
+    color: #152040;
+    box-shadow: 0 4px 12px rgba(10, 19, 41, 0.15);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  .floating-actions.is-dragging .floating-actions__move {
+    cursor: grabbing;
+  }
+  .floating-actions__move:focus-visible {
+    outline: 3px solid #287a4d;
+    outline-offset: 3px;
+  }
   .floating-whatsapp {
     width: 3.3rem;
     height: 3.3rem;
   }
+}
+@media print {
+  .floating-actions { display: none !important; }
 }
 @media (min-width: 769px) {
   .mobile-dive-bar {
