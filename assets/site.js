@@ -111,7 +111,11 @@
       loadStylesheet('/assets/css/faq-assistant.css?v=20260925h', 'faq-assistant-styles');
 
       await Promise.all([
-        fetchHTML('/assets/partials/faq-assistant.html?v=20260925h', 'faq-assistant-placeholder'),
+        // The mounted assistant moves out of this placeholder into floating actions.
+        // Reuse it when pageshow restores the page instead of inserting a duplicate.
+        document.querySelector('[data-faq-assistant]')
+          ? Promise.resolve()
+          : fetchHTML('/assets/partials/faq-assistant.html?v=20260925h', 'faq-assistant-placeholder'),
         loadScript('/assets/js/faq-assistant-content.js?v=20260925h', 'faq-assistant-content-script', 'ltFaqAssistantContent')
       ]);
       await loadScript('/assets/js/faq-assistant.js?v=20260925h', 'faq-assistant-script', 'ltFaqAssistant');
@@ -1093,6 +1097,12 @@
     const tagTargets = (elements, { stagger = false } = {}) => {
       elements.forEach((el, idx) => {
         if (!el || el.classList.contains('reveal')) return;
+        // The mobile room list is one very tall section. Keep its content visible
+        // without depending on a scroll-animation callback for the whole list.
+        if (el.tagName === 'SECTION' && el.querySelector('.room-section')) {
+          el.classList.add('is-visible');
+          return;
+        }
         el.classList.add('reveal');
         if (stagger) {
           const delay = Math.min(idx * 80, 480);
