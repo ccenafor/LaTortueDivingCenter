@@ -1230,7 +1230,9 @@
     });
   };
 
+  let clearRoomRevealWatch = () => {};
   const setupRevealAnimations = () => {
+    clearRoomRevealWatch();
     if (!('IntersectionObserver' in window)) return;
 
     const revealNow = (el) => {
@@ -1246,20 +1248,20 @@
     const observerOptions = earlyReveal
       ? { threshold: 0.05, rootMargin: isMobile ? '20% 0px 20% 0px' : '20% 0px 10% 0px' }
       : { threshold: 0.1, rootMargin: '20% 0px -5% 0px' };
-    const observer = new IntersectionObserver((entries) => {
+    const revealEntries = (entries, targetObserver) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           revealNow(entry.target);
-          observer.unobserve(entry.target);
+          targetObserver.unobserve(entry.target);
         }
       });
-    }, observerOptions);
+    };
+    const observer = new IntersectionObserver(entries => revealEntries(entries, observer), observerOptions);
 
-    const tagTargets = (elements, { stagger = false } = {}) => {
+    const tagTargets = (elements, { stagger = false, targetObserver = observer } = {}) => {
       elements.forEach((el, idx) => {
         if (!el || el.classList.contains('reveal')) return;
-        // The mobile room list is one very tall section. Keep its content visible
-        // without depending on a scroll-animation callback for the whole list.
+        // Animate each room separately; the very tall list must stay visible.
         if (el.tagName === 'SECTION' && el.querySelector('.room-section')) {
           el.classList.add('is-visible');
           return;
@@ -1269,7 +1271,7 @@
           const delay = Math.min(idx * 80, 480);
           el.style.setProperty('--reveal-delay', `${delay}ms`);
         }
-        observer.observe(el);
+        targetObserver.observe(el);
       });
     };
 
@@ -1300,6 +1302,44 @@
     };
 
     tagTargets(document.querySelectorAll('section:not(.slider)'), { stagger: true });
+    const rooms = Array.from(document.querySelectorAll('.room-section'));
+    if (rooms.length) {
+      // A room can exceed the viewport height: reveal on entry, not on a ratio
+      // of the full room that a short mobile screen may never reach.
+      const roomObserver = new IntersectionObserver(entries => revealEntries(entries, roomObserver), {
+        threshold: 0, rootMargin: '0px 0px -5% 0px'
+      });
+      tagTargets(rooms, { targetObserver: roomObserver });
+      const pending = new Set(rooms.filter(room => !room.classList.contains('is-visible')));
+      pending.forEach(room => roomObserver.observe(room));
+      let framePending = false;
+      const checkRooms = () => {
+        framePending = false;
+        const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+        pending.forEach(room => {
+          const rect = room.getBoundingClientRect();
+          if (room.classList.contains('is-visible') || (rect.top < viewHeight * 0.95 && rect.bottom > 0)) {
+            revealNow(room);
+            roomObserver.unobserve(room);
+            pending.delete(room);
+          }
+        });
+        if (!pending.size) clearRoomRevealWatch();
+      };
+      const scheduleCheck = () => {
+        if (framePending) return;
+        framePending = true;
+        requestAnimationFrame(checkRooms);
+      };
+      clearRoomRevealWatch = () => {
+        window.removeEventListener('scroll', scheduleCheck);
+        window.removeEventListener('resize', scheduleCheck);
+        roomObserver.disconnect();
+      };
+      window.addEventListener('scroll', scheduleCheck, { passive: true });
+      window.addEventListener('resize', scheduleCheck);
+      checkRooms();
+    }
     tagTargets(document.querySelectorAll('.card, .card-wide, .feature-card, .day-pass-card'), { stagger: true });
     tagTargets(document.querySelectorAll('.row.row-4.dining-gallery .ph.tile'), { stagger: true });
     tagTargets(document.querySelectorAll('.hero .inner.container'), { stagger: false });

@@ -109,6 +109,7 @@ const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {})
   if (tallSection) {
     const room = new Element();
     room.className = 'room-section';
+    room.rect = { top: 1100, bottom: 5100, height: 4000 };
     section.appendChild(room);
     body.appendChild(section);
   }
@@ -145,6 +146,7 @@ const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {})
     }
     observe(el) { this.targets.add(el); }
     unobserve(el) { this.targets.delete(el); }
+    disconnect() { this.targets.clear(); }
     takeRecords() { return []; }
   }
   const window = {
@@ -152,6 +154,7 @@ const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {})
     innerHeight: 844, innerWidth: 390, events: {},
     matchMedia: () => ({ get matches() { return mobile; } }),
     addEventListener(type, callback) { (this.events[type] ||= []).push(callback); },
+    removeEventListener(type, callback) { this.events[type] = (this.events[type] || []).filter(listener => listener !== callback); },
     IntersectionObserver, ltFaqAssistantContent: { locales: { en: {} } },
     ltFaqAssistant: { init: () => {
       const assistant = document.querySelector('[data-faq-assistant]');
@@ -179,7 +182,7 @@ const createHarness = ({ mobile = true, tallSection = false, lang = 'en' } = {})
     } };
 };
 
-test('mobile rooms remain visible below the hero without an observer callback', () => {
+test('the tall room list stays visible while each room gets its own scroll animation', () => {
   const h = createHarness({ tallSection: true });
   h.window.testSite.setupRevealAnimations();
   const observer = h.observers[0];
@@ -187,6 +190,41 @@ test('mobile rooms remain visible below the hero without an observer callback', 
   assert.equal(h.section.classList.contains('reveal'), false, 'The room list must not receive the transparent animation state');
   assert.equal(h.section.classList.contains('is-visible'), true, 'Rooms must be visible without an animation callback');
   assert.equal(observer.targets.has(h.section), false, 'Room visibility must not depend on the observer');
+  const room = h.section.querySelector('.room-section');
+  const roomObserver = h.observers[1];
+  assert.equal(room.classList.contains('reveal'), true, 'Keep the requested animation on each room');
+  assert.equal(roomObserver.targets.has(room), true);
+  assert.equal(roomObserver.options.threshold, 0, 'A tall room must reveal on entry even in a short viewport');
+  roomObserver.callback([{ target: room, isIntersecting: true, intersectionRatio: 0.01 }]);
+  assert.equal(room.classList.contains('is-visible'), true);
+});
+
+test('scroll still reveals a room if the observer callback is delayed or absent', () => {
+  const h = createHarness({ tallSection: true });
+  h.window.testSite.setupRevealAnimations();
+  const room = h.section.querySelector('.room-section');
+  assert.equal(room.classList.contains('is-visible'), false, 'A room below the fold waits for scrolling');
+  room.rect = { top: 300, bottom: 4300, height: 4000 };
+  h.window.innerHeight = 390;
+  h.window.events.scroll.slice().forEach(callback => callback());
+  assert.equal(room.classList.contains('is-visible'), true, 'Entering a short landscape viewport must reveal the room without IO');
+  assert.equal(h.window.events.scroll.length, 0, 'Remove the fallback listener after all rooms are revealed');
+});
+
+test('restoring a cached page does not duplicate room scroll watchers', () => {
+  const h = createHarness({ tallSection: true });
+  h.window.testSite.setupRevealAnimations();
+  h.window.testSite.setupRevealAnimations();
+  assert.equal(h.window.events.scroll.length, 1);
+  assert.equal(h.observers[1].targets.size, 0, 'Disconnect the prior room observer on reinitialization');
+  assert.equal(h.observers[3].targets.has(h.section.querySelector('.room-section')), true);
+});
+
+test('rooms remain visible if the browser has no IntersectionObserver', () => {
+  const h = createHarness({ tallSection: true });
+  delete h.window.IntersectionObserver;
+  h.window.testSite.setupRevealAnimations();
+  assert.equal(h.section.querySelector('.room-section').classList.contains('reveal'), false);
 });
 
 test('reinitialization reuses the FAQ after it has moved into floating actions', async () => {
