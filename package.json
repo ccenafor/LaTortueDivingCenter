@@ -1,6 +1,7 @@
 {
   "name": "la-tortue-diving-center",
   "private": true,
+  "engines": { "node": "^24.22.1" },
   "scripts": {
     "generate-blog-pages": "node scripts/generate-blog-pages.js",
     "generate-search-index": "node scripts/generate-search-index.js",

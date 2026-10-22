@@ -1,3 +1,6 @@
 [build]
   command = "node scripts/build.js && node scripts/netlify-noindex-guard.js dist"
   publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24.22.1"
